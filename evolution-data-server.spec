@@ -8,7 +8,7 @@ Summary:	Evolution data server
 Summary(pl):	Serwer danych Evolution
 Name:		evolution-data-server
 Version:	1.2.1
-Release:	1
+Release:	2
 License:	GPL
 Group:		Libraries
 Source0:	http://ftp.gnome.org/pub/gnome/sources/evolution-data-server/1.2/%{name}-%{version}.tar.bz2
@@ -23,6 +23,7 @@ BuildRequires:	autoconf >= 2.52
 BuildRequires:	automake
 BuildRequires:	db-devel
 BuildRequires:	gnome-common >= 2.8.0
+BuildRequires:	howl-devel >= 0.9.10
 BuildRequires:	intltool
 BuildRequires:	libglade2-devel >= 1:2.5.0
 BuildRequires:	libgnomeui-devel >= 2.10.0
