@@ -7,6 +7,7 @@
 %define		mver		1.0
 
 Summary:	Evolution data server
+Summary(pl):	Serwer danych Evolution
 Name:		evolution-data-server
 Version:	0.0.3
 Release:	0.10
@@ -16,36 +17,58 @@ Source0:	http://ftp.gnome.org/pub/gnome/sources/%{name}/0.0/%{name}-%{version}.t
 # Source0-md5:	bcacfd623db973a100deb67f0b7d8a38
 Patch0:		%{name}-system_db.patch
 URL:		http://www.ximian.com/products/ximian_evolution/
+BuildRequires:	ORBit2-devel >= 2.8.0
+BuildRequires:	autoconf >= 2.52
+BuildRequires:	automake
+BuildRequires:	db-devel
+BuildRequires:	intltool
+BuildRequires:	libgnome-devel >= 2.0
 BuildRequires:	libsoup-devel >= 2.1.2
-BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
+BuildRequires:	libtool
+BuildRequires:	openldap-devel
+BuildRequires:	pkgconfig
 Requires(post,postun):	/sbin/ldconfig
 Requires(post,postun):	/usr/bin/scrollkeeper-update
 Requires(post):		GConf2
+BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
-Evolution data server.
+The Evolution data server for the calendar and addressbook.
+
+%description -l pl
+Serwer danych Evolution dla kalendarza i ksi±¿ki adresowej.
 
 %package devel
 Summary:	Evolution data server development files
+Summary(pl):	Pliki programistyczne serwera danych evolution
 Group:		Development/Libraries
-Requires:	%{name} >= %{version}
+Requires:	%{name} = %{version}
 
 %description devel
 This package contains the files necessary to develop applications
 using Evolution's data server libraries.
 
+%description devel -l pl
+Ten pakiet zawiera pliki potrzebne do tworzenia aplikacji
+korzystaj±cych z bibliotek serwera danych Evolution.
+
 %package static
 Summary:	Evolution data server static libraries
+Summary(pl):	Statyczne biblioteki serwera danych Evolution
 Group:		Development/Libraries
-Requires:	%{name}-devel >= %{version}
+Requires:	%{name}-devel = %{version}
 
 %description static
 Evolution data server static libraries.
 
+%description static -l pl
+Statyczne biblioteki serwera danych Evolution.
+
 %prep
 %setup -q 
 %patch0 -p1
-rm -rf libdb/
+
+rm -rf libdb
 
 %build
 glib-gettextize --copy --force
