@@ -39,7 +39,7 @@ BuildRequires:	pkgconfig
 %{?with_kerberos5:BuildRequires:	heimdal-devel}
 %{?with_ldap:BuildRequires:	openldap-devel >= 2.0.0}
 Requires(post,postun):	/sbin/ldconfig
-Requires(post,postun):	scrollkeeper-update
+Requires(post,postun):	scrollkeeper
 Requires:	libsoup >= 2.2.3
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
