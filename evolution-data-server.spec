@@ -127,6 +127,8 @@ rm -rf $RPM_BUILD_ROOT
 	HTML_DIR=%{_gtkdocdir} \
 	pkgconfigdir=%{_pkgconfigdir}
 
+rm $RPM_BUILD_ROOT%{_libdir}/%{name}-%{mver}/{camel-providers,extensions}/*.{,l}a
+
 rm -r $RPM_BUILD_ROOT%{_datadir}/locale/no
 
 %find_lang %{name} --all-name
@@ -146,10 +148,16 @@ rm -rf $RPM_BUILD_ROOT
 %files -f %{name}.lang
 %defattr(644,root,root,755)
 %doc AUTHORS ChangeLog NEWS* README
-%attr(755,root,root) %{_libdir}/%{name}-%{mver}
 %attr(755,root,root) %{_libdir}/camel-index-control-%{mver}
 %attr(755,root,root) %{_libdir}/camel-lock-helper-%{mver}
 %attr(755,root,root) %{_libdir}/*.so.*.*
+%dir %{_libdir}/%{name}-%{mver}
+%attr(755,root,root) %{_libdir}/%{name}-%{mver}/%{name}
+%dir %{_libdir}/%{name}-%{mver}/camel-providers
+%attr(755,root,root) %{_libdir}/%{name}-%{mver}/camel-providers/*.so
+%{_libdir}/%{name}-%{mver}/camel-providers/*.urls
+%dir %{_libdir}/%{name}-%{mver}/extensions
+%attr(755,root,root) %{_libdir}/%{name}-%{mver}/extensions/*.so
 %{_libdir}/bonobo/servers/*
 %{_datadir}/idl/*
 %dir %{_datadir}/%{name}-%{mver}
