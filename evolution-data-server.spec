@@ -7,12 +7,12 @@
 Summary:	Evolution data server
 Summary(pl):	Serwer danych Evolution
 Name:		evolution-data-server
-Version:	0.0.93
+Version:	0.0.94
 Release:	1
 License:	GPL
 Group:		Libraries
 Source0:	http://ftp.gnome.org/pub/gnome/sources/%{name}/0.0/%{name}-%{version}.tar.bz2
-# Source0-md5:	e4379c7af6b849dcec617058df620e13
+# Source0-md5:	934acfdcbd6ef8f9c799bc2d05a9eb3d
 Patch0:		%{name}-system_db.patch
 Patch1:		%{name}-locale-names.patch
 URL:		http://www.ximian.com/products/ximian_evolution/
@@ -22,14 +22,14 @@ BuildRequires:	automake
 BuildRequires:	db-devel
 BuildRequires:	intltool
 BuildRequires:	libgnome-devel >= 2.6.1.1
-BuildRequires:	libsoup-devel >= 2.1.10
+BuildRequires:	libsoup-devel >= 2.1.11
 BuildRequires:	libtool
 BuildRequires:	openldap-devel
 BuildRequires:	pkgconfig
 Requires(post,postun):	/sbin/ldconfig
 Requires(post,postun):	/usr/bin/scrollkeeper-update
 Requires(post):		GConf2
-Requires:	libsoup >= 2.1.10
+Requires:	libsoup >= 2.1.11
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
