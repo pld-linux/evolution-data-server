@@ -11,13 +11,14 @@ Summary:	Evolution data server
 Summary(pl):	Serwer danych Evolution
 Name:		evolution-data-server
 Version:	0.0.7
-Release:	1
+Release:	2
 License:	GPL
 Group:		Libraries
 Source0:	http://ftp.gnome.org/pub/gnome/sources/%{name}/0.0/%{name}-%{version}.tar.gz
 # Source0-md5:	743893fa1840b22514bc33db05e36d83
 #Source0:	%{name}-%{version}-%{snap}.tar.bz2
 Patch0:		%{name}-system_db.patch
+Patch1:		%{name}-locale-names.patch
 URL:		http://www.ximian.com/products/ximian_evolution/
 BuildRequires:	ORBit2-devel >= 2.9.0
 BuildRequires:	autoconf >= 2.52
@@ -25,7 +26,7 @@ BuildRequires:	automake
 BuildRequires:	db-devel
 BuildRequires:	intltool
 BuildRequires:	libgnome-devel >= 2.5.0
-BuildRequires:	libsoup-devel >= 2.1.6
+BuildRequires:	libsoup-devel >= 2.1.7
 BuildRequires:	libtool
 BuildRequires:	openldap-devel
 BuildRequires:	pkgconfig
@@ -44,7 +45,7 @@ Serwer danych Evolution dla kalendarza i ksi±¿ki adresowej.
 Summary:	Evolution data server development files
 Summary(pl):	Pliki programistyczne serwera danych evolution
 Group:		Development/Libraries
-Requires:	%{name} = %{version}
+Requires:	%{name} = %{version}-%{release}
 Requires:	GConf2-devel >= 2.5.0
 Requires:	ORBit2-devel >= 2.9.0
 Requires:	glib2-devel >= 2.3.0
@@ -63,7 +64,7 @@ korzystaj±cych z bibliotek serwera danych Evolution.
 Summary:	Evolution data server static libraries
 Summary(pl):	Statyczne biblioteki serwera danych Evolution
 Group:		Development/Libraries
-Requires:	%{name}-devel = %{version}
+Requires:	%{name}-devel = %{version}-%{release}
 
 %description static
 Evolution data server static libraries.
@@ -74,11 +75,12 @@ Statyczne biblioteki serwera danych Evolution.
 %prep
 %setup -q 
 %patch0 -p1
+%patch1 -p1
 
+mv po/{no,nb}.po
 rm -rf libdb
 
 %build
-cp %{_datadir}/automake/mkinstalldirs ./
 glib-gettextize --copy --force
 intltoolize --copy --force
 %{__libtoolize}
