@@ -11,7 +11,7 @@ Summary:	Evolution data server
 Summary(pl):	Serwer danych Evolution
 Name:		evolution-data-server
 Version:	1.2.1
-Release:	2.1
+Release:	3
 License:	GPL
 Group:		Libraries
 Source0:	http://ftp.gnome.org/pub/gnome/sources/evolution-data-server/1.2/%{name}-%{version}.tar.bz2
@@ -28,9 +28,9 @@ BuildRequires:	db-devel
 BuildRequires:	gnome-common >= 2.8.0
 BuildRequires:	howl-devel >= 0.9.10
 BuildRequires:	intltool
-BuildRequires:	libglade2-devel >= 1:2.5.0
-BuildRequires:	libgnomeui-devel >= 2.10.0
-BuildRequires:	libsoup-devel >= 2.2.2
+BuildRequires:	libglade2-devel >= 1:2.5.1
+BuildRequires:	libgnomeui-devel >= 2.10.0-2
+BuildRequires:	libsoup-devel >= 2.2.3
 BuildRequires:	libstdc++-devel
 BuildRequires:	libtool
 BuildRequires:	nspr-devel
@@ -39,9 +39,8 @@ BuildRequires:	pkgconfig
 %{?with_kerberos5:BuildRequires:	heimdal-devel}
 %{?with_ldap:BuildRequires:	openldap-devel >= 2.0.0}
 Requires(post,postun):	/sbin/ldconfig
-Requires(post,postun):	/usr/bin/scrollkeeper-update
-Requires(post):		GConf2
-Requires:	libsoup >= 2.2.2
+Requires(post,postun):	scrollkeeper-update
+Requires:	libsoup >= 2.2.3
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
@@ -60,10 +59,10 @@ Requires:	GConf2-devel >= 2.10.0
 Requires:	ORBit2-devel >= 1:2.12.1
 Requires:	glib2-devel >= 1:2.6.2
 Requires:	libbonobo-devel >= 2.8.1
-Requires:	libgnome-devel >= 2.10.0
+Requires:	libgnome-devel >= 2.10.0-2
 Requires:	libxml2-devel
 # for libegroupwise
-Requires:	libsoup-devel >= 2.2.2
+Requires:	libsoup-devel >= 2.2.3
 
 %description devel
 This package contains the files necessary to develop applications
@@ -146,12 +145,13 @@ rm -rf $RPM_BUILD_ROOT
 
 %post
 /sbin/ldconfig
-/usr/bin/scrollkeeper-update
-%gconf_schema_install
+/usr/bin/scrollkeeper-update -q
 
 %postun
-/sbin/ldconfig
-/usr/bin/scrollkeeper-update
+if [ $1 = 0 ]; then
+	/sbin/ldconfig
+	/usr/bin/scrollkeeper-update -q
+fi
 
 %files -f %{name}.lang
 %defattr(644,root,root,755)
