@@ -41,9 +41,9 @@
 @@ -1,6 +1,6 @@
  DISTCHECK_CONFIGURE_FLAGS = --enable-gtk-doc
  
--SUBDIRS = libdb libedataserver addressbook calendar src docs po
-+SUBDIRS = libedataserver addressbook calendar src docs po
- DIST_SUBDIRS= libedataserver addressbook calendar src docs po
+-SUBDIRS = libdb libedataserver servers addressbook calendar src docs po
++SUBDIRS = libedataserver servers addressbook calendar src docs po
+ DIST_SUBDIRS= libedataserver servers addressbook calendar src docs po
  
  changelogs =			\
 @@ -21,9 +21,10 @@
