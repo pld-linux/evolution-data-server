@@ -1,7 +1,7 @@
-diff -urN evolution-data-server.orig/addressbook/backends/groupwise/e-book-backend-groupwise.c evolution-data-server/addressbook/backends/groupwise/e-book-backend-groupwise.c
---- evolution-data-server.orig/addressbook/backends/groupwise/e-book-backend-groupwise.c	2004-06-02 12:31:44.303464592 +0200
-+++ evolution-data-server/addressbook/backends/groupwise/e-book-backend-groupwise.c	2004-06-02 12:49:41.386723048 +0200
-@@ -123,6 +123,7 @@
+diff -urN aa/evolution-data-server-1.1.5/addressbook/backends/groupwise/e-book-backend-groupwise.c evolution-data-server-1.1.5/addressbook/backends/groupwise/e-book-backend-groupwise.c
+--- aa/evolution-data-server-1.1.5/addressbook/backends/groupwise/e-book-backend-groupwise.c	2005-02-04 07:30:34.000000000 +0100
++++ evolution-data-server-1.1.5/addressbook/backends/groupwise/e-book-backend-groupwise.c	2005-02-12 22:40:38.005140712 +0100
+@@ -143,6 +143,7 @@
  	GList *aim_list = NULL;
  	GList *icq_list = NULL;
  	GList *yahoo_list = NULL;
@@ -9,7 +9,7 @@ diff -urN evolution-data-server.orig/addressbook/backends/groupwise/e-book-backe
  	GList *msn_list = NULL;
  	GList *jabber_list = NULL;
  	GList *groupwise_list = NULL;
-@@ -158,6 +159,10 @@
+@@ -178,6 +179,10 @@
  			im_field_id = E_CONTACT_IM_YAHOO;
  			im_attr_list = &yahoo_list;
  		}
@@ -20,7 +20,7 @@ diff -urN evolution-data-server.orig/addressbook/backends/groupwise/e-book-backe
  		else if (g_str_equal (address->service, "jabber")) {
  			im_field_id = E_CONTACT_IM_JABBER;
  			im_attr_list = &jabber_list;
-@@ -180,6 +185,7 @@
+@@ -200,6 +205,7 @@
  	e_contact_set_attributes (contact, E_CONTACT_IM_JABBER, jabber_list);
  	e_contact_set_attributes (contact, E_CONTACT_IM_ICQ, icq_list);
  	e_contact_set_attributes (contact, E_CONTACT_IM_YAHOO, yahoo_list);
@@ -28,7 +28,7 @@ diff -urN evolution-data-server.orig/addressbook/backends/groupwise/e-book-backe
  	e_contact_set_attributes (contact, E_CONTACT_IM_MSN, msn_list);
  	e_contact_set_attributes (contact, E_CONTACT_IM_GROUPWISE, groupwise_list);
  	
-@@ -187,6 +193,7 @@
+@@ -207,6 +213,7 @@
  	free_attr_list (jabber_list);
  	free_attr_list (icq_list);
  	free_attr_list (yahoo_list);
@@ -36,7 +36,7 @@ diff -urN evolution-data-server.orig/addressbook/backends/groupwise/e-book-backe
  	free_attr_list (msn_list);
  	free_attr_list (groupwise_list);
  }
-@@ -219,6 +226,7 @@
+@@ -239,6 +246,7 @@
    
  	append_ims_to_list (&im_list, contact, "aim", E_CONTACT_IM_AIM);
  	append_ims_to_list (&im_list, contact, "yahoo", E_CONTACT_IM_YAHOO);
@@ -44,7 +44,7 @@ diff -urN evolution-data-server.orig/addressbook/backends/groupwise/e-book-backe
  	append_ims_to_list (&im_list, contact, "icq", E_CONTACT_IM_ICQ);
  	append_ims_to_list (&im_list, contact, "msn", E_CONTACT_IM_MSN);
  	append_ims_to_list (&im_list, contact, "jabber", E_CONTACT_IM_JABBER);
-@@ -1968,6 +1976,7 @@
+@@ -2371,6 +2379,7 @@
  	fields = g_list_append (fields, g_strdup (e_contact_field_name (E_CONTACT_EMAIL_3)));
  	fields = g_list_append (fields, g_strdup (e_contact_field_name (E_CONTACT_IM_ICQ)));
  	fields = g_list_append (fields, g_strdup (e_contact_field_name (E_CONTACT_IM_YAHOO)));
@@ -52,10 +52,10 @@ diff -urN evolution-data-server.orig/addressbook/backends/groupwise/e-book-backe
  	fields = g_list_append (fields, g_strdup (e_contact_field_name (E_CONTACT_IM_MSN)));
  	fields = g_list_append (fields, g_strdup (e_contact_field_name (E_CONTACT_IM_JABBER)));
  	fields = g_list_append (fields, g_strdup (e_contact_field_name (E_CONTACT_IM_GROUPWISE)));
-diff -urN evolution-data-server.orig/addressbook/libebook/e-contact.c evolution-data-server/addressbook/libebook/e-contact.c
---- evolution-data-server.orig/addressbook/libebook/e-contact.c	2004-06-02 12:31:44.883376432 +0200
-+++ evolution-data-server/addressbook/libebook/e-contact.c	2004-06-02 12:41:36.416449736 +0200
-@@ -155,6 +155,7 @@
+diff -urN aa/evolution-data-server-1.1.5/addressbook/libebook/e-contact.c evolution-data-server-1.1.5/addressbook/libebook/e-contact.c
+--- aa/evolution-data-server-1.1.5/addressbook/libebook/e-contact.c	2005-02-06 13:28:41.000000000 +0100
++++ evolution-data-server-1.1.5/addressbook/libebook/e-contact.c	2005-02-12 22:40:38.007140408 +0100
+@@ -157,6 +157,7 @@
          MULTI_LIST_FIELD (E_CONTACT_IM_GROUPWISE, EVC_X_GROUPWISE, "im_groupwise", N_("Groupwise Id List"),       FALSE),
  	MULTI_LIST_FIELD (E_CONTACT_IM_JABBER, 	  EVC_X_JABBER,    "im_jabber",    N_("Jabber Id List"),          FALSE),
  	MULTI_LIST_FIELD (E_CONTACT_IM_YAHOO,  	  EVC_X_YAHOO,     "im_yahoo",     N_("Yahoo! Screen Name List"), FALSE),
@@ -63,7 +63,7 @@ diff -urN evolution-data-server.orig/addressbook/libebook/e-contact.c evolution-
  	MULTI_LIST_FIELD (E_CONTACT_IM_MSN,    	  EVC_X_MSN,       "im_msn",       N_("MSN Screen Name List"),    FALSE),
  	MULTI_LIST_FIELD (E_CONTACT_IM_ICQ,    	  EVC_X_ICQ,       "im_icq",       N_("ICQ Id List"),             FALSE),
   
-@@ -182,6 +183,12 @@
+@@ -184,6 +185,12 @@
  	ATTR_TYPE_STR_FIELD (E_CONTACT_IM_YAHOO_WORK_1,  EVC_X_YAHOO,  "im_yahoo_work_1",  N_("Yahoo! Work Screen Name 1"), FALSE, "WORK", 0),
  	ATTR_TYPE_STR_FIELD (E_CONTACT_IM_YAHOO_WORK_2,  EVC_X_YAHOO,  "im_yahoo_work_2",  N_("Yahoo! Work Screen Name 2"), FALSE, "WORK", 1),
  	ATTR_TYPE_STR_FIELD (E_CONTACT_IM_YAHOO_WORK_3,  EVC_X_YAHOO,  "im_yahoo_work_3",  N_("Yahoo! Work Screen Name 3"), FALSE, "WORK", 2),
@@ -76,9 +76,9 @@ diff -urN evolution-data-server.orig/addressbook/libebook/e-contact.c evolution-
  	ATTR_TYPE_STR_FIELD (E_CONTACT_IM_MSN_HOME_1,    EVC_X_MSN,    "im_msn_home_1",    N_("MSN Home Screen Name 1"),    FALSE, "HOME", 0),
  	ATTR_TYPE_STR_FIELD (E_CONTACT_IM_MSN_HOME_2,    EVC_X_MSN,    "im_msn_home_2",    N_("MSN Home Screen Name 2"),    FALSE, "HOME", 1),
  	ATTR_TYPE_STR_FIELD (E_CONTACT_IM_MSN_HOME_3,    EVC_X_MSN,    "im_msn_home_3",    N_("MSN Home Screen Name 3"),    FALSE, "HOME", 2),
-diff -urN evolution-data-server.orig/addressbook/libebook/e-contact.h evolution-data-server/addressbook/libebook/e-contact.h
---- evolution-data-server.orig/addressbook/libebook/e-contact.h	2004-06-02 12:31:44.883376432 +0200
-+++ evolution-data-server/addressbook/libebook/e-contact.h	2004-06-02 12:44:07.738445296 +0200
+diff -urN aa/evolution-data-server-1.1.5/addressbook/libebook/e-contact.h evolution-data-server-1.1.5/addressbook/libebook/e-contact.h
+--- aa/evolution-data-server-1.1.5/addressbook/libebook/e-contact.h	2005-02-06 19:09:01.000000000 +0100
++++ evolution-data-server-1.1.5/addressbook/libebook/e-contact.h	2005-02-12 22:40:38.008140256 +0100
 @@ -128,6 +128,12 @@
  	E_CONTACT_IM_YAHOO_WORK_1,     /* Synthetic string field */
  	E_CONTACT_IM_YAHOO_WORK_2,     /* Synthetic string field */
@@ -92,7 +92,7 @@ diff -urN evolution-data-server.orig/addressbook/libebook/e-contact.h evolution-
  	E_CONTACT_IM_MSN_HOME_1,       /* Synthetic string field */
  	E_CONTACT_IM_MSN_HOME_2,       /* Synthetic string field */
  	E_CONTACT_IM_MSN_HOME_3,       /* Synthetic string field */
-@@ -166,6 +172,7 @@
+@@ -167,6 +173,7 @@
  	E_CONTACT_IM_GROUPWISE,  /* Multi-valued */
  	E_CONTACT_IM_JABBER,  	 /* Multi-valued */
  	E_CONTACT_IM_YAHOO,   	 /* Multi-valued */
@@ -100,21 +100,21 @@ diff -urN evolution-data-server.orig/addressbook/libebook/e-contact.h evolution-
  	E_CONTACT_IM_MSN,     	 /* Multi-valued */
  	E_CONTACT_IM_ICQ,     	 /* Multi-valued */
         
-diff -urN evolution-data-server.orig/addressbook/libebook/e-vcard.h evolution-data-server/addressbook/libebook/e-vcard.h
---- evolution-data-server.orig/addressbook/libebook/e-vcard.h	2004-06-02 12:31:45.544275960 +0200
-+++ evolution-data-server/addressbook/libebook/e-vcard.h	2004-06-02 12:45:00.322451312 +0200
+diff -urN aa/evolution-data-server-1.1.5/addressbook/libebook/e-vcard.h evolution-data-server-1.1.5/addressbook/libebook/e-vcard.h
+--- aa/evolution-data-server-1.1.5/addressbook/libebook/e-vcard.h	2004-05-03 18:43:00.000000000 +0200
++++ evolution-data-server-1.1.5/addressbook/libebook/e-vcard.h	2005-02-12 22:48:04.288295360 +0100
 @@ -85,6 +85,7 @@
  #define EVC_X_VIDEO_URL     	"X-EVOLUTION-VIDEO-URL"
  #define EVC_X_WANTS_HTML    	"X-MOZILLA-HTML"
  #define EVC_X_YAHOO         	"X-YAHOO"
-+#define EVC_X_GADUGADU         "X-GADUGADU"
++#define EVC_X_GADUGADU        "X-GADUGADU"
  #define EVC_X_GROUPWISE     	"X-GROUPWISE"
  
  typedef enum {
-diff -urN evolution-data-server.orig/addressbook/libedata-book/e-book-backend-sexp.c evolution-data-server/addressbook/libedata-book/e-book-backend-sexp.c
---- evolution-data-server.orig/addressbook/libedata-book/e-book-backend-sexp.c	2004-06-02 12:31:45.546275656 +0200
-+++ evolution-data-server/addressbook/libedata-book/e-book-backend-sexp.c	2004-06-02 12:34:22.944347512 +0200
-@@ -89,6 +89,13 @@
+diff -urN aa/evolution-data-server-1.1.5/addressbook/libedata-book/e-book-backend-sexp.c evolution-data-server-1.1.5/addressbook/libedata-book/e-book-backend-sexp.c
+--- aa/evolution-data-server-1.1.5/addressbook/libedata-book/e-book-backend-sexp.c	2005-01-28 15:42:19.000000000 +0100
++++ evolution-data-server-1.1.5/addressbook/libedata-book/e-book-backend-sexp.c	2005-02-12 22:49:22.176454560 +0100
+@@ -87,6 +87,13 @@
  }
  
  static gboolean
@@ -128,11 +128,11 @@ diff -urN evolution-data-server.orig/addressbook/libedata-book/e-book-backend-se
  compare_im_jabber (EContact *contact, const char *str,
  		   char *(*compare)(const char*, const char*))
  {
-@@ -221,6 +228,7 @@
+@@ -252,6 +259,7 @@
  	LIST_PROP ( "im_icq",    compare_im_icq ),
  	LIST_PROP ( "im_jabber", compare_im_jabber ),
  	LIST_PROP ( "im_yahoo",  compare_im_yahoo ),
 +	LIST_PROP ( "im_gadugadu",  compare_im_gadugadu ),
+ 	LIST_PROP ( "im_groupwise", compare_im_groupwise ),
  	LIST_PROP ( "email",     compare_email ),
  	LIST_PROP ( "phone",     compare_phone ),
- 	LIST_PROP ( "address",   compare_address ),
