@@ -25,7 +25,7 @@ BuildRequires:	automake
 BuildRequires:	db-devel
 BuildRequires:	intltool
 BuildRequires:	libgnome-devel >= 2.5.0
-BuildRequires:	libsoup-devel >= 2.1.2
+BuildRequires:	libsoup-devel >= 2.1.2-2.20031227.1
 BuildRequires:	libtool
 BuildRequires:	openldap-devel
 BuildRequires:	pkgconfig
