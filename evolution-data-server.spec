@@ -8,13 +8,14 @@ Summary:	Evolution data server
 Summary(pl):	Serwer danych Evolution
 Name:		evolution-data-server
 Version:	0.0.94
-Release:	1
+Release:	2
 License:	GPL
 Group:		Libraries
 Source0:	http://ftp.gnome.org/pub/gnome/sources/%{name}/0.0/%{name}-%{version}.tar.bz2
 # Source0-md5:	934acfdcbd6ef8f9c799bc2d05a9eb3d
 Patch0:		%{name}-system_db.patch
 Patch1:		%{name}-locale-names.patch
+Patch2:		%{name}-GG-IM.patch
 URL:		http://www.ximian.com/products/ximian_evolution/
 BuildRequires:	ORBit2-devel >= 1:2.10.2
 BuildRequires:	autoconf >= 2.52
@@ -73,6 +74,7 @@ Statyczne biblioteki serwera danych Evolution.
 %setup -q 
 %patch0 -p1
 %patch1 -p1
+%patch2 -p1
 
 mv po/{no,nb}.po
 rm -rf libdb
