@@ -1,0 +1,38 @@
+--- evolution-data-server-1.1.5/src/GNOME_Evolution_DataServer.server.in.in.wiget	2005-02-09 13:01:43.623730585 +0100
++++ evolution-data-server-1.1.5/src/GNOME_Evolution_DataServer.server.in.in	2005-02-09 13:02:52.736572217 +0100
+@@ -2,7 +2,7 @@
+ 
+ <oaf_server iid="OAFIID:GNOME_Evolution_DataServer_BookFactory:@VERSION@"
+             type="exe"
+-            location="@LIBEXECDIR@/evolution-data-server-@VERSION@">
++            location="@LIBEXECDIR@/evolution-data-server-@VERSION@/evolution-data-server">
+ 
+ 	<oaf_attribute name="repo_ids" type="stringv">
+ 		<item value="IDL:GNOME/Evolution/DataServer/BookFactory:@VERSION@"/>
+@@ -15,7 +15,7 @@
+ 
+ <oaf_server iid="OAFIID:GNOME_Evolution_DataServer_CalFactory:@VERSION@"
+             type="exe"
+-            location="@LIBEXECDIR@/evolution-data-server-@VERSION@">
++            location="@LIBEXECDIR@/evolution-data-server-@VERSION@/evolution-data-server">
+ 
+ 	<oaf_attribute name="repo_ids" type="stringv">
+ 		<item value="IDL:GNOME/Evolution/DataServer/CalFactory:@VERSION@"/>
+@@ -28,7 +28,7 @@
+ 
+ <oaf_server iid="OAFIID:GNOME_Evolution_DataServer_InterfaceCheck"
+             type="exe"
+-            location="@LIBEXECDIR@/evolution-data-server-@VERSION@">
++            location="@LIBEXECDIR@/evolution-data-server-@VERSION@/evolution-data-server">
+ 
+ 	<oaf_attribute name="repo_ids" type="stringv">
+ 		<item value="IDL:GNOME/Evolution/ServerInterfaceCheck:1.0"/>
+@@ -39,7 +39,7 @@
+ 
+ <oaf_server iid="OAFIID:GNOME_Evolution_DataServer_Logging"
+             type="exe"
+-            location="@LIBEXECDIR@/evolution-data-server-@VERSION@">
++            location="@LIBEXECDIR@/evolution-data-server-@VERSION@/evolution-data-server">
+ 
+ 	<oaf_attribute name="repo_ids" type="stringv">
+ 		<item value="IDL:GNOME/Evolution/ServerLogging:1.0"/>
