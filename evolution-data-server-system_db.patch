@@ -1,5 +1,25 @@
---- evolution-data-server-0.0.5/libedataserver/Makefile.am.wiget	2004-01-07 14:41:40.000000000 +0100
-+++ evolution-data-server-0.0.5/libedataserver/Makefile.am	2004-01-13 18:30:18.947392610 +0100
+diff -urN evolution-data-server-0.0.93.orig/configure.in evolution-data-server-0.0.93/configure.in
+--- evolution-data-server-0.0.93.orig/configure.in	2004-05-22 12:08:38.934333552 +0200
++++ evolution-data-server-0.0.93/configure.in	2004-05-22 12:11:03.053424120 +0200
+@@ -269,7 +269,6 @@
+ export privincludedir
+ export privdatadir
+ AC_CONFIG_SUBDIRS(calendar/libical)
+-AC_CONFIG_SUBDIRS(libdb/dist)
+ 
+ AC_OUTPUT([
+ Makefile
+@@ -301,7 +300,6 @@
+ calendar/backends/contacts/Makefile
+ calendar/tests/Makefile
+ calendar/tests/ecal/Makefile
+-libdb/Makefile
+ libedataserver/Makefile
+ libedataserver/libedataserver-1.0.pc
+ servers/Makefile
+diff -urN evolution-data-server-0.0.93.orig/libedataserver/Makefile.am evolution-data-server-0.0.93/libedataserver/Makefile.am
+--- evolution-data-server-0.0.93.orig/libedataserver/Makefile.am	2004-05-22 12:08:37.715518840 +0200
++++ evolution-data-server-0.0.93/libedataserver/Makefile.am	2004-05-22 12:10:23.587423864 +0200
 @@ -1,7 +1,6 @@
  INCLUDES =								\
  	-I$(top_srcdir)							\
@@ -8,37 +28,22 @@
  	$(E_DATA_SERVER_CFLAGS)
  
  # The marshallers
-@@ -33,8 +32,7 @@
+@@ -33,9 +32,7 @@
  	e-xml-hash-utils.c		\
  	md5-utils.c
  
 -libedataserver_la_LIBADD = 				\
+-	$(E_DATA_SERVER_LIBS)				\
 -	$(top_builddir)/libdb/dist/libdb-4.1.la
 +libedataserver_la_LIBADD = -ldb
  
  libedataserver_la_LDFLAGS = 										\
  	-version-info $(LIBEDATASERVER_CURRENT):$(LIBEDATASERVER_REVISION):$(LIBEDATASERVER_AGE)
---- evolution-data-server-0.0.5/configure.in.wiget	2004-01-12 20:12:36.000000000 +0100
-+++ evolution-data-server-0.0.5/configure.in	2004-01-13 18:29:40.807417203 +0100
-@@ -272,7 +272,6 @@
- export privincludedir
- export privdatadir
- AC_CONFIG_SUBDIRS(calendar/libical)
--AC_CONFIG_SUBDIRS(libdb/dist)
- 
- AC_OUTPUT([
- Makefile
-@@ -303,7 +302,6 @@
- calendar/backends/contacts/Makefile
- calendar/tests/Makefile
- calendar/tests/ecal/Makefile
--libdb/Makefile
- libedataserver/Makefile
- libedataserver/libedataserver-1.0.pc
- src/Makefile
---- evolution-data-server-0.0.5/Makefile.am.wiget	2003-12-10 22:59:06.000000000 +0100
-+++ evolution-data-server-0.0.5/Makefile.am	2004-01-13 18:27:59.979347761 +0100
-@@ -1,6 +1,6 @@
+diff -urN evolution-data-server-0.0.93.orig/Makefile.am evolution-data-server-0.0.93/Makefile.am
+--- evolution-data-server-0.0.93.orig/Makefile.am	2004-05-22 12:08:38.915336440 +0200
++++ evolution-data-server-0.0.93/Makefile.am	2004-05-22 12:13:09.128257832 +0200
+@@ -1,7 +1,7 @@
+ AUTOMAKE_OPTIONS = 1.6
  DISTCHECK_CONFIGURE_FLAGS = --enable-gtk-doc
  
 -SUBDIRS = libdb libedataserver servers addressbook calendar src docs po
@@ -46,13 +51,13 @@
  DIST_SUBDIRS= libedataserver servers addressbook calendar src docs po
  
  changelogs =			\
-@@ -21,9 +21,10 @@
+@@ -22,9 +22,10 @@
  	intltool-merge.in	\
  	intltool-update.in	\
  	intltool-extract.in	\
 -	$(pkgconfig_DATA:.pc=.pc.in) \
 -	$(LIBDB_FILES)
-+	$(pkgconfig_DATA:.pc=.pc.in)
++	$(pkgconfig_DATA:.pc=.pc.in) 
  
 +# files below should be removed due to system db patch, but they are left,
 +# so patch is small
