@@ -1,4 +1,9 @@
-
+#TODO:
+# - system db
+# - system libical
+# - --enable-gtk-doc
+# - --enable-static
+#
 %define		mver		1.0
 
 Summary:	Evolution data server
@@ -43,7 +48,8 @@ intltoolize --copy --force
 	--with-openldap=yes
 
 %{__make} \
-	GTKHTML_DATADIR=%{_datadir}/idl
+	HTML_DIR=%{_gtkdocdir} \
+	GTKHTML_DATADIR=%{_datadir}/idl 
 
 %install
 rm -rf $RPM_BUILD_ROOT
@@ -51,6 +57,7 @@ rm -rf $RPM_BUILD_ROOT
 %{__make} install \
 	DESTDIR=$RPM_BUILD_ROOT \
 	GTKHTML_DATADIR=%{_datadir}/idl \
+	HTML_DIR=%{_gtkdocdir} \
 	pkgconfigdir=%{_pkgconfigdir}
 
 %find_lang %{name} --all-name
@@ -75,6 +82,7 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_libdir}/*.so.*.*
 %{_libdir}/bonobo/servers/*
 %{_datadir}/idl/*
+%dir %{_datadir}/%{name}-%{mver}
 %{_datadir}/%{name}-%{mver}/zoneinfo
 %{_datadir}/%{name}-%{mver}/*.schema
 
@@ -85,3 +93,4 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/*.la
 %{_includedir}/*
 %{_pkgconfigdir}/*
+%{_gtkdocdir}/*
