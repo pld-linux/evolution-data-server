@@ -5,24 +5,26 @@
 #
 
 %define		mver		1.0
+%define		snap		20031227
 
 Summary:	Evolution data server
 Summary(pl):	Serwer danych Evolution
 Name:		evolution-data-server
 Version:	0.0.3
-Release:	0.10
+Release:	0.%{snap}.1
 License:	GPL
 Group:		Libraries
-Source0:	http://ftp.gnome.org/pub/gnome/sources/%{name}/0.0/%{name}-%{version}.tar.gz
-# Source0-md5:	bcacfd623db973a100deb67f0b7d8a38
+Source0:	%{name}-%{version}-%{snap}.tar.bz2
+# Source0-md5:	fa03a8cb067e78afa8199ca65f623e40
+#Source0:	http://ftp.gnome.org/pub/gnome/sources/%{name}/0.0/%{name}-%{version}.tar.gz
 Patch0:		%{name}-system_db.patch
 URL:		http://www.ximian.com/products/ximian_evolution/
-BuildRequires:	ORBit2-devel >= 2.8.0
+BuildRequires:	ORBit2-devel >= 2.9.0
 BuildRequires:	autoconf >= 2.52
 BuildRequires:	automake
 BuildRequires:	db-devel
 BuildRequires:	intltool
-BuildRequires:	libgnome-devel >= 2.0
+BuildRequires:	libgnome-devel >= 2.5.0
 BuildRequires:	libsoup-devel >= 2.1.2
 BuildRequires:	libtool
 BuildRequires:	openldap-devel
@@ -43,6 +45,11 @@ Summary:	Evolution data server development files
 Summary(pl):	Pliki programistyczne serwera danych evolution
 Group:		Development/Libraries
 Requires:	%{name} = %{version}
+Requires:	GConf2-devel
+Requires:	ORBit2-devel >= 2.9.0
+Requires:	glib2-devel >= 2.3.0
+Requires:	libbonobo-devel >= 2.5.0
+Requires:	libxml2-devel
 
 %description devel
 This package contains the files necessary to develop applications
@@ -71,6 +78,7 @@ Statyczne biblioteki serwera danych Evolution.
 rm -rf libdb
 
 %build
+cp %{_datadir}/automake/mkinstalldirs ./
 glib-gettextize --copy --force
 intltoolize --copy --force
 %{__libtoolize}
@@ -78,6 +86,15 @@ intltoolize --copy --force
 %{__autoheader}
 %{__autoconf}
 %{__automake}
+
+cd calendar/libical
+%{__libtoolize}
+%{__aclocal}
+%{__autoheader}
+%{__autoconf}
+%{__automake}
+cd ../..
+
 %configure \
 	--enable-gtk-doc \
 	--enable-static \
