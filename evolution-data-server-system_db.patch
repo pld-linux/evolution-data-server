@@ -13,7 +13,7 @@
  	md5-utils.c
  
 -libedataserver_la_LIBADD = 				\
--	$(top_builddir)/libdb/dist/libdb.a
+-	$(top_builddir)/libdb/dist/libdb-4.1.la
 +libedataserver_la_LIBADD = -ldb
  
  libedataserver_la_LDFLAGS = 										\
@@ -56,6 +56,6 @@
  
 +# files below should be removed due to system db patch, but they are left,
 +# so patch is small
- LIBDB_FILES= \
- $(srcdir)/libdb/Makefile.am \
- $(srcdir)/libdb/Makefile.in \
+ DISTCLEANFILES = intltool-extract intltool-merge intltool-update
+ distclean-local:
+ 	(cd libdb && $(MAKE) $(AM_MAKEFLAGS) distclean)
