@@ -2,31 +2,35 @@
 # todo:
 # - system libical
 #
-%define		mver		1.0
+%define		mver		1.2
 
 Summary:	Evolution data server
 Summary(pl):	Serwer danych Evolution
 Name:		evolution-data-server
-Version:	1.0.4
+Version:	1.2.0
 Release:	1
 License:	GPL
 Group:		Libraries
-Source0:	http://ftp.gnome.org/pub/gnome/sources/evolution-data-server/1.0/%{name}-%{version}.tar.bz2
-# Source0-md5:	5c9c6cac9b65d392e50ea3214022cb5b
+Source0:	http://ftp.gnome.org/pub/gnome/sources/evolution-data-server/1.2/%{name}-%{version}.tar.bz2
+# Source0-md5:	9a34499dc8e65af768ab1582803015ef
 Patch0:		%{name}-system_db.patch
 Patch1:		%{name}-GG-IM.patch
 Patch2:		%{name}-workaround-cal-backend-leak.patch
+Patch3:		%{name}-bonobo.patch
 URL:		http://www.ximian.com/products/ximian_evolution/
-BuildRequires:	ORBit2-devel >= 1:2.10.3
+BuildRequires:	ORBit2-devel >= 1:2.12.1
 BuildRequires:	autoconf >= 2.52
 BuildRequires:	automake
 BuildRequires:	db-devel
 BuildRequires:	gnome-common >= 2.8.0
 BuildRequires:	intltool
-BuildRequires:	libgnome-devel >= 2.6.1.1
+BuildRequires:	libglade2-devel >= 1:2.5.0
+BuildRequires:	libgnomeui-devel >= 2.10.0
 BuildRequires:	libsoup-devel >= 2.2.2
 BuildRequires:	libstdc++-devel
 BuildRequires:	libtool
+BuildRequires:	nspr-devel
+Buildrequires:	nss-devel
 BuildRequires:	openldap-devel
 BuildRequires:	pkgconfig
 Requires(post,postun):	/sbin/ldconfig
@@ -47,11 +51,11 @@ Summary(pl):	Pliki programistyczne serwera danych evolution
 Group:		Development/Libraries
 Requires:	%{name} = %{version}-%{release}
 # for all but libegroupwise
-Requires:	GConf2-devel >= 2.6.2
-Requires:	ORBit2-devel >= 1:2.10.3
-Requires:	glib2-devel >= 1:2.4.4
-Requires:	libbonobo-devel >= 2.6.2
-Requires:	libgnome-devel >= 2.6.1.1
+Requires:	GConf2-devel >= 2.10.0
+Requires:	ORBit2-devel >= 1:2.12.1
+Requires:	glib2-devel >= 1:2.6.2
+Requires:	libbonobo-devel >= 2.8.1
+Requires:	libgnome-devel >= 2.10.0
 Requires:	libxml2-devel
 # for libegroupwise
 Requires:	libsoup-devel >= 2.2.2
@@ -81,6 +85,7 @@ Statyczne biblioteki serwera danych Evolution.
 %patch0 -p1
 %patch1 -p1
 %patch2 -p1
+%patch3 -p1
 
 rm -rf libdb
 
@@ -104,8 +109,11 @@ cd ../..
 %configure \
 	--enable-gtk-doc \
 	--enable-static \
-	--with-openldap=yes
-
+	--with-openldap=yes \
+	--with-nspr-includes=%{_includedir}/nspr \
+	--with-nspr-libs=%{_libdir} \
+	--with-nss-includes=%{_includedir}/nss \
+	--with-nss-libs=%{_libdir}
 %{__make} \
 	HTML_DIR=%{_gtkdocdir} \
 	GTKHTML_DATADIR=%{_datadir}/idl 
@@ -118,6 +126,8 @@ rm -rf $RPM_BUILD_ROOT
 	GTKHTML_DATADIR=%{_datadir}/idl \
 	HTML_DIR=%{_gtkdocdir} \
 	pkgconfigdir=%{_pkgconfigdir}
+
+rm $RPM_BUILD_ROOT%{_libdir}/%{name}-%{mver}/{camel-providers,extensions}/*.{,l}a
 
 rm -r $RPM_BUILD_ROOT%{_datadir}/locale/no
 
@@ -138,13 +148,24 @@ rm -rf $RPM_BUILD_ROOT
 %files -f %{name}.lang
 %defattr(644,root,root,755)
 %doc AUTHORS ChangeLog NEWS* README
-%attr(755,root,root) %{_libdir}/%{name}-1.0
+%attr(755,root,root) %{_libdir}/camel-index-control-%{mver}
+%attr(755,root,root) %{_libdir}/camel-lock-helper-%{mver}
 %attr(755,root,root) %{_libdir}/*.so.*.*
+%dir %{_libdir}/%{name}-%{mver}
+%attr(755,root,root) %{_libdir}/%{name}-%{mver}/%{name}
+%dir %{_libdir}/%{name}-%{mver}/camel-providers
+%attr(755,root,root) %{_libdir}/%{name}-%{mver}/camel-providers/*.so
+%{_libdir}/%{name}-%{mver}/camel-providers/*.urls
+%dir %{_libdir}/%{name}-%{mver}/extensions
+%attr(755,root,root) %{_libdir}/%{name}-%{mver}/extensions/*.so
 %{_libdir}/bonobo/servers/*
 %{_datadir}/idl/*
 %dir %{_datadir}/%{name}-%{mver}
+%{_datadir}/%{name}-%{mver}/glade
+%{_datadir}/%{name}-%{mver}/weather
 %{_datadir}/%{name}-%{mver}/zoneinfo
 %{_datadir}/%{name}-%{mver}/*.schema
+%{_pixmapsdir}/%{name}-%{mver}
 
 %files devel
 %defattr(644,root,root,755)
