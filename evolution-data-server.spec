@@ -2,36 +2,39 @@
 # todo:
 # - system libical
 #
-%define		mver		1.0
+%define		mver		1.2
 
 Summary:	Evolution data server
 Summary(pl):	Serwer danych Evolution
 Name:		evolution-data-server
-Version:	1.0.3
+Version:	1.1.4.2
 Release:	1
 License:	GPL
 Group:		Libraries
-Source0:	http://ftp.gnome.org/pub/gnome/sources/%{name}/1.0/%{name}-%{version}.tar.bz2
-# Source0-md5:	6fc9aa8178540828c0056e2b070b7546
+Source0:	http://ftp.gnome.org/pub/gnome/sources/%{name}/1.1/%{name}-%{version}.tar.bz2
+# Source0-md5:	11776f7d65419ef4f0adbf2cf5483300
 Patch0:		%{name}-system_db.patch
 Patch1:		%{name}-GG-IM.patch
 Patch2:		%{name}-workaround-cal-backend-leak.patch
 URL:		http://www.ximian.com/products/ximian_evolution/
-BuildRequires:	ORBit2-devel >= 1:2.10.3
+BuildRequires:	ORBit2-devel >= 1:2.12.1
 BuildRequires:	autoconf >= 2.52
 BuildRequires:	automake
 BuildRequires:	db-devel
 BuildRequires:	gnome-common >= 2.8.0
 BuildRequires:	intltool
-BuildRequires:	libgnome-devel >= 2.6.1.1
-BuildRequires:	libsoup-devel >= 2.2.0
+BuildRequires:	libglade2-devel >= 1:2.5.0
+BuildRequires:	libgnomeui-devel >= 2.9.1
+BuildRequires:	libsoup-devel >= 2.2.2
 BuildRequires:	libtool
+BuildRequires:	nspr-devel
+Buildrequires:	nss-devel
 BuildRequires:	openldap-devel
 BuildRequires:	pkgconfig
 Requires(post,postun):	/sbin/ldconfig
 Requires(post,postun):	/usr/bin/scrollkeeper-update
 Requires(post):		GConf2
-Requires:	libsoup >= 2.2.0
+Requires:	libsoup >= 2.2.2
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
@@ -46,14 +49,14 @@ Summary(pl):	Pliki programistyczne serwera danych evolution
 Group:		Development/Libraries
 Requires:	%{name} = %{version}-%{release}
 # for all but libegroupwise
-Requires:	GConf2-devel >= 2.6.2
-Requires:	ORBit2-devel >= 1:2.10.3
-Requires:	glib2-devel >= 1:2.4.4
-Requires:	libbonobo-devel >= 2.6.2
-Requires:	libgnome-devel >= 2.6.1.1
+Requires:	GConf2-devel >= 2.9.2
+Requires:	ORBit2-devel >= 1:2.12.1
+Requires:	glib2-devel >= 1:2.6.2
+Requires:	libbonobo-devel >= 2.8.1
+Requires:	libgnome-devel >= 2.9.1
 Requires:	libxml2-devel
 # for libegroupwise
-Requires:	libsoup-devel >= 2.2.0
+Requires:	libsoup-devel >= 2.2.2
 
 %description devel
 This package contains the files necessary to develop applications
@@ -103,7 +106,11 @@ cd ../..
 %configure \
 	--enable-gtk-doc \
 	--enable-static \
-	--with-openldap=yes
+	--with-openldap=yes \
+	--with-nspr-includes=%{_includedir}/nspr \
+	--with-nspr-libs=%{_libdir} \
+	--with-nss-includes=%{_includedir}/nss \
+	--with-nss-libs=%{_libdir}
 
 %{__make} \
 	HTML_DIR=%{_gtkdocdir} \
@@ -137,13 +144,18 @@ rm -rf $RPM_BUILD_ROOT
 %files -f %{name}.lang
 %defattr(644,root,root,755)
 %doc AUTHORS ChangeLog NEWS* README
-%attr(755,root,root) %{_libdir}/%{name}-1.0
+%attr(755,root,root) %{_libdir}/%{name}-%{mver}
+%attr(755,root,root) %{_libdir}/camel-index-control-%{mver}
+%attr(755,root,root) %{_libdir}/camel-lock-helper-%{mver}
 %attr(755,root,root) %{_libdir}/*.so.*.*
 %{_libdir}/bonobo/servers/*
 %{_datadir}/idl/*
 %dir %{_datadir}/%{name}-%{mver}
+%{_datadir}/%{name}-%{mver}/glade
+%{_datadir}/%{name}-%{mver}/weather
 %{_datadir}/%{name}-%{mver}/zoneinfo
 %{_datadir}/%{name}-%{mver}/*.schema
+%{_pixmapsdir}/%{name}-%{mver}
 
 %files devel
 %defattr(644,root,root,755)
