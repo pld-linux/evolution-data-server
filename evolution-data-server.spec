@@ -10,13 +10,13 @@
 Summary:	Evolution data server
 Summary(pl):	Serwer danych Evolution
 Name:		evolution-data-server
-Version:	0.0.3
-Release:	0.%{snap}.1
+Version:	0.0.4
+Release:	1
 License:	GPL
 Group:		Libraries
-Source0:	%{name}-%{version}-%{snap}.tar.bz2
-# Source0-md5:	fa03a8cb067e78afa8199ca65f623e40
-#Source0:	http://ftp.gnome.org/pub/gnome/sources/%{name}/0.0/%{name}-%{version}.tar.gz
+Source0:	http://ftp.gnome.org/pub/gnome/sources/%{name}/0.0/%{name}-%{version}.tar.gz
+# Source0-md5:	c6369eab477f4dff19b4070234826c7b
+#Source0:	%{name}-%{version}-%{snap}.tar.bz2
 Patch0:		%{name}-system_db.patch
 URL:		http://www.ximian.com/products/ximian_evolution/
 BuildRequires:	ORBit2-devel >= 2.9.0
@@ -25,7 +25,7 @@ BuildRequires:	automake
 BuildRequires:	db-devel
 BuildRequires:	intltool
 BuildRequires:	libgnome-devel >= 2.5.0
-BuildRequires:	libsoup-devel >= 2.1.2-2.20031227.1
+BuildRequires:	libsoup-devel >= 2.1.3
 BuildRequires:	libtool
 BuildRequires:	openldap-devel
 BuildRequires:	pkgconfig
@@ -45,7 +45,7 @@ Summary:	Evolution data server development files
 Summary(pl):	Pliki programistyczne serwera danych evolution
 Group:		Development/Libraries
 Requires:	%{name} = %{version}
-Requires:	GConf2-devel
+Requires:	GConf2-devel >= 2.5.0
 Requires:	ORBit2-devel >= 2.9.0
 Requires:	glib2-devel >= 2.3.0
 Requires:	libbonobo-devel >= 2.5.0
