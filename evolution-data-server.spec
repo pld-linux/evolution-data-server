@@ -7,16 +7,15 @@
 Summary:	Evolution data server
 Summary(pl):	Serwer danych Evolution
 Name:		evolution-data-server
-Version:	0.0.98
-Release:	2
+Version:	0.0.99
+Release:	1
 License:	GPL
 Group:		Libraries
 Source0:	http://ftp.gnome.org/pub/gnome/sources/%{name}/0.0/%{name}-%{version}.tar.bz2
-# Source0-md5:	acc604979b4b8044f8ac5360b8fa82a4
+# Source0-md5:	5c959c8a824f0763f91358035048aa70
 Patch0:		%{name}-system_db.patch
-Patch1:		%{name}-locale-names.patch
-Patch2:		%{name}-GG-IM.patch
-Patch3:		%{name}-configure.patch
+Patch1:		%{name}-GG-IM.patch
+Patch2:		%{name}-configure.patch
 URL:		http://www.ximian.com/products/ximian_evolution/
 BuildRequires:	ORBit2-devel >= 1:2.10.3
 BuildRequires:	autoconf >= 2.52
@@ -80,9 +79,7 @@ Statyczne biblioteki serwera danych Evolution.
 %patch0 -p1
 %patch1 -p1
 %patch2 -p1
-%patch3 -p1
 
-mv po/{no,nb}.po
 rm -rf libdb
 
 %build
@@ -119,6 +116,8 @@ rm -rf $RPM_BUILD_ROOT
 	GTKHTML_DATADIR=%{_datadir}/idl \
 	HTML_DIR=%{_gtkdocdir} \
 	pkgconfigdir=%{_pkgconfigdir}
+
+rm -r $RPM_BUILD_ROOT%{_datadir}/locale/no
 
 %find_lang %{name} --all-name
 
