@@ -1,20 +1,18 @@
-
 #
 # todo:
 # - system libical
 #
-
 %define		mver		1.0
 
 Summary:	Evolution data server
 Summary(pl):	Serwer danych Evolution
 Name:		evolution-data-server
-Version:	0.0.91
-Release:	2
+Version:	0.0.92
+Release:	1
 License:	GPL
 Group:		Libraries
 Source0:	http://ftp.gnome.org/pub/gnome/sources/%{name}/0.0/%{name}-%{version}.tar.gz
-# Source0-md5:	f4ec7c5ca9046cdf82a00c7bf141f846
+# Source0-md5:	ec5e58c5f73fe506e7c220a339581700
 Patch0:		%{name}-system_db.patch
 Patch1:		%{name}-locale-names.patch
 URL:		http://www.ximian.com/products/ximian_evolution/
@@ -31,6 +29,7 @@ BuildRequires:	pkgconfig
 Requires(post,postun):	/sbin/ldconfig
 Requires(post,postun):	/usr/bin/scrollkeeper-update
 Requires(post):		GConf2
+Requires:	libsoup >= 2.1.9
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
