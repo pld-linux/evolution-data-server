@@ -1,0 +1,64 @@
+diff -Nur evolution-data-server-0.0.3.orig/configure.in evolution-data-server-0.0.3/configure.in
+--- evolution-data-server-0.0.3.orig/configure.in	2003-12-08 01:09:35.000000000 +0100
++++ evolution-data-server-0.0.3/configure.in	2003-12-15 16:57:54.000000000 +0100
+@@ -257,7 +257,6 @@
+ export privincludedir
+ export privdatadir
+ AC_CONFIG_SUBDIRS(calendar/libical)
+-AC_CONFIG_SUBDIRS(libdb/dist)
+ 
+ AC_OUTPUT([
+ Makefile
+@@ -285,7 +284,6 @@
+ calendar/backends/file/Makefile
+ calendar/backends/groupwise/Makefile
+ calendar/backends/http/Makefile
+-libdb/Makefile
+ libedataserver/Makefile
+ libedataserver/libedataserver-1.0.pc
+ src/Makefile
+diff -Nur evolution-data-server-0.0.3.orig/libedataserver/Makefile.am evolution-data-server-0.0.3/libedataserver/Makefile.am
+--- evolution-data-server-0.0.3.orig/libedataserver/Makefile.am	2003-12-01 19:04:04.000000000 +0100
++++ evolution-data-server-0.0.3/libedataserver/Makefile.am	2003-12-15 16:57:54.000000000 +0100
+@@ -2,7 +2,6 @@
+ 	-I$(top_srcdir)							\
+ 	-DG_LOG_DOMAIN=\"e-data-server\"				\
+ 	-DG_DISABLE_DEPRECATED						\
+-	-I$(top_srcdir)/libdb/dist			\
+ 	$(E_DATA_SERVER_CFLAGS)
+ 
+ # The marshallers
+@@ -34,8 +33,7 @@
+ 	e-xml-hash-utils.c		\
+ 	md5-utils.c
+ 
+-libedataserver_la_LIBADD = 				\
+-	$(top_builddir)/libdb/dist/libdb.a
++libedataserver_la_LIBADD = -ldb
+ 
+ libedataserver_la_LDFLAGS = 										\
+ 	-version-info $(LIBEDATASERVER_CURRENT):$(LIBEDATASERVER_REVISION):$(LIBEDATASERVER_AGE)
+diff -Nur evolution-data-server-0.0.3.orig/Makefile.am evolution-data-server-0.0.3/Makefile.am
+--- evolution-data-server-0.0.3.orig/Makefile.am	2003-11-26 18:10:38.000000000 +0100
++++ evolution-data-server-0.0.3/Makefile.am	2003-12-15 16:59:35.000000000 +0100
+@@ -1,6 +1,6 @@
+ DISTCHECK_CONFIGURE_FLAGS = --enable-gtk-doc
+ 
+-SUBDIRS = libdb libedataserver addressbook calendar src docs po
++SUBDIRS = libedataserver addressbook calendar src docs po
+ DIST_SUBDIRS= libedataserver addressbook calendar src docs po
+ 
+ ACLOCAL_AMFLAGS = -I m4
+@@ -23,9 +23,10 @@
+ 	intltool-merge.in	\
+ 	intltool-update.in	\
+ 	intltool-extract.in	\
+-	$(pkgconfig_DATA:.pc=.pc.in) \
+-	$(LIBDB_FILES)
++	$(pkgconfig_DATA:.pc=.pc.in)
+ 
++# files below should be removed due to system db patch, but they are left,
++# so patch is small
+ LIBDB_FILES= \
+ $(srcdir)/libdb/Makefile.am \
+ $(srcdir)/libdb/Makefile.in \
