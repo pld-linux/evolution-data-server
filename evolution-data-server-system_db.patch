@@ -28,10 +28,10 @@
  
  AC_OUTPUT([
  Makefile
-@@ -301,7 +300,6 @@
- calendar/backends/groupwise/Makefile
- calendar/backends/http/Makefile
+@@ -303,7 +302,6 @@
  calendar/backends/contacts/Makefile
+ calendar/tests/Makefile
+ calendar/tests/ecal/Makefile
 -libdb/Makefile
  libedataserver/Makefile
  libedataserver/libedataserver-1.0.pc
