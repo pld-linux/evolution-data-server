@@ -7,12 +7,12 @@
 Summary:	Evolution data server
 Summary(pl):	Serwer danych Evolution
 Name:		evolution-data-server
-Version:	0.0.97
+Version:	0.0.98
 Release:	1
 License:	GPL
 Group:		Libraries
 Source0:	http://ftp.gnome.org/pub/gnome/sources/%{name}/0.0/%{name}-%{version}.tar.bz2
-# Source0-md5:	bb1a32e033fb449841078f7a8440d2b9
+# Source0-md5:	acc604979b4b8044f8ac5360b8fa82a4
 Patch0:		%{name}-system_db.patch
 Patch1:		%{name}-locale-names.patch
 Patch2:		%{name}-GG-IM.patch
@@ -24,14 +24,14 @@ BuildRequires:	automake
 BuildRequires:	db-devel
 BuildRequires:	intltool
 BuildRequires:	libgnome-devel >= 2.6.1.1
-BuildRequires:	libsoup-devel >= 2.1.12
+BuildRequires:	libsoup-devel >= 2.1.13
 BuildRequires:	libtool
 BuildRequires:	openldap-devel
 BuildRequires:	pkgconfig
 Requires(post,postun):	/sbin/ldconfig
 Requires(post,postun):	/usr/bin/scrollkeeper-update
 Requires(post):		GConf2
-Requires:	libsoup >= 2.1.12
+Requires:	libsoup >= 2.1.13
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
@@ -53,7 +53,7 @@ Requires:	libbonobo-devel >= 2.6.2
 Requires:	libgnome-devel >= 2.6.1.1
 Requires:	libxml2-devel
 # for libegroupwise
-Requires:	libsoup-devel >= 2.1.12
+Requires:	libsoup-devel >= 2.1.13
 
 %description devel
 This package contains the files necessary to develop applications
