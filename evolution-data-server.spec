@@ -2,10 +2,11 @@
 # todo:
 # - system libical
 #
-%define		mver		1.2
+# Conditional build:
 %bcond_without	kerberos5	# build without kerberos5 support
 %bcond_without	ldap		# build without ldap support
-
+#
+%define		mver		1.2
 Summary:	Evolution data server
 Summary(pl):	Serwer danych Evolution
 Name:		evolution-data-server
@@ -134,7 +135,7 @@ rm -rf $RPM_BUILD_ROOT
 	HTML_DIR=%{_gtkdocdir} \
 	pkgconfigdir=%{_pkgconfigdir}
 
-rm $RPM_BUILD_ROOT%{_libdir}/%{name}-%{mver}/{camel-providers,extensions}/*.{,l}a
+rm $RPM_BUILD_ROOT%{_libdir}/%{name}-%{mver}/{camel-providers,extensions}/*.{la,a}
 
 rm -r $RPM_BUILD_ROOT%{_datadir}/locale/no
 
