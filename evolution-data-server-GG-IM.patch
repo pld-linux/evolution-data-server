@@ -133,6 +133,6 @@ diff -urN evolution-data-server.orig/addressbook/libedata-book/e-book-backend-se
  	LIST_PROP ( "im_jabber", compare_im_jabber ),
  	LIST_PROP ( "im_yahoo",  compare_im_yahoo ),
 +	LIST_PROP ( "im_gadugadu",  compare_im_gadugadu ),
+ 	LIST_PROP ( "im_groupwise", compare_im_groupwise ),
  	LIST_PROP ( "email",     compare_email ),
  	LIST_PROP ( "phone",     compare_phone ),
- 	LIST_PROP ( "address",   compare_address ),
