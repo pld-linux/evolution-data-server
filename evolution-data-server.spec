@@ -44,11 +44,15 @@ Summary:	Evolution data server development files
 Summary(pl):	Pliki programistyczne serwera danych evolution
 Group:		Development/Libraries
 Requires:	%{name} = %{version}-%{release}
+# for all but libegroupwise
 Requires:	GConf2-devel >= 2.6.2
 Requires:	ORBit2-devel >= 1:2.10.3
 Requires:	glib2-devel >= 1:2.4.4
 Requires:	libbonobo-devel >= 2.6.2
+Requires:	libgnome-devel >= 2.6.1.1
 Requires:	libxml2-devel
+# for libegroupwise
+Requires:	libsoup-devel >= 2.1.12
 
 %description devel
 This package contains the files necessary to develop applications
