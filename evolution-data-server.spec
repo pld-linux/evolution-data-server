@@ -3,12 +3,14 @@
 # - system libical
 #
 %define		mver		1.2
+%bcond_without	kerberos5	# build without kerberos5 support
+%bcond_without	ldap		# build without ldap support
 
 Summary:	Evolution data server
 Summary(pl):	Serwer danych Evolution
 Name:		evolution-data-server
 Version:	1.2.1
-Release:	2
+Release:	2.1
 License:	GPL
 Group:		Libraries
 Source0:	http://ftp.gnome.org/pub/gnome/sources/evolution-data-server/1.2/%{name}-%{version}.tar.bz2
@@ -32,8 +34,9 @@ BuildRequires:	libstdc++-devel
 BuildRequires:	libtool
 BuildRequires:	nspr-devel
 Buildrequires:	nss-devel
-BuildRequires:	openldap-devel
 BuildRequires:	pkgconfig
+%{?with_kerberos5:BuildRequires:	heimdal-devel}
+%{?with_ldap:BuildRequires:	openldap-devel >= 2.0.0}
 Requires(post,postun):	/sbin/ldconfig
 Requires(post,postun):	/usr/bin/scrollkeeper-update
 Requires(post):		GConf2
@@ -108,9 +111,12 @@ cd calendar/libical
 cd ../..
 
 %configure \
+	%{?with_kerberos5:--with-krb5=%{_prefix}} \
+	%{!?with_kerberos5:--with-krb5=no} \
+	%{?with_ldap:--with-openldap=yes} \
+	%{!?with_ldap:--with-openldap=no} \
 	--enable-gtk-doc \
 	--enable-static \
-	--with-openldap=yes \
 	--with-nspr-includes=%{_includedir}/nspr \
 	--with-nspr-libs=%{_libdir} \
 	--with-nss-includes=%{_includedir}/nss \
