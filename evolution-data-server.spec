@@ -7,12 +7,12 @@
 Summary:	Evolution data server
 Summary(pl):	Serwer danych Evolution
 Name:		evolution-data-server
-Version:	1.0.3
+Version:	1.0.4
 Release:	1
 License:	GPL
 Group:		Libraries
-Source0:	http://ftp.gnome.org/pub/gnome/sources/%{name}/1.0/%{name}-%{version}.tar.bz2
-# Source0-md5:	6fc9aa8178540828c0056e2b070b7546
+Source0:	http://ftp.gnome.org/pub/gnome/sources/evolution-data-server/1.0/%{name}-%{version}.tar.bz2
+# Source0-md5:	5c9c6cac9b65d392e50ea3214022cb5b
 Patch0:		%{name}-system_db.patch
 Patch1:		%{name}-GG-IM.patch
 Patch2:		%{name}-workaround-cal-backend-leak.patch
@@ -24,14 +24,15 @@ BuildRequires:	db-devel
 BuildRequires:	gnome-common >= 2.8.0
 BuildRequires:	intltool
 BuildRequires:	libgnome-devel >= 2.6.1.1
-BuildRequires:	libsoup-devel >= 2.2.0
+BuildRequires:	libsoup-devel >= 2.2.2
+BuildRequires:	libstdc++-devel
 BuildRequires:	libtool
 BuildRequires:	openldap-devel
 BuildRequires:	pkgconfig
 Requires(post,postun):	/sbin/ldconfig
 Requires(post,postun):	/usr/bin/scrollkeeper-update
 Requires(post):		GConf2
-Requires:	libsoup >= 2.2.0
+Requires:	libsoup >= 2.2.2
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
@@ -53,7 +54,7 @@ Requires:	libbonobo-devel >= 2.6.2
 Requires:	libgnome-devel >= 2.6.1.1
 Requires:	libxml2-devel
 # for libegroupwise
-Requires:	libsoup-devel >= 2.2.0
+Requires:	libsoup-devel >= 2.2.2
 
 %description devel
 This package contains the files necessary to develop applications
