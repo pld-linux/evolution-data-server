@@ -7,12 +7,12 @@
 Summary:	Evolution data server
 Summary(pl):	Serwer danych Evolution
 Name:		evolution-data-server
-Version:	0.0.94
-Release:	2
+Version:	0.0.94.1
+Release:	1
 License:	GPL
 Group:		Libraries
 Source0:	http://ftp.gnome.org/pub/gnome/sources/%{name}/0.0/%{name}-%{version}.tar.bz2
-# Source0-md5:	934acfdcbd6ef8f9c799bc2d05a9eb3d
+# Source0-md5:	90fc1c9a7fc3c1398ba1a76d3b3f6c45
 Patch0:		%{name}-system_db.patch
 Patch1:		%{name}-locale-names.patch
 Patch2:		%{name}-GG-IM.patch
@@ -44,10 +44,10 @@ Summary:	Evolution data server development files
 Summary(pl):	Pliki programistyczne serwera danych evolution
 Group:		Development/Libraries
 Requires:	%{name} = %{version}-%{release}
-Requires:	GConf2-devel >= 2.6.1
+Requires:	GConf2-devel >= 2.6.2
 Requires:	ORBit2-devel >= 1:2.10.2
-Requires:	glib2-devel >= 1:2.4.1
-Requires:	libbonobo-devel >= 2.6.0
+Requires:	glib2-devel >= 1:2.4.2
+Requires:	libbonobo-devel >= 2.6.2
 Requires:	libxml2-devel
 
 %description devel
