@@ -21,6 +21,7 @@ BuildRequires:	ORBit2-devel >= 1:2.10.3
 BuildRequires:	autoconf >= 2.52
 BuildRequires:	automake
 BuildRequires:	db-devel
+BuildRequires:	gnome-common >= 2.8.0
 BuildRequires:	intltool
 BuildRequires:	libgnome-devel >= 2.6.1.1
 BuildRequires:	libsoup-devel >= 2.2.0
@@ -86,7 +87,7 @@ rm -rf libdb
 glib-gettextize --copy --force
 intltoolize --copy --force
 %{__libtoolize}
-%{__aclocal} -I %{_aclocaldir}/gnome2-macros
+%{__aclocal}
 %{__autoheader}
 %{__autoconf}
 %{__automake}
