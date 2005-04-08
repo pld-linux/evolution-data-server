@@ -36,6 +36,7 @@ BuildRequires:	libtool
 BuildRequires:	nspr-devel
 Buildrequires:	nss-devel
 BuildRequires:	pkgconfig
+BuildRequires:	rpmbuild(macros) >= 1.197
 %{?with_kerberos5:BuildRequires:	heimdal-devel}
 %{?with_ldap:BuildRequires:	openldap-devel >= 2.0.0}
 Requires(post,postun):	/sbin/ldconfig
@@ -57,7 +58,7 @@ Requires:	%{name} = %{version}-%{release}
 # for all but libegroupwise
 Requires:	GConf2-devel >= 2.10.0
 Requires:	ORBit2-devel >= 1:2.12.1
-Requires:	glib2-devel >= 1:2.6.2
+Requires:	glib2-devel >= 1:2.6.4
 Requires:	libbonobo-devel >= 2.8.1
 Requires:	libgnome-devel >= 2.10.0-2
 Requires:	libxml2-devel
@@ -94,8 +95,8 @@ Statyczne biblioteki serwera danych Evolution.
 rm -rf libdb
 
 %build
-glib-gettextize --copy --force
-intltoolize --copy --force
+%{__glib_gettextize}
+%{__intltoolize}
 %{__libtoolize}
 %{__aclocal}
 %{__autoheader}
@@ -144,14 +145,12 @@ rm -r $RPM_BUILD_ROOT%{_datadir}/locale/no
 rm -rf $RPM_BUILD_ROOT
 
 %post
-/sbin/ldconfig
-/usr/bin/scrollkeeper-update -q
+%ldconfig_post
+%scrollkeeper_update_post
 
 %postun
-if [ $1 = 0 ]; then
-	/sbin/ldconfig
-	/usr/bin/scrollkeeper-update -q
-fi
+%ldconfig_postun
+%scrollkeeper_update_postun
 
 %files -f %{name}.lang
 %defattr(644,root,root,755)
