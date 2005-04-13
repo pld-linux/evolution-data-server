@@ -10,12 +10,12 @@
 Summary:	Evolution data server
 Summary(pl):	Serwer danych Evolution
 Name:		evolution-data-server
-Version:	1.2.1
-Release:	3
+Version:	1.2.2
+Release:	1
 License:	GPL
 Group:		Libraries
 Source0:	http://ftp.gnome.org/pub/gnome/sources/evolution-data-server/1.2/%{name}-%{version}.tar.bz2
-# Source0-md5:	c86cc41c1563f552015aebb563018936
+# Source0-md5:	2b15cba799e4594926472dca3e1747bb
 Patch0:		%{name}-system_db.patch
 Patch1:		%{name}-GG-IM.patch
 Patch2:		%{name}-workaround-cal-backend-leak.patch
