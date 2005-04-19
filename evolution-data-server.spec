@@ -34,7 +34,7 @@ BuildRequires:	libsoup-devel >= 2.2.3
 BuildRequires:	libstdc++-devel
 BuildRequires:	libtool
 BuildRequires:	nspr-devel
-Buildrequires:	nss-devel
+BuildRequires:	nss-devel
 BuildRequires:	pkgconfig
 BuildRequires:	rpmbuild(macros) >= 1.197
 %{?with_kerberos5:BuildRequires:	heimdal-devel}
