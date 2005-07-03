@@ -6,7 +6,8 @@
 %bcond_without	kerberos5	# build without kerberos5 support
 %bcond_without	ldap		# build without ldap support
 #
-%define		mver		1.2
+%define		basever		1.4
+%define		apiver		1.2
 Summary:	Evolution data server
 Summary(pl):	Serwer danych Evolution
 Name:		evolution-data-server
@@ -137,7 +138,7 @@ rm -rf $RPM_BUILD_ROOT
 	HTML_DIR=%{_gtkdocdir} \
 	pkgconfigdir=%{_pkgconfigdir}
 
-rm $RPM_BUILD_ROOT%{_libdir}/%{name}-%{mver}/{camel-providers,extensions}/*.{la,a}
+rm $RPM_BUILD_ROOT%{_libdir}/%{name}-%{apiver}/{camel-providers,extensions}/*.{la,a}
 
 rm -r $RPM_BUILD_ROOT%{_datadir}/locale/no
 
@@ -157,24 +158,24 @@ rm -rf $RPM_BUILD_ROOT
 %files -f %{name}.lang
 %defattr(644,root,root,755)
 %doc AUTHORS ChangeLog NEWS* README
-%attr(755,root,root) %{_libdir}/camel-index-control-%{mver}
-%attr(755,root,root) %{_libdir}/camel-lock-helper-%{mver}
+%attr(755,root,root) %{_libdir}/camel-index-control-%{apiver}
+%attr(755,root,root) %{_libdir}/camel-lock-helper-%{apiver}
 %attr(755,root,root) %{_libdir}/*.so.*.*
-%dir %{_libdir}/%{name}-%{mver}
-%dir %{_libdir}/%{name}-%{mver}/camel-providers
-%attr(755,root,root) %{_libdir}/evolution-data-server-1.4
-%attr(755,root,root) %{_libdir}/%{name}-%{mver}/camel-providers/*.so
-%{_libdir}/%{name}-%{mver}/camel-providers/*.urls
-%dir %{_libdir}/%{name}-%{mver}/extensions
-%attr(755,root,root) %{_libdir}/%{name}-%{mver}/extensions/*.so
+%dir %{_libdir}/%{name}-%{apiver}
+%dir %{_libdir}/%{name}-%{apiver}/camel-providers
+%attr(755,root,root) %{_libdir}/evolution-data-server-%{basever}
+%attr(755,root,root) %{_libdir}/%{name}-%{apiver}/camel-providers/*.so
+%{_libdir}/%{name}-%{apiver}/camel-providers/*.urls
+%dir %{_libdir}/%{name}-%{apiver}/extensions
+%attr(755,root,root) %{_libdir}/%{name}-%{apiver}/extensions/*.so
 %{_libdir}/bonobo/servers/*
 %{_datadir}/idl/*
-%dir %{_datadir}/%{name}-1.4
-%{_datadir}/%{name}-1.4/glade
-%{_datadir}/%{name}-1.4/weather
-%{_datadir}/%{name}-1.4/zoneinfo
-%{_datadir}/%{name}-1.4/*.schema
-%{_pixmapsdir}/%{name}-1.4
+%dir %{_datadir}/%{name}-%{basever}
+%{_datadir}/%{name}-%{basever}/glade
+%{_datadir}/%{name}-%{basever}/weather
+%{_datadir}/%{name}-%{basever}/zoneinfo
+%{_datadir}/%{name}-%{basever}/*.schema
+%{_pixmapsdir}/%{name}-%{basever}
 
 %files devel
 %defattr(644,root,root,755)
