@@ -10,12 +10,12 @@
 Summary:	Evolution data server
 Summary(pl):	Serwer danych Evolution
 Name:		evolution-data-server
-Version:	1.2.3
+Version:	1.3.4
 Release:	1
 License:	GPL
 Group:		Libraries
-Source0:	http://ftp.gnome.org/pub/gnome/sources/evolution-data-server/1.2/%{name}-%{version}.tar.bz2
-# Source0-md5:	067d808957d4b3ac60159f8c8c1358fb
+Source0:	http://ftp.gnome.org/pub/gnome/sources/evolution-data-server/1.3/%{name}-%{version}.tar.bz2
+# Source0-md5:	7a789c7fbd67fe938e2d9a09973f7a9b
 Patch0:		%{name}-system_db.patch
 Patch1:		%{name}-GG-IM.patch
 Patch2:		%{name}-workaround-cal-backend-leak.patch
@@ -161,20 +161,20 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_libdir}/camel-lock-helper-%{mver}
 %attr(755,root,root) %{_libdir}/*.so.*.*
 %dir %{_libdir}/%{name}-%{mver}
-%attr(755,root,root) %{_libdir}/%{name}-%{mver}/%{name}
 %dir %{_libdir}/%{name}-%{mver}/camel-providers
+%attr(755,root,root) %{_libdir}/evolution-data-server-1.4
 %attr(755,root,root) %{_libdir}/%{name}-%{mver}/camel-providers/*.so
 %{_libdir}/%{name}-%{mver}/camel-providers/*.urls
 %dir %{_libdir}/%{name}-%{mver}/extensions
 %attr(755,root,root) %{_libdir}/%{name}-%{mver}/extensions/*.so
 %{_libdir}/bonobo/servers/*
 %{_datadir}/idl/*
-%dir %{_datadir}/%{name}-%{mver}
-%{_datadir}/%{name}-%{mver}/glade
-%{_datadir}/%{name}-%{mver}/weather
-%{_datadir}/%{name}-%{mver}/zoneinfo
-%{_datadir}/%{name}-%{mver}/*.schema
-%{_pixmapsdir}/%{name}-%{mver}
+%dir %{_datadir}/%{name}-1.4
+%{_datadir}/%{name}-1.4/glade
+%{_datadir}/%{name}-1.4/weather
+%{_datadir}/%{name}-1.4/zoneinfo
+%{_datadir}/%{name}-1.4/*.schema
+%{_pixmapsdir}/%{name}-1.4
 
 %files devel
 %defattr(644,root,root,755)
