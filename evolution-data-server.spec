@@ -12,7 +12,7 @@ Summary:	Evolution data server
 Summary(pl):	Serwer danych Evolution
 Name:		evolution-data-server
 Version:	1.3.5
-Release:	1
+Release:	2
 License:	GPL
 Group:		Libraries
 Source0:	http://ftp.gnome.org/pub/gnome/sources/evolution-data-server/1.3/%{name}-%{version}.tar.bz2
@@ -40,7 +40,7 @@ BuildRequires:	nspr-devel
 BuildRequires:	nss-devel
 BuildRequires:	pkgconfig
 BuildRequires:	rpmbuild(macros) >= 1.197
-%{?with_kerberos5:BuildRequires:	heimdal-devel}
+%{?with_kerberos5:BuildRequires:	heimdal-devel >= 0.7}
 %{?with_ldap:BuildRequires:	openldap-devel >= 2.0.0}
 Requires(post,postun):	/sbin/ldconfig
 Requires(post,postun):	scrollkeeper
