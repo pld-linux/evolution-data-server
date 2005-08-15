@@ -173,7 +173,9 @@ rm -rf $RPM_BUILD_ROOT
 %{_datadir}/%{name}-%{mver}/glade
 %{_datadir}/%{name}-%{mver}/weather
 %{_datadir}/%{name}-%{mver}/zoneinfo
+%if %{with ldap}
 %{_datadir}/%{name}-%{mver}/*.schema
+%endif
 %{_pixmapsdir}/%{name}-%{mver}
 
 %files devel
