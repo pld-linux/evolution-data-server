@@ -45,11 +45,22 @@ Requires(post,postun):	scrollkeeper
 Requires:	libsoup >= 2.2.3
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
+%define		schemadir	/usr/share/openldap/schema
+
 %description
 The Evolution data server for the calendar and addressbook.
 
 %description -l pl
 Serwer danych Evolution dla kalendarza i ksi±¿ki adresowej.
+
+%package -n openldap-schema-evolutionperson
+Summary:	evolutionperson LDAP schema
+Group:		Networking/Daemons
+Requires(post,postun):	sed >= 4.0
+Requires:	openldap-servers
+
+%description -n openldap-schema-evolutionperson
+This package contains evolutionperson.schema for openldap.
 
 %package devel
 Summary:	Evolution data server development files
@@ -141,6 +152,9 @@ rm $RPM_BUILD_ROOT%{_libdir}/%{name}-%{mver}/{camel-providers,extensions}/*.{la,
 
 rm -r $RPM_BUILD_ROOT%{_datadir}/locale/no
 
+install -d $RPM_BUILD_ROOT%{schemadir}
+install addressbook/backends/ldap/evolutionperson.schema $RPM_BUILD_ROOT%{schemadir}
+
 %find_lang %{name} --all-name
 
 %clean
@@ -153,6 +167,34 @@ rm -rf $RPM_BUILD_ROOT
 %postun
 /sbin/ldconfig
 %scrollkeeper_update_postun
+
+%post -n openldap-schema-evolutionperson
+if ! grep -q %{schemadir}/evolutionperson.schema /etc/openldap/slapd.conf; then
+	sed -i -e '
+		/^include.*local.schema/{
+			i\
+include		%{schemadir}/evolutionperson.schema
+		}
+	' /etc/openldap/slapd.conf
+fi
+
+if [ -f /var/lock/subsys/ldap ]; then
+    /etc/rc.d/init.d/ldap restart >&2
+fi
+
+%postun -n openldap-schema-evolutionperson
+if [ "$1" = "0" ]; then
+	if grep -q %{schemadir}/evolutionperson.schema /etc/openldap/slapd.conf; then
+		sed -i -e '
+		/^include.*\/usr\/share\/openldap\/schema\/evolutionperson.schema/d
+		' /etc/openldap/slapd.conf
+	fi
+
+	if [ -f /var/lock/subsys/ldap ]; then
+		/etc/rc.d/init.d/ldap restart >&2 || :
+	fi
+fi
+
 
 %files -f %{name}.lang
 %defattr(644,root,root,755)
@@ -177,6 +219,10 @@ rm -rf $RPM_BUILD_ROOT
 %{_datadir}/%{name}-%{mver}/*.schema
 %endif
 %{_pixmapsdir}/%{name}-%{mver}
+
+%files -n openldap-schema-evolutionperson
+%defattr(644,root,root,755)
+%{schemadir}/*.schema
 
 %files devel
 %defattr(644,root,root,755)
