@@ -12,7 +12,7 @@ Summary:	Evolution data server
 Summary(pl):	Serwer danych Evolution
 Name:		evolution-data-server
 Version:	1.3.7
-Release:	2
+Release:	3
 License:	GPL
 Group:		Libraries
 Source0:	http://ftp.gnome.org/pub/gnome/sources/evolution-data-server/1.3/%{name}-%{version}.tar.bz2
@@ -31,7 +31,7 @@ BuildRequires:	gnome-common >= 2.8.0
 BuildRequires:	howl-devel >= 0.9.10
 BuildRequires:	intltool
 BuildRequires:	libglade2-devel >= 1:2.5.1
-BuildRequires:	libgnomeui-devel >= 2.10.0-2
+BuildRequires:	libgnomeui-devel >= 2.11.2-2
 BuildRequires:	libsoup-devel >= 2.2.5
 BuildRequires:	libstdc++-devel
 BuildRequires:	libtool
@@ -62,7 +62,7 @@ Requires:	GConf2-devel >= 2.10.0
 Requires:	ORBit2-devel >= 1:2.12.1
 Requires:	glib2-devel >= 1:2.6.4
 Requires:	libbonobo-devel >= 2.8.1
-Requires:	libgnome-devel >= 2.10.0-2
+Requires:	libgnomeui-devel >= 2.11.2-2
 Requires:	libxml2-devel
 # for libegroupwise
 Requires:	libsoup-devel >= 2.2.5
