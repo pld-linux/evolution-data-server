@@ -55,12 +55,16 @@ Serwer danych Evolution dla kalendarza i ksi±¿ki adresowej.
 
 %package -n openldap-schema-evolutionperson
 Summary:	evolutionperson LDAP schema
+Summary(pl):	Schemat LDAP evolutionperson
 Group:		Networking/Daemons
 Requires(post,postun):	sed >= 4.0
 Requires:	openldap-servers
 
 %description -n openldap-schema-evolutionperson
-This package contains evolutionperson.schema for openldap.
+This package contains evolutionperson.schema for openldap server.
+
+%description -n openldap-schema-evolutionperson -l pl
+Ten pakiet zawiera evolutionperson.schema dla serwera openldap.
 
 %package devel
 Summary:	Evolution data server development files
@@ -179,7 +183,7 @@ include		%{schemadir}/evolutionperson.schema
 fi
 
 if [ -f /var/lock/subsys/ldap ]; then
-    /etc/rc.d/init.d/ldap restart >&2
+	/etc/rc.d/init.d/ldap restart >&2
 fi
 
 %postun -n openldap-schema-evolutionperson
