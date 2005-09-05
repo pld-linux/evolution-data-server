@@ -217,7 +217,7 @@ fi
 %{_datadir}/idl/*
 
 %if %{with ldap}
-%{_datadir}/%{name}-%{mver}/*.schema
+%{_datadir}/%{name}-%{basever}/*.schema
 %endif
 
 %dir %{_datadir}/%{name}-%{basever}
