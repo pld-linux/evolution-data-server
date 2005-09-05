@@ -6,32 +6,33 @@
 %bcond_without	kerberos5	# build without kerberos5 support
 %bcond_without	ldap		# build without ldap support
 #
-%define		mver		1.2
+%define		basever		1.4
+%define		apiver		1.2
 Summary:	Evolution data server
 Summary(pl):	Serwer danych Evolution
 Name:		evolution-data-server
-Version:	1.2.3
-Release:	3
+Version:	1.4.0
+Release:	1
 License:	GPL
 Group:		Libraries
-Source0:	http://ftp.gnome.org/pub/gnome/sources/evolution-data-server/1.2/%{name}-%{version}.tar.bz2
-# Source0-md5:	067d808957d4b3ac60159f8c8c1358fb
+Source0:	http://ftp.gnome.org/pub/gnome/sources/evolution-data-server/1.4/%{name}-%{version}.tar.bz2
+# Source0-md5:	a15991d5f0112b43c18fa99dfccfec1b
 Patch0:		%{name}-system_db.patch
 Patch1:		%{name}-GG-IM.patch
 Patch2:		%{name}-workaround-cal-backend-leak.patch
-Patch3:		%{name}-bonobo.patch
-Patch4:		%{name}-gcc4.patch
+Patch3:		%{name}-gcc4.patch
 URL:		http://www.ximian.com/products/ximian_evolution/
 BuildRequires:	ORBit2-devel >= 1:2.12.1
 BuildRequires:	autoconf >= 2.52
 BuildRequires:	automake
+BuildRequires:	bison
 BuildRequires:	db-devel
 BuildRequires:	gnome-common >= 2.8.0
 BuildRequires:	howl-devel >= 0.9.10
 BuildRequires:	intltool
 BuildRequires:	libglade2-devel >= 1:2.5.1
-BuildRequires:	libgnomeui-devel >= 2.10.0-2
-BuildRequires:	libsoup-devel >= 2.2.3
+BuildRequires:	libgnomeui-devel >= 2.11.2-2
+BuildRequires:	libsoup-devel >= 2.2.5
 BuildRequires:	libstdc++-devel
 BuildRequires:	libtool
 BuildRequires:	nspr-devel
@@ -76,10 +77,10 @@ Requires:	GConf2-devel >= 2.10.0
 Requires:	ORBit2-devel >= 1:2.12.1
 Requires:	glib2-devel >= 1:2.6.4
 Requires:	libbonobo-devel >= 2.8.1
-Requires:	libgnome-devel >= 2.10.0-2
+Requires:	libgnomeui-devel >= 2.11.2-2
 Requires:	libxml2-devel
 # for libegroupwise
-Requires:	libsoup-devel >= 2.2.3
+Requires:	libsoup-devel >= 2.2.5
 
 %description devel
 This package contains the files necessary to develop applications
@@ -107,7 +108,6 @@ Statyczne biblioteki serwera danych Evolution.
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
-%patch4 -p1
 
 rm -rf libdb
 
@@ -152,7 +152,7 @@ rm -rf $RPM_BUILD_ROOT
 	HTML_DIR=%{_gtkdocdir} \
 	pkgconfigdir=%{_pkgconfigdir}
 
-rm $RPM_BUILD_ROOT%{_libdir}/%{name}-%{mver}/{camel-providers,extensions}/*.{la,a}
+rm $RPM_BUILD_ROOT%{_libdir}/%{name}-%{apiver}/{camel-providers,extensions}/*.{la,a}
 
 rm -r $RPM_BUILD_ROOT%{_datadir}/locale/no
 
@@ -203,26 +203,25 @@ fi
 %files -f %{name}.lang
 %defattr(644,root,root,755)
 %doc AUTHORS ChangeLog NEWS* README
-%attr(755,root,root) %{_libdir}/camel-index-control-%{mver}
-%attr(755,root,root) %{_libdir}/camel-lock-helper-%{mver}
+%attr(755,root,root) %{_libdir}/camel-index-control-%{apiver}
+%attr(755,root,root) %{_libdir}/camel-lock-helper-%{apiver}
 %attr(755,root,root) %{_libdir}/*.so.*.*
-%dir %{_libdir}/%{name}-%{mver}
-%attr(755,root,root) %{_libdir}/%{name}-%{mver}/%{name}
-%dir %{_libdir}/%{name}-%{mver}/camel-providers
-%attr(755,root,root) %{_libdir}/%{name}-%{mver}/camel-providers/*.so
-%{_libdir}/%{name}-%{mver}/camel-providers/*.urls
-%dir %{_libdir}/%{name}-%{mver}/extensions
-%attr(755,root,root) %{_libdir}/%{name}-%{mver}/extensions/*.so
+%dir %{_libdir}/%{name}-%{apiver}
+%dir %{_libdir}/%{name}-%{apiver}/camel-providers
+%attr(755,root,root) %{_libdir}/evolution-data-server-%{basever}
+%attr(755,root,root) %{_libdir}/%{name}-%{apiver}/camel-providers/*.so
+%{_libdir}/%{name}-%{apiver}/camel-providers/*.urls
+%dir %{_libdir}/%{name}-%{apiver}/extensions
+%attr(755,root,root) %{_libdir}/%{name}-%{apiver}/extensions/*.so
 %{_libdir}/bonobo/servers/*
 %{_datadir}/idl/*
-%dir %{_datadir}/%{name}-%{mver}
-%{_datadir}/%{name}-%{mver}/glade
-%{_datadir}/%{name}-%{mver}/weather
-%{_datadir}/%{name}-%{mver}/zoneinfo
-%if %{with ldap}
-%{_datadir}/%{name}-%{mver}/*.schema
-%endif
-%{_pixmapsdir}/%{name}-%{mver}
+
+%dir %{_datadir}/%{name}-%{basever}
+%{_datadir}/%{name}-%{basever}/glade
+%{_datadir}/%{name}-%{basever}/weather
+%{_datadir}/%{name}-%{basever}/zoneinfo
+%{_datadir}/%{name}-%{basever}/*.schema
+%{_pixmapsdir}/%{name}-%{basever}
 
 %files -n openldap-schema-evolutionperson
 %defattr(644,root,root,755)
