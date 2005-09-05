@@ -216,11 +216,14 @@ fi
 %{_libdir}/bonobo/servers/*
 %{_datadir}/idl/*
 
+%if %{with ldap}
+%{_datadir}/%{name}-%{mver}/*.schema
+%endif
+
 %dir %{_datadir}/%{name}-%{basever}
 %{_datadir}/%{name}-%{basever}/glade
 %{_datadir}/%{name}-%{basever}/weather
 %{_datadir}/%{name}-%{basever}/zoneinfo
-%{_datadir}/%{name}-%{basever}/*.schema
 %{_pixmapsdir}/%{name}-%{basever}
 
 %files -n openldap-schema-evolutionperson
