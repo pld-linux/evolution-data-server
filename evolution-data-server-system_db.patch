@@ -1,6 +1,6 @@
-diff -urN aa/evolution-data-server-1.1.4.2/addressbook/backends/file/Makefile.am evolution-data-server-1.1.4.2/addressbook/backends/file/Makefile.am
---- aa/evolution-data-server-1.1.4.2/addressbook/backends/file/Makefile.am	2004-10-14 17:50:17.000000000 +0200
-+++ evolution-data-server-1.1.4.2/addressbook/backends/file/Makefile.am	2005-02-07 17:12:29.879046432 +0100
+diff -urN evolution-data-server-1.3.8.orig/addressbook/backends/file/Makefile.am evolution-data-server-1.3.8/addressbook/backends/file/Makefile.am
+--- evolution-data-server-1.3.8.orig/addressbook/backends/file/Makefile.am	2005-08-23 11:04:40.302083616 +0200
++++ evolution-data-server-1.3.8/addressbook/backends/file/Makefile.am	2005-08-23 11:05:46.385037480 +0200
 @@ -4,7 +4,6 @@
  	-I$(top_builddir)				\
  	-I$(top_srcdir)/addressbook			\
@@ -9,10 +9,21 @@ diff -urN aa/evolution-data-server-1.1.4.2/addressbook/backends/file/Makefile.am
          $(EVOLUTION_ADDRESSBOOK_CFLAGS)
  
  extension_LTLIBRARIES = libebookbackendfile.la
-diff -urN aa/evolution-data-server-1.1.4.2/configure.in evolution-data-server-1.1.4.2/configure.in
---- aa/evolution-data-server-1.1.4.2/configure.in	2005-01-26 18:50:11.000000000 +0100
-+++ evolution-data-server-1.1.4.2/configure.in	2005-02-07 17:09:29.476471792 +0100
-@@ -1163,7 +1163,6 @@
+@@ -18,8 +17,8 @@
+ 	$(top_builddir)/addressbook/libebook/libebook-1.2.la		\
+ 	$(top_builddir)/addressbook/libedata-book/libedata-book-1.2.la	\
+ 	$(top_builddir)/libedataserver/libedataserver-1.2.la		\
+-	$(top_builddir)/libdb/dist/libdb-4.1.la				\
+-	$(EVOLUTION_ADDRESSBOOK_LIBS)
++	$(EVOLUTION_ADDRESSBOOK_LIBS)					\
++	-ldb
+ 
+ libebookbackendfile_la_LDFLAGS =	\
+ 	-module -avoid-version $(NO_UNDEFINED)
+diff -urN evolution-data-server-1.3.8.orig/configure.in evolution-data-server-1.3.8/configure.in
+--- evolution-data-server-1.3.8.orig/configure.in	2005-08-23 11:04:38.291389288 +0200
++++ evolution-data-server-1.3.8/configure.in	2005-08-23 11:05:46.387037176 +0200
+@@ -1253,7 +1253,6 @@
  export privincludedir
  export privdatadir
  AC_CONFIG_SUBDIRS(calendar/libical)
@@ -20,7 +31,7 @@ diff -urN aa/evolution-data-server-1.1.4.2/configure.in evolution-data-server-1.
  
  AC_OUTPUT([
  Makefile
-@@ -1217,7 +1216,6 @@
+@@ -1308,7 +1307,6 @@
  camel/tests/stream/Makefile
  camel/camel.pc
  camel/camel-provider.pc
@@ -28,9 +39,9 @@ diff -urN aa/evolution-data-server-1.1.4.2/configure.in evolution-data-server-1.
  libedataserver/Makefile
  libedataserver/libedataserver.pc
  libedataserverui/Makefile
-diff -urN aa/evolution-data-server-1.1.4.2/libedataserver/Makefile.am evolution-data-server-1.1.4.2/libedataserver/Makefile.am
---- aa/evolution-data-server-1.1.4.2/libedataserver/Makefile.am	2005-01-10 17:00:02.000000000 +0100
-+++ evolution-data-server-1.1.4.2/libedataserver/Makefile.am	2005-02-07 17:10:18.724984880 +0100
+diff -urN evolution-data-server-1.3.8.orig/libedataserver/Makefile.am evolution-data-server-1.3.8/libedataserver/Makefile.am
+--- evolution-data-server-1.3.8.orig/libedataserver/Makefile.am	2005-08-23 11:04:40.526049568 +0200
++++ evolution-data-server-1.3.8/libedataserver/Makefile.am	2005-08-23 11:06:56.983304912 +0200
 @@ -1,7 +1,6 @@
  INCLUDES =								\
  	-I$(top_srcdir)							\
@@ -43,14 +54,14 @@ diff -urN aa/evolution-data-server-1.1.4.2/libedataserver/Makefile.am evolution-
  libedataserver_1_2_la_LIBADD = 				\
  	$(E_DATA_SERVER_LIBS)				\
  	$(ICONV_LIBS)					\
--	$(top_builddir)/libdb/dist/libdb-4.1.la
-+	-ldb
+-	$(top_builddir)/libdb/dist/libdb-4.1.la		\
++	-ldb						\
+ 	$(SOCKET_LIBS)
  
- libedataserver_1_2_la_LDFLAGS = 										\
- 	-version-info $(LIBEDATASERVER_CURRENT):$(LIBEDATASERVER_REVISION):$(LIBEDATASERVER_AGE)
-diff -urN aa/evolution-data-server-1.1.4.2/Makefile.am evolution-data-server-1.1.4.2/Makefile.am
---- aa/evolution-data-server-1.1.4.2/Makefile.am	2005-01-10 16:59:52.000000000 +0100
-+++ evolution-data-server-1.1.4.2/Makefile.am	2005-02-07 17:11:27.480532448 +0100
+ libedataserver_1_2_la_LDFLAGS = \
+diff -urN evolution-data-server-1.3.8.orig/Makefile.am evolution-data-server-1.3.8/Makefile.am
+--- evolution-data-server-1.3.8.orig/Makefile.am	2005-08-23 11:04:40.203098664 +0200
++++ evolution-data-server-1.3.8/Makefile.am	2005-08-23 11:05:46.390036720 +0200
 @@ -1,7 +1,7 @@
  AUTOMAKE_OPTIONS = 1.6
  DISTCHECK_CONFIGURE_FLAGS = --enable-gtk-doc
@@ -64,9 +75,9 @@ diff -urN aa/evolution-data-server-1.1.4.2/Makefile.am evolution-data-server-1.1
  	intltool-merge.in				\
  	intltool-update.in				\
  	intltool-extract.in				\
--	$(pkgconfig_DATA:-$(BASE_VERSION).pc=.pc.in) 	\
+-	$(pkgconfig_DATA:-$(API_VERSION).pc=.pc.in) 	\
 -	$(LIBDB_FILES)
-+	$(pkgconfig_DATA:-$(BASE_VERSION).pc=.pc.in)
++	$(pkgconfig_DATA:-$(API_VERSION).pc=.pc.in)
  
 +# files below should be removed due to system db patch, but they are left,
 +# so patch is small
