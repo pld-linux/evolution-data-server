@@ -102,13 +102,13 @@ Evolution data server static libraries.
 Statyczne biblioteki serwera danych Evolution.
 
 %package libs
-Summary:	Evoltion Data Server library
+Summary:	Evolution Data Server library
 Summary(pl):	Biblioteka Evolution Data Server
 Group:		Libraries
 Requires:	libsoup >= 2.2.3
 
 %description
-This package contains Evoltion Data Server library.
+This package contains Evolution Data Server library.
 
 %description libs -l pl
 Ten pakiet zawiera bibliotekê Evolution Data Server.
