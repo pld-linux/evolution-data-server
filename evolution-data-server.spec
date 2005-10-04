@@ -11,12 +11,12 @@
 Summary:	Evolution data server
 Summary(pl):	Serwer danych Evolution
 Name:		evolution-data-server
-Version:	1.4.0
+Version:	1.4.1
 Release:	1
 License:	GPL
 Group:		Libraries
 Source0:	http://ftp.gnome.org/pub/gnome/sources/evolution-data-server/1.4/%{name}-%{version}.tar.bz2
-# Source0-md5:	a15991d5f0112b43c18fa99dfccfec1b
+# Source0-md5:	af8f53c4ea524df861a6f2eb1ea75ad9
 Patch0:		%{name}-system_db.patch
 Patch1:		%{name}-GG-IM.patch
 Patch2:		%{name}-workaround-cal-backend-leak.patch
@@ -41,9 +41,8 @@ BuildRequires:	pkgconfig
 BuildRequires:	rpmbuild(macros) >= 1.197
 %{?with_kerberos5:BuildRequires:	heimdal-devel >= 0.7}
 %{?with_ldap:BuildRequires:	openldap-devel >= 2.0.0}
-Requires(post,postun):	/sbin/ldconfig
 Requires(post,postun):	scrollkeeper
-Requires:	libsoup >= 2.2.3
+Requires:	%{name}-libs = %{version}-%{release}
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %define		schemadir	/usr/share/openldap/schema
@@ -101,6 +100,18 @@ Evolution data server static libraries.
 
 %description static -l pl
 Statyczne biblioteki serwera danych Evolution.
+
+%package libs
+Summary:	Evoltion Data Server library
+Summary(pl):	Biblioteka Evolution Data Server
+Group:		Libraries
+Requires:	libsoup >= 2.2.3
+
+%description
+This package contains Evoltion Data Server library.
+
+%description libs -l pl
+Ten pakiet zawiera bibliotekê Evolution Data Server.
 
 %prep
 %setup -q 
@@ -165,12 +176,13 @@ install addressbook/backends/ldap/evolutionperson.schema $RPM_BUILD_ROOT%{schema
 rm -rf $RPM_BUILD_ROOT
 
 %post
-/sbin/ldconfig
 %scrollkeeper_update_post
 
 %postun
-/sbin/ldconfig
 %scrollkeeper_update_postun
+
+%post	libs -p /sbin/ldconfig
+%postun	libs -p /sbin/ldconfig
 
 %post -n openldap-schema-evolutionperson
 if ! grep -q %{schemadir}/evolutionperson.schema /etc/openldap/slapd.conf; then
@@ -205,7 +217,6 @@ fi
 %doc AUTHORS ChangeLog NEWS* README
 %attr(755,root,root) %{_libdir}/camel-index-control-%{apiver}
 %attr(755,root,root) %{_libdir}/camel-lock-helper-%{apiver}
-%attr(755,root,root) %{_libdir}/*.so.*.*
 %dir %{_libdir}/%{name}-%{apiver}
 %dir %{_libdir}/%{name}-%{apiver}/camel-providers
 %attr(755,root,root) %{_libdir}/evolution-data-server-%{basever}
@@ -241,3 +252,7 @@ fi
 %files static
 %defattr(644,root,root,755)
 %{_libdir}/*.a
+
+%files libs
+%defattr(644,root,root,755)
+%attr(755,root,root) %{_libdir}/*.so.*.*
