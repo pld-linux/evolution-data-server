@@ -66,11 +66,23 @@ This package contains evolutionperson.schema for openldap server.
 %description -n openldap-schema-evolutionperson -l pl
 Ten pakiet zawiera evolutionperson.schema dla serwera openldap.
 
+%package libs
+Summary:	Evolution Data Server library
+Summary(pl):	Biblioteka Evolution Data Server
+Group:		Libraries
+Requires:	libsoup >= 2.2.3
+
+%description libs
+This package contains Evolution Data Server library.
+
+%description libs -l pl
+Ten pakiet zawiera bibliotekê Evolution Data Server.
+
 %package devel
 Summary:	Evolution data server development files
 Summary(pl):	Pliki programistyczne serwera danych evolution
 Group:		Development/Libraries
-Requires:	%{name} = %{version}-%{release}
+Requires:	%{name}-libs = %{version}-%{release}
 # for all but libegroupwise
 Requires:	GConf2-devel >= 2.10.0
 Requires:	ORBit2-devel >= 1:2.12.1
@@ -100,18 +112,6 @@ Evolution data server static libraries.
 
 %description static -l pl
 Statyczne biblioteki serwera danych Evolution.
-
-%package libs
-Summary:	Evolution Data Server library
-Summary(pl):	Biblioteka Evolution Data Server
-Group:		Libraries
-Requires:	libsoup >= 2.2.3
-
-%description
-This package contains Evolution Data Server library.
-
-%description libs -l pl
-Ten pakiet zawiera bibliotekê Evolution Data Server.
 
 %prep
 %setup -q 
@@ -211,7 +211,6 @@ if [ "$1" = "0" ]; then
 	fi
 fi
 
-
 %files -f %{name}.lang
 %defattr(644,root,root,755)
 %doc AUTHORS ChangeLog NEWS* README
@@ -241,6 +240,10 @@ fi
 %defattr(644,root,root,755)
 %{schemadir}/*.schema
 
+%files libs
+%defattr(644,root,root,755)
+%attr(755,root,root) %{_libdir}/*.so.*.*
+
 %files devel
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_libdir}/*.so
@@ -252,7 +255,3 @@ fi
 %files static
 %defattr(644,root,root,755)
 %{_libdir}/*.a
-
-%files libs
-%defattr(644,root,root,755)
-%attr(755,root,root) %{_libdir}/*.so.*.*
