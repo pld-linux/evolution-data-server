@@ -12,7 +12,7 @@ Summary:	Evolution data server
 Summary(pl):	Serwer danych Evolution
 Name:		evolution-data-server
 Version:	1.4.1
-Release:	2
+Release:	3
 License:	GPL
 Group:		Libraries
 Source0:	http://ftp.gnome.org/pub/gnome/sources/evolution-data-server/1.4/%{name}-%{version}.tar.bz2
@@ -224,7 +224,6 @@ fi
 %dir %{_libdir}/%{name}-%{apiver}/extensions
 %attr(755,root,root) %{_libdir}/%{name}-%{apiver}/extensions/*.so
 %{_libdir}/bonobo/servers/*
-%{_datadir}/idl/*
 
 %if %{with ldap}
 %{_datadir}/%{name}-%{basever}/*.schema
@@ -250,6 +249,7 @@ fi
 %{_libdir}/*.la
 %{_includedir}/*
 %{_pkgconfigdir}/*
+%{_datadir}/idl/%{name}-%{apiver}
 %{_gtkdocdir}/*
 
 %files static
