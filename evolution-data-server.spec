@@ -242,6 +242,7 @@ fi
 %files libs
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_libdir}/*.so.*.*
+%{_datadir}/idl/%{name}-%{apiver}
 
 %files devel
 %defattr(644,root,root,755)
@@ -249,7 +250,6 @@ fi
 %{_libdir}/*.la
 %{_includedir}/*
 %{_pkgconfigdir}/*
-%{_datadir}/idl/%{name}-%{apiver}
 %{_gtkdocdir}/*
 
 %files static
