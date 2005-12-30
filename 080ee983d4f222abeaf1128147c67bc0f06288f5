@@ -1,0 +1,3 @@
+- added a patch for fucked up IMAP in 1.4.2.1
+- rel. up to 2
+- STBR ASAP (non-ASCII folders are unusable without this patch)
