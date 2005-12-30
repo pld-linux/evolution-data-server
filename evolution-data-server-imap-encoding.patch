@@ -1,0 +1,48 @@
+diff -p -u -2 -r1.73 camel-imap-command.c
+--- camel/providers/imap/camel-imap-command.c	1 Dec 2005 07:26:34 -0000	1.73
++++ camel/providers/imap/camel-imap-command.c	14 Dec 2005 14:08:32 -0000
+@@ -767,9 +767,17 @@ imap_command_strdup_vprintf (CamelImapSt
+ 		case 'F':
+ 			string = va_arg (ap, char *);
++			/* NB: string is freed during output */
+ 			if (*p == 'F') {
+-				/* NB: this is freed during output */
+ 				char *s = camel_imap_store_summary_full_from_path(store->summary, string);
+-				string = s?s:camel_utf8_utf7(string);
++				if (s) {
++					string = camel_utf8_utf7(s);
++					g_free(s);
++				} else {
++					string = camel_utf8_utf7(string);
++				}
++			} else {
++				string = camel_utf8_utf7(string);
+ 			}
++				
+ 			arglen = strlen (string);
+ 			g_ptr_array_add (args, string);
+@@ -836,6 +844,5 @@ imap_command_strdup_vprintf (CamelImapSt
+ 			}
+ 			
+-			if (*p == 'F')
+-				g_free (string);
++			g_free (string);
+ 			break;
+ 		default:
+diff -p -u -2 -r1.16 camel-imap-store-summary.c
+--- camel/providers/imap/camel-imap-store-summary.c	31 Aug 2005 04:26:02 -0000	1.16
++++ camel/providers/imap/camel-imap-store-summary.c	14 Dec 2005 14:08:33 -0000
+@@ -196,5 +196,5 @@ camel_imap_store_summary_full_to_path(Ca
+ 		path = (char *)full_name;
+ 
+-	return camel_utf7_utf8(path);
++	return g_strdup(path);
+ }
+ 
+@@ -274,5 +274,5 @@ camel_imap_store_summary_path_to_full(Ca
+ 
+ 	/* merge old path part if required */
+-	f = camel_utf8_utf7(full);
++	f = g_strdup(full);
+ 	if (si) {
+ 		full = g_strdup_printf("%s%s", camel_imap_store_info_full_name(s, si), f);
