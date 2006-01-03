@@ -29,6 +29,7 @@ BuildRequires:	automake
 BuildRequires:	bison
 BuildRequires:	db-devel
 BuildRequires:	gnome-common >= 2.8.0
+%{?with_kerberos5:BuildRequires:	heimdal-devel >= 0.7}
 BuildRequires:	howl-devel >= 0.9.10
 BuildRequires:	intltool
 BuildRequires:	libglade2-devel >= 1:2.5.1
@@ -38,10 +39,9 @@ BuildRequires:	libstdc++-devel
 BuildRequires:	libtool
 BuildRequires:	nspr-devel
 BuildRequires:	nss-devel
+%{?with_ldap:BuildRequires:	openldap-devel >= 2.0.0}
 BuildRequires:	pkgconfig
 BuildRequires:	rpmbuild(macros) >= 1.197
-%{?with_kerberos5:BuildRequires:	heimdal-devel >= 0.7}
-%{?with_ldap:BuildRequires:	openldap-devel >= 2.0.0}
 Requires(post,postun):	scrollkeeper
 Requires:	%{name}-libs = %{version}-%{release}
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
@@ -84,6 +84,7 @@ Summary:	Evolution data server development files
 Summary(pl):	Pliki programistyczne serwera danych evolution
 Group:		Development/Libraries
 Requires:	%{name}-libs = %{version}-%{release}
+%{?with_kerberos5:Requires:	heimdal-devel >= 0.7}
 # for all but libegroupwise
 Requires:	GConf2-devel >= 2.10.0
 Requires:	ORBit2-devel >= 1:2.12.1
@@ -115,7 +116,7 @@ Evolution data server static libraries.
 Statyczne biblioteki serwera danych Evolution.
 
 %prep
-%setup -q 
+%setup -q
 %patch0 -p1
 %patch1 -p1
 %patch2 -p1
@@ -154,7 +155,7 @@ cd ../..
 	--with-nss-libs=%{_libdir}
 %{__make} \
 	HTML_DIR=%{_gtkdocdir} \
-	GTKHTML_DATADIR=%{_datadir}/idl 
+	GTKHTML_DATADIR=%{_datadir}/idl
 
 %install
 rm -rf $RPM_BUILD_ROOT
