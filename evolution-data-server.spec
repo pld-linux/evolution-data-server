@@ -6,22 +6,21 @@
 %bcond_without	kerberos5	# build without kerberos5 support
 %bcond_without	ldap		# build without ldap support
 #
-%define		basever		1.4
+%define		basever		1.6
 %define		apiver		1.2
 Summary:	Evolution data server
 Summary(pl):	Serwer danych Evolution
 Name:		evolution-data-server
-Version:	1.4.2.1
-Release:	3
+Version:	1.6.0
+Release:	1
 License:	GPL
 Group:		Libraries
-Source0:	http://ftp.gnome.org/pub/gnome/sources/evolution-data-server/1.4/%{name}-%{version}.tar.bz2
-# Source0-md5:	8b058aff089cf3a6c13cc9f51f536ae8
+Source0:	http://ftp.gnome.org/pub/gnome/sources/evolution-data-server/1.6/%{name}-%{version}.tar.bz2
+# Source0-md5:	1d775148a4f88559cb375924b9f7b79f
 Patch0:		%{name}-system_db.patch
 Patch1:		%{name}-GG-IM.patch
 Patch2:		%{name}-workaround-cal-backend-leak.patch
 Patch3:		%{name}-gcc4.patch
-Patch4:		%{name}-imap-encoding.patch
 URL:		http://www.ximian.com/products/ximian_evolution/
 BuildRequires:	ORBit2-devel >= 1:2.12.1
 BuildRequires:	autoconf >= 2.52
@@ -30,7 +29,6 @@ BuildRequires:	bison
 BuildRequires:	db-devel
 BuildRequires:	gnome-common >= 2.8.0
 %{?with_kerberos5:BuildRequires:	heimdal-devel >= 0.7}
-BuildRequires:	howl-devel >= 0.9.10
 BuildRequires:	intltool
 BuildRequires:	libglade2-devel >= 1:2.5.1
 BuildRequires:	libgnomeui-devel >= 2.11.2-2
@@ -121,7 +119,6 @@ Statyczne biblioteki serwera danych Evolution.
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
-%patch4 -p0
 
 rm -rf libdb
 
