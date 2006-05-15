@@ -6,35 +6,33 @@
 %bcond_without	kerberos5	# build without kerberos5 support
 %bcond_without	ldap		# build without ldap support
 #
-%define		basever		1.4
+%define		basever		1.6
 %define		apiver		1.2
 Summary:	Evolution data server
 Summary(pl):	Serwer danych Evolution
 Name:		evolution-data-server
-Version:	1.4.2.1
-Release:	3
+Version:	1.6.1
+Release:	1
 License:	GPL
 Group:		Libraries
-Source0:	http://ftp.gnome.org/pub/gnome/sources/evolution-data-server/1.4/%{name}-%{version}.tar.bz2
-# Source0-md5:	8b058aff089cf3a6c13cc9f51f536ae8
+Source0:	http://ftp.gnome.org/pub/gnome/sources/evolution-data-server/1.6/%{name}-%{version}.tar.bz2
+# Source0-md5:	d4def6cad1dc3508b8df55e7e794db49
 Patch0:		%{name}-system_db.patch
 Patch1:		%{name}-GG-IM.patch
 Patch2:		%{name}-workaround-cal-backend-leak.patch
 Patch3:		%{name}-gcc4.patch
-Patch4:		%{name}-imap-encoding.patch
 URL:		http://www.ximian.com/products/ximian_evolution/
-BuildRequires:	ORBit2-devel >= 1:2.12.1
+BuildRequires:	ORBit2-devel >= 1:2.14.0
 BuildRequires:	autoconf >= 2.52
 BuildRequires:	automake
 BuildRequires:	bison
 BuildRequires:	db-devel
 BuildRequires:	gnome-common >= 2.8.0
 %{?with_kerberos5:BuildRequires:	heimdal-devel >= 0.7}
-BuildRequires:	howl-devel >= 0.9.10
 BuildRequires:	intltool
 BuildRequires:	libglade2-devel >= 1:2.5.1
-BuildRequires:	libgnomeui-devel >= 2.11.2-2
-BuildRequires:	libsoup-devel >= 2.2.5
+BuildRequires:	libgnomeui-devel >= 2.14.0
+BuildRequires:	libsoup-devel >= 2.2.92
 BuildRequires:	libstdc++-devel
 BuildRequires:	libtool
 BuildRequires:	nspr-devel
@@ -86,14 +84,14 @@ Group:		Development/Libraries
 Requires:	%{name}-libs = %{version}-%{release}
 %{?with_kerberos5:Requires:	heimdal-devel >= 0.7}
 # for all but libegroupwise
-Requires:	GConf2-devel >= 2.10.0
-Requires:	ORBit2-devel >= 1:2.12.1
+Requires:	GConf2-devel >= 2.14.0
+Requires:	ORBit2-devel >= 1:2.14.1
 Requires:	glib2-devel >= 1:2.6.4
-Requires:	libbonobo-devel >= 2.8.1
-Requires:	libgnomeui-devel >= 2.11.2-2
+Requires:	libbonobo-devel >= 2.14.0
+Requires:	libgnomeui-devel >= 2.14.0
 Requires:	libxml2-devel
 # for libegroupwise
-Requires:	libsoup-devel >= 2.2.5
+Requires:	libsoup-devel >= 2.2.92
 
 %description devel
 This package contains the files necessary to develop applications
@@ -121,7 +119,6 @@ Statyczne biblioteki serwera danych Evolution.
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
-%patch4 -p0
 
 rm -rf libdb
 
