@@ -11,12 +11,12 @@
 Summary:	Evolution data server
 Summary(pl):	Serwer danych Evolution
 Name:		evolution-data-server
-Version:	1.6.1
-Release:	3
+Version:	1.6.2
+Release:	1
 License:	GPL
 Group:		Libraries
 Source0:	http://ftp.gnome.org/pub/gnome/sources/evolution-data-server/1.6/%{name}-%{version}.tar.bz2
-# Source0-md5:	d4def6cad1dc3508b8df55e7e794db49
+# Source0-md5:	165f493eec8a2c8fc6eca3fdeb8c4885
 Patch0:		%{name}-system_db.patch
 Patch1:		%{name}-GG-IM.patch
 Patch2:		%{name}-workaround-cal-backend-leak.patch
@@ -31,8 +31,8 @@ BuildRequires:	gnome-common >= 2.8.0
 %{?with_kerberos5:BuildRequires:	heimdal-devel >= 0.7}
 BuildRequires:	intltool
 BuildRequires:	libglade2-devel >= 1:2.5.1
-BuildRequires:	libgnomeui-devel >= 2.14.0
-BuildRequires:	libsoup-devel >= 2.2.92
+BuildRequires:	libgnomeui-devel >= 2.14.1
+BuildRequires:	libsoup-devel >= 2.2.93
 BuildRequires:	libstdc++-devel
 BuildRequires:	libtool
 BuildRequires:	nspr-devel
@@ -69,8 +69,8 @@ Ten pakiet zawiera evolutionperson.schema dla serwera openldap.
 Summary:	Evolution Data Server library
 Summary(pl):	Biblioteka Evolution Data Server
 Group:		Libraries
-Requires:	libgnomeui >= 2.14.0
-Requires:	libsoup >= 2.2.3
+Requires:	libgnomeui >= 2.14.1
+Requires:	libsoup >= 2.2.93
 
 %description libs
 This package contains Evolution Data Server library.
@@ -92,7 +92,7 @@ Requires:	libbonobo-devel >= 2.14.0
 Requires:	libgnomeui-devel >= 2.14.0
 Requires:	libxml2-devel
 # for libegroupwise
-Requires:	libsoup-devel >= 2.2.92
+Requires:	libsoup-devel >= 2.2.93
 
 %description devel
 This package contains the files necessary to develop applications
