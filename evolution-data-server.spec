@@ -6,21 +6,20 @@
 %bcond_without	kerberos5	# build without kerberos5 support
 %bcond_without	ldap		# build without ldap support
 #
-%define		basever		1.6
+%define		basever		1.8
 %define		apiver		1.2
 Summary:	Evolution data server
 Summary(pl):	Serwer danych Evolution
 Name:		evolution-data-server
-Version:	1.6.1
-Release:	3
+Version:	1.7.2
+Release:	1
 License:	GPL
 Group:		Libraries
-Source0:	http://ftp.gnome.org/pub/gnome/sources/evolution-data-server/1.6/%{name}-%{version}.tar.bz2
-# Source0-md5:	d4def6cad1dc3508b8df55e7e794db49
-Patch0:		%{name}-system_db.patch
-Patch1:		%{name}-GG-IM.patch
-Patch2:		%{name}-workaround-cal-backend-leak.patch
-Patch3:		%{name}-gcc4.patch
+Source0:	http://ftp.gnome.org/pub/gnome/sources/evolution-data-server/1.7/%{name}-%{version}.tar.bz2
+# Source0-md5:	ccd8cd291cdea417b4d3ae19363cc4c5
+Patch0:		%{name}-GG-IM.patch
+Patch1:		%{name}-workaround-cal-backend-leak.patch
+Patch2:		%{name}-gcc4.patch
 URL:		http://www.ximian.com/products/ximian_evolution/
 BuildRequires:	ORBit2-devel >= 1:2.14.0
 BuildRequires:	autoconf >= 2.52
@@ -28,11 +27,12 @@ BuildRequires:	automake
 BuildRequires:	bison
 BuildRequires:	db-devel
 BuildRequires:	gnome-common >= 2.8.0
+BuildRequires:	gnome-keyring-devel >= 0.4.9-2
 %{?with_kerberos5:BuildRequires:	heimdal-devel >= 0.7}
 BuildRequires:	intltool
 BuildRequires:	libglade2-devel >= 1:2.5.1
-BuildRequires:	libgnomeui-devel >= 2.14.0
-BuildRequires:	libsoup-devel >= 2.2.92
+BuildRequires:	libgnomeui-devel >= 2.14.1
+BuildRequires:	libsoup-devel >= 2.2.93
 BuildRequires:	libstdc++-devel
 BuildRequires:	libtool
 BuildRequires:	nspr-devel
@@ -69,8 +69,8 @@ Ten pakiet zawiera evolutionperson.schema dla serwera openldap.
 Summary:	Evolution Data Server library
 Summary(pl):	Biblioteka Evolution Data Server
 Group:		Libraries
-Requires:	libgnomeui >= 2.14.0
-Requires:	libsoup >= 2.2.3
+Requires:	libgnomeui >= 2.14.1
+Requires:	libsoup >= 2.2.93
 
 %description libs
 This package contains Evolution Data Server library.
@@ -87,12 +87,12 @@ Requires:	%{name}-libs = %{version}-%{release}
 # for all but libegroupwise
 Requires:	GConf2-devel >= 2.14.0
 Requires:	ORBit2-devel >= 1:2.14.0
-Requires:	glib2-devel >= 1:2.6.4
+Requires:	glib2-devel >= 1:2.11.1
 Requires:	libbonobo-devel >= 2.14.0
-Requires:	libgnomeui-devel >= 2.14.0
+Requires:	libgnomeui-devel >= 2.14.1
 Requires:	libxml2-devel
 # for libegroupwise
-Requires:	libsoup-devel >= 2.2.92
+Requires:	libsoup-devel >= 2.2.93
 
 %description devel
 This package contains the files necessary to develop applications
@@ -119,9 +119,6 @@ Statyczne biblioteki serwera danych Evolution.
 %patch0 -p1
 %patch1 -p1
 %patch2 -p1
-%patch3 -p1
-
-rm -rf libdb
 
 %build
 %{__glib_gettextize}
@@ -145,12 +142,15 @@ cd ../..
 	%{!?with_kerberos5:--with-krb5=no} \
 	%{?with_ldap:--with-openldap=yes} \
 	%{!?with_ldap:--with-openldap=no} \
+	--enable-gnome-keyring=yes \
 	--enable-gtk-doc \
 	--enable-static \
 	--with-nspr-includes=%{_includedir}/nspr \
 	--with-nspr-libs=%{_libdir} \
 	--with-nss-includes=%{_includedir}/nss \
-	--with-nss-libs=%{_libdir}
+	--with-nss-libs=%{_libdir} \
+	--with-libdb=%{_libdir}
+	
 %{__make} \
 	HTML_DIR=%{_gtkdocdir} \
 	GTKHTML_DATADIR=%{_datadir}/idl
@@ -165,8 +165,6 @@ rm -rf $RPM_BUILD_ROOT
 	pkgconfigdir=%{_pkgconfigdir}
 
 rm $RPM_BUILD_ROOT%{_libdir}/%{name}-%{apiver}/{camel-providers,extensions}/*.{la,a}
-
-rm -r $RPM_BUILD_ROOT%{_datadir}/locale/no
 
 install -d $RPM_BUILD_ROOT%{schemadir}
 install addressbook/backends/ldap/evolutionperson.schema $RPM_BUILD_ROOT%{schemadir}
