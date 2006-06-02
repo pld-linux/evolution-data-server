@@ -39,7 +39,7 @@ BuildRequires:	nspr-devel
 BuildRequires:	nss-devel
 %{?with_ldap:BuildRequires:	openldap-devel >= 2.3.0}
 BuildRequires:	pkgconfig
-BuildRequires:	rpmbuild(macros) >= 1.197
+BuildRequires:	rpmbuild(macros) >= 1.304
 Requires(post,postun):	scrollkeeper
 Requires:	%{name}-libs = %{version}-%{release}
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
@@ -186,30 +186,13 @@ rm -rf $RPM_BUILD_ROOT
 %postun	libs -p /sbin/ldconfig
 
 %post -n openldap-schema-evolutionperson
-if ! grep -q %{schemadir}/evolutionperson.schema /etc/openldap/slapd.conf; then
-	sed -i -e '
-		/^include.*local.schema/{
-			i\
-include		%{schemadir}/evolutionperson.schema
-		}
-	' /etc/openldap/slapd.conf
-fi
-
-if [ -f /var/lock/subsys/ldap ]; then
-	/etc/rc.d/init.d/ldap restart >&2
-fi
+%openldap_schema_register %{schemadir}/evolutionperson.schema
+%service -q ldap restart
 
 %postun -n openldap-schema-evolutionperson
 if [ "$1" = "0" ]; then
-	if grep -q %{schemadir}/evolutionperson.schema /etc/openldap/slapd.conf; then
-		sed -i -e '
-		/^include.*\/usr\/share\/openldap\/schema\/evolutionperson.schema/d
-		' /etc/openldap/slapd.conf
-	fi
-
-	if [ -f /var/lock/subsys/ldap ]; then
-		/etc/rc.d/init.d/ldap restart >&2 || :
-	fi
+	%openldap_schema_unregister %{schemadir}/evolutionperson.schema
+	%service -q ldap restart
 fi
 
 %files -f %{name}.lang
