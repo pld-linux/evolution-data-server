@@ -11,12 +11,12 @@
 Summary:	Evolution data server
 Summary(pl):	Serwer danych Evolution
 Name:		evolution-data-server
-Version:	1.7.3
-Release:	2
+Version:	1.7.4
+Release:	1
 License:	GPL
 Group:		Libraries
 Source0:	http://ftp.gnome.org/pub/gnome/sources/evolution-data-server/1.7/%{name}-%{version}.tar.bz2
-# Source0-md5:	8d1134598c1cefa669ecd42a85e3cd56
+# Source0-md5:	b992845da75badd6eb5fecea022b5a50
 Patch0:		%{name}-GG-IM.patch
 Patch1:		%{name}-workaround-cal-backend-leak.patch
 Patch2:		%{name}-gcc4.patch
@@ -31,9 +31,9 @@ BuildRequires:	gnome-common >= 2.12.0
 BuildRequires:	gnome-keyring-devel >= 0.5.1
 %{?with_kerberos5:BuildRequires:	heimdal-devel >= 0.7}
 BuildRequires:	intltool
-BuildRequires:	libglade2-devel >= 1:2.5.1
-BuildRequires:	libgnomeui-devel >= 2.15.1
-BuildRequires:	libsoup-devel >= 2.2.94
+BuildRequires:	libglade2-devel >= 1:2.6.0
+BuildRequires:	libgnomeui-devel >= 2.15.2
+BuildRequires:	libsoup-devel >= 2.2.95.1
 BuildRequires:	libstdc++-devel
 BuildRequires:	libtool
 BuildRequires:	nspr-devel
@@ -70,8 +70,8 @@ Ten pakiet zawiera evolutionperson.schema dla serwera openldap.
 Summary:	Evolution Data Server library
 Summary(pl):	Biblioteka Evolution Data Server
 Group:		Libraries
-Requires:	libgnomeui >= 2.15.1
-Requires:	libsoup >= 2.2.94
+Requires:	libgnomeui >= 2.15.2
+Requires:	libsoup >= 2.2.95.1
 
 %description libs
 This package contains Evolution Data Server library.
@@ -88,11 +88,11 @@ Requires:	%{name}-libs = %{version}-%{release}
 # for all but libegroupwise
 Requires:	GConf2-devel >= 2.14.0
 Requires:	ORBit2-devel >= 1:2.14.0
-Requires:	glib2-devel >= 1:2.11.3
-Requires:	libgnomeui-devel >= 2.15.1
+Requires:	glib2-devel >= 1:2.12.0
+Requires:	libgnomeui-devel >= 2.15.2
 Requires:	libxml2-devel >= 1:2.6.26
 # for libegroupwise
-Requires:	libsoup-devel >= 2.2.94
+Requires:	libsoup-devel >= 2.2.95.1
 
 %description devel
 This package contains the files necessary to develop applications
@@ -137,7 +137,7 @@ cd calendar/libical
 %{__autoconf}
 %{__automake}
 cd ../..
-
+LDFLAGS="%{rpmldflags} -Wl,--as-needed"
 %configure \
 	%{?with_kerberos5:--with-krb5=%{_prefix}} \
 	%{!?with_kerberos5:--with-krb5=no} \
