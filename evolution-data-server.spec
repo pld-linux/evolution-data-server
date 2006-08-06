@@ -19,6 +19,7 @@ Source0:	http://ftp.gnome.org/pub/gnome/sources/evolution-data-server/1.7/%{name
 # Source0-md5:	07fa3db5725d41093b22d4e90c2ced87
 Patch0:		%{name}-workaround-cal-backend-leak.patch
 Patch1:		%{name}-gcc4.patch
+Patch2:		%{name}-as_needed-fix.patch
 URL:		http://www.ximian.com/products/ximian_evolution/
 BuildRequires:	ORBit2-devel >= 1:2.14.2
 BuildRequires:	autoconf >= 2.52
@@ -43,7 +44,6 @@ Requires(post,postun):	scrollkeeper
 Requires:	%{name}-libs = %{version}-%{release}
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
-%define		filterout_ld	(-Wl,)?--as-needed
 %define		schemadir	/usr/share/openldap/schema
 
 %description
@@ -117,6 +117,7 @@ Statyczne biblioteki serwera danych Evolution.
 %setup -q
 %patch0 -p1
 %patch1 -p1
+%patch2 -p1
 
 %build
 %{__glib_gettextize}
