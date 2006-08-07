@@ -1,12 +1,12 @@
-diff -Nur evolution-data-server-1.7.90.1.orig/libedataserverui/Makefile.am evolution-data-server-1.7.90.1.as_needed-fix/libedataserverui/Makefile.am
---- evolution-data-server-1.7.90.1.orig/libedataserverui/Makefile.am	2006-07-22 10:59:09.000000000 +0000
-+++ evolution-data-server-1.7.90.1.as_needed-fix/libedataserverui/Makefile.am	2006-08-06 18:24:42.000000000 +0000
-@@ -36,7 +36,7 @@
- 
+diff -aurN evolution-data-server-1.7.91.orig/libedataserverui/Makefile.am evolution-data-server-1.7.91/libedataserverui/Makefile.am
+--- evolution-data-server-1.7.91.orig/libedataserverui/Makefile.am	2006-08-07 06:48:26.000000000 +0200
++++ evolution-data-server-1.7.91/libedataserverui/Makefile.am	2006-08-07 22:44:08.109276133 +0200
+@@ -42,7 +42,7 @@
+ else
  libedataserverui_1_2_la_LIBADD = 				\
  	$(top_builddir)/addressbook/libebook/libebook-1.2.la	\
 -	$(E_DATA_SERVER_LIBS)
 +	$(E_DATA_SERVER_UI_LIBS)
+ endif
  
  libedataserverui_1_2_la_LDFLAGS = 										\
- 	-version-info $(LIBEDATASERVERUI_CURRENT):$(LIBEDATASERVERUI_REVISION):$(LIBEDATASERVERUI_AGE) 
