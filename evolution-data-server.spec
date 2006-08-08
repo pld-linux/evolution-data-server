@@ -31,7 +31,7 @@ BuildRequires:	gnome-keyring-devel >= 0.5.1
 %{?with_kerberos5:BuildRequires:	heimdal-devel >= 0.7}
 BuildRequires:	intltool
 BuildRequires:	libglade2-devel >= 1:2.6.0
-BuildRequires:	libgnomeui-devel >= 2.15.90
+BuildRequires:	libgnomeui-devel >= 2.15.91
 BuildRequires:	libsoup-devel >= 2.2.96
 BuildRequires:	libstdc++-devel
 BuildRequires:	libtool
@@ -69,7 +69,7 @@ Ten pakiet zawiera evolutionperson.schema dla serwera openldap.
 Summary:	Evolution Data Server library
 Summary(pl):	Biblioteka Evolution Data Server
 Group:		Libraries
-Requires:	libgnomeui >= 2.15.90
+Requires:	libgnomeui >= 2.15.91
 Requires:	libsoup >= 2.2.96
 
 %description libs
@@ -88,7 +88,7 @@ Requires:	%{name}-libs = %{version}-%{release}
 Requires:	GConf2-devel >= 2.14.0
 Requires:	ORBit2-devel >= 1:2.14.2
 Requires:	glib2-devel >= 1:2.12.1
-Requires:	libgnomeui-devel >= 2.15.90
+Requires:	libgnomeui-devel >= 2.15.91
 Requires:	libxml2-devel >= 1:2.6.26
 # for libegroupwise
 Requires:	libsoup-devel >= 2.2.96
@@ -112,6 +112,18 @@ Evolution data server static libraries.
 
 %description static -l pl
 Statyczne biblioteki serwera danych Evolution.
+
+%package apidocs
+Summary:	e-d-s API documentation
+Summary(pl):	Dokumentacja API e-d-s
+Group:		Documentation
+Requires:	gtk-doc-common
+
+%description apidocs
+e-d-s API documentation.
+
+%description apidocs -l pl
+Dokumentacja API e-d-s.
 
 %prep
 %setup -q
@@ -230,8 +242,11 @@ fi
 %{_libdir}/*.la
 %{_includedir}/*
 %{_pkgconfigdir}/*
-%{_gtkdocdir}/*
 
 %files static
 %defattr(644,root,root,755)
 %{_libdir}/*.a
+
+%files apidocs
+%defattr(644,root,root,755)
+%{_gtkdocdir}/*
