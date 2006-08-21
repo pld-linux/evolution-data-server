@@ -11,12 +11,12 @@
 Summary:	Evolution data server
 Summary(pl):	Serwer danych Evolution
 Name:		evolution-data-server
-Version:	1.7.91
-Release:	3
+Version:	1.7.92
+Release:	1
 License:	GPL
 Group:		Libraries
 Source0:	http://ftp.gnome.org/pub/gnome/sources/evolution-data-server/1.7/%{name}-%{version}.tar.bz2
-# Source0-md5:	384f2bd20966f175fc18e6d1903fe040
+# Source0-md5:	e5cf9b7317b9b495e15b18586cacda6c
 Patch0:		%{name}-workaround-cal-backend-leak.patch
 Patch1:		%{name}-gcc4.patch
 Patch2:		%{name}-as_needed-fix.patch
@@ -27,7 +27,7 @@ BuildRequires:	automake
 BuildRequires:	bison
 BuildRequires:	db-devel
 BuildRequires:	gnome-common >= 2.12.0
-BuildRequires:	gnome-keyring-devel >= 0.5.1
+BuildRequires:	gnome-keyring-devel >= 0.5.2
 %{?with_kerberos5:BuildRequires:	heimdal-devel >= 0.7}
 BuildRequires:	intltool
 BuildRequires:	libglade2-devel >= 1:2.6.0
