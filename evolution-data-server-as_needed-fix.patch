@@ -75,15 +75,3 @@ diff -urN aaa/evolution-data-server-1.7.91/configure.in evolution-data-server-1.
  	LDFLAGS="$LDFLAGS_save"
  	if test "$ac_cv_lib_kerberos4" != "no"; then
  		AC_DEFINE(HAVE_KRB4,1,[Define if you have Krb4])
-diff -urN aaa/evolution-data-server-1.7.91/libedataserverui/Makefile.am evolution-data-server-1.7.91/libedataserverui/Makefile.am
---- aaa/evolution-data-server-1.7.91/libedataserverui/Makefile.am	2006-08-07 06:48:26.000000000 +0200
-+++ evolution-data-server-1.7.91/libedataserverui/Makefile.am	2006-08-13 23:34:10.175852750 +0200
-@@ -42,7 +42,7 @@
- else
- libedataserverui_1_2_la_LIBADD = 				\
- 	$(top_builddir)/addressbook/libebook/libebook-1.2.la	\
--	$(E_DATA_SERVER_LIBS)
-+	$(E_DATA_SERVER_UI_LIBS)
- endif
- 
- libedataserverui_1_2_la_LDFLAGS = 										\
