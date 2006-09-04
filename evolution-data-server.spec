@@ -11,27 +11,25 @@
 Summary:	Evolution data server
 Summary(pl):	Serwer danych Evolution
 Name:		evolution-data-server
-Version:	1.7.92
+Version:	1.8.0
 Release:	1
 License:	GPL
 Group:		Libraries
-Source0:	http://ftp.gnome.org/pub/gnome/sources/evolution-data-server/1.7/%{name}-%{version}.tar.bz2
-# Source0-md5:	e5cf9b7317b9b495e15b18586cacda6c
-Patch0:		%{name}-workaround-cal-backend-leak.patch
-Patch1:		%{name}-gcc4.patch
-Patch2:		%{name}-as_needed-fix.patch
+Source0:	http://ftp.gnome.org/pub/gnome/sources/evolution-data-server/1.8/%{name}-%{version}.tar.bz2
+# Source0-md5:	53f0885731440cb9cf0ca0601dd2105f
+Patch0:		%{name}-as_needed-fix.patch
 URL:		http://www.ximian.com/products/ximian_evolution/
-BuildRequires:	ORBit2-devel >= 1:2.14.2
+BuildRequires:	ORBit2-devel >= 1:2.14.3
 BuildRequires:	autoconf >= 2.52
 BuildRequires:	automake
 BuildRequires:	bison
 BuildRequires:	db-devel
 BuildRequires:	gnome-common >= 2.12.0
-BuildRequires:	gnome-keyring-devel >= 0.5.2
+BuildRequires:	gnome-keyring-devel >= 0.6.0
 %{?with_kerberos5:BuildRequires:	heimdal-devel >= 0.7}
 BuildRequires:	intltool
 BuildRequires:	libglade2-devel >= 1:2.6.0
-BuildRequires:	libgnomeui-devel >= 2.15.91
+BuildRequires:	libgnomeui-devel >= 2.16.0
 BuildRequires:	libsoup-devel >= 2.2.96
 BuildRequires:	libstdc++-devel
 BuildRequires:	libtool
@@ -69,7 +67,7 @@ Ten pakiet zawiera evolutionperson.schema dla serwera openldap.
 Summary:	Evolution Data Server library
 Summary(pl):	Biblioteka Evolution Data Server
 Group:		Libraries
-Requires:	libgnomeui >= 2.15.91
+Requires:	libgnomeui >= 2.16.0
 Requires:	libsoup >= 2.2.96
 
 %description libs
@@ -86,9 +84,9 @@ Requires:	%{name}-libs = %{version}-%{release}
 %{?with_kerberos5:Requires:	heimdal-devel >= 0.7}
 # for all but libegroupwise
 Requires:	GConf2-devel >= 2.14.0
-Requires:	ORBit2-devel >= 1:2.14.2
-Requires:	glib2-devel >= 1:2.12.1
-Requires:	libgnomeui-devel >= 2.15.91
+Requires:	ORBit2-devel >= 1:2.14.3
+Requires:	glib2-devel >= 1:2.12.3
+Requires:	libgnomeui-devel >= 2.16.0
 Requires:	libxml2-devel >= 1:2.6.26
 # for libegroupwise
 Requires:	libsoup-devel >= 2.2.96
@@ -128,8 +126,6 @@ Dokumentacja API e-d-s.
 %prep
 %setup -q
 %patch0 -p1
-%patch1 -p1
-%patch2 -p1
 
 %build
 %{__glib_gettextize}
