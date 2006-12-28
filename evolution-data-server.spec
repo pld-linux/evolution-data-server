@@ -16,7 +16,7 @@ Release:	1
 License:	GPL
 Group:		Libraries
 Source0:	http://ftp.gnome.org/pub/gnome/sources/evolution-data-server/1.8/%{name}-%{version}.tar.bz2
-# Source0-md5:	8c2fe35bcdc457e09728ed213e915d01
+# Source0-md5:	fe7545411f7417bd246e15ae07ae9f54
 Patch0:		%{name}-as_needed-fix.patch
 URL:		http://www.ximian.com/products/ximian_evolution/
 BuildRequires:	ORBit2-devel >= 1:2.14.4
