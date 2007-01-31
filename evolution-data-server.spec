@@ -11,12 +11,12 @@
 Summary:	Evolution data server
 Summary(pl):	Serwer danych Evolution
 Name:		evolution-data-server
-Version:	1.8.2
+Version:	1.8.3
 Release:	1
 License:	GPL
 Group:		Libraries
 Source0:	http://ftp.gnome.org/pub/gnome/sources/evolution-data-server/1.8/%{name}-%{version}.tar.bz2
-# Source0-md5:	fe7545411f7417bd246e15ae07ae9f54
+# Source0-md5:	f6a824f2553fd97555b8785a452fb6ab
 Patch0:		%{name}-as_needed-fix.patch
 URL:		http://www.ximian.com/products/ximian_evolution/
 BuildRequires:	ORBit2-devel >= 1:2.14.4
@@ -30,7 +30,7 @@ BuildRequires:	gnome-keyring-devel >= 0.6.0
 BuildRequires:	intltool
 BuildRequires:	libglade2-devel >= 1:2.6.0
 BuildRequires:	libgnomeui-devel >= 2.16.1
-BuildRequires:	libsoup-devel >= 2.2.98
+BuildRequires:	libsoup-devel >= 2.2.99
 BuildRequires:	libstdc++-devel
 BuildRequires:	libtool
 BuildRequires:	nspr-devel
@@ -68,7 +68,7 @@ Summary:	Evolution Data Server library
 Summary(pl):	Biblioteka Evolution Data Server
 Group:		Libraries
 Requires:	libgnomeui >= 2.16.1
-Requires:	libsoup >= 2.2.98
+Requires:	libsoup >= 2.2.99
 
 %description libs
 This package contains Evolution Data Server library.
@@ -89,7 +89,7 @@ Requires:	glib2-devel >= 1:2.12.6
 Requires:	libgnomeui-devel >= 2.16.1
 Requires:	libxml2-devel >= 1:2.6.27
 # for libegroupwise
-Requires:	libsoup-devel >= 2.2.98
+Requires:	libsoup-devel >= 2.2.99
 
 %description devel
 This package contains the files necessary to develop applications
@@ -156,7 +156,7 @@ cd ../..
 	--with-nss-includes=%{_includedir}/nss \
 	--with-nss-libs=%{_libdir} \
 	--with-libdb=%{_libdir}
-	
+
 %{__make} \
 	HTML_DIR=%{_gtkdocdir} \
 	GTKHTML_DATADIR=%{_datadir}/idl
