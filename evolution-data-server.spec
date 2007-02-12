@@ -9,7 +9,7 @@
 %define		basever		1.8
 %define		apiver		1.2
 Summary:	Evolution data server
-Summary(pl):	Serwer danych Evolution
+Summary(pl.UTF-8):   Serwer danych Evolution
 Name:		evolution-data-server
 Version:	1.8.3
 Release:	1
@@ -47,12 +47,12 @@ BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 %description
 The Evolution data server for the calendar and addressbook.
 
-%description -l pl
-Serwer danych Evolution dla kalendarza i ksi±¿ki adresowej.
+%description -l pl.UTF-8
+Serwer danych Evolution dla kalendarza i ksiÄ…Å¼ki adresowej.
 
 %package -n openldap-schema-evolutionperson
 Summary:	evolutionperson LDAP schema
-Summary(pl):	Schemat LDAP evolutionperson
+Summary(pl.UTF-8):   Schemat LDAP evolutionperson
 Group:		Networking/Daemons
 Requires(post,postun):	sed >= 4.0
 Requires:	openldap-servers
@@ -60,12 +60,12 @@ Requires:	openldap-servers
 %description -n openldap-schema-evolutionperson
 This package contains evolutionperson.schema for openldap server.
 
-%description -n openldap-schema-evolutionperson -l pl
+%description -n openldap-schema-evolutionperson -l pl.UTF-8
 Ten pakiet zawiera evolutionperson.schema dla serwera openldap.
 
 %package libs
 Summary:	Evolution Data Server library
-Summary(pl):	Biblioteka Evolution Data Server
+Summary(pl.UTF-8):   Biblioteka Evolution Data Server
 Group:		Libraries
 Requires:	libgnomeui >= 2.16.1
 Requires:	libsoup >= 2.2.99
@@ -73,12 +73,12 @@ Requires:	libsoup >= 2.2.99
 %description libs
 This package contains Evolution Data Server library.
 
-%description libs -l pl
-Ten pakiet zawiera bibliotekê Evolution Data Server.
+%description libs -l pl.UTF-8
+Ten pakiet zawiera bibliotekÄ™ Evolution Data Server.
 
 %package devel
 Summary:	Evolution data server development files
-Summary(pl):	Pliki programistyczne serwera danych evolution
+Summary(pl.UTF-8):   Pliki programistyczne serwera danych evolution
 Group:		Development/Libraries
 Requires:	%{name}-libs = %{version}-%{release}
 %{?with_kerberos5:Requires:	heimdal-devel >= 0.7}
@@ -95,32 +95,32 @@ Requires:	libsoup-devel >= 2.2.99
 This package contains the files necessary to develop applications
 using Evolution's data server libraries.
 
-%description devel -l pl
+%description devel -l pl.UTF-8
 Ten pakiet zawiera pliki potrzebne do tworzenia aplikacji
-korzystaj±cych z bibliotek serwera danych Evolution.
+korzystajÄ…cych z bibliotek serwera danych Evolution.
 
 %package static
 Summary:	Evolution data server static libraries
-Summary(pl):	Statyczne biblioteki serwera danych Evolution
+Summary(pl.UTF-8):   Statyczne biblioteki serwera danych Evolution
 Group:		Development/Libraries
 Requires:	%{name}-devel = %{version}-%{release}
 
 %description static
 Evolution data server static libraries.
 
-%description static -l pl
+%description static -l pl.UTF-8
 Statyczne biblioteki serwera danych Evolution.
 
 %package apidocs
 Summary:	e-d-s API documentation
-Summary(pl):	Dokumentacja API e-d-s
+Summary(pl.UTF-8):   Dokumentacja API e-d-s
 Group:		Documentation
 Requires:	gtk-doc-common
 
 %description apidocs
 e-d-s API documentation.
 
-%description apidocs -l pl
+%description apidocs -l pl.UTF-8
 Dokumentacja API e-d-s.
 
 %prep
