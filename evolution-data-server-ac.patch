@@ -1,0 +1,11 @@
+--- evolution-data-server-1.6.3/configure.in.orig	2007-02-17 21:08:22.924760000 +0000
++++ evolution-data-server-1.6.3/configure.in	2007-02-17 21:21:23.569547750 +0000
+@@ -314,7 +314,7 @@
+ }],[
+ AC_DEFINE(HAVE_LKSTRFTIME, 1, [strftime supports use of l and k])
+ ac_cv_lkstrftime=yes
+-],ac_cv_lkstrftime=no,ac_cv_lkstrftime=no])
++],[ac_cv_lkstrftime=no],[ac_cv_lkstrftime=no])
+ AC_MSG_RESULT($ac_cv_lkstrftime)
+ 
+ dnl ********************************************************************************
