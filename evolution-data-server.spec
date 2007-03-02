@@ -6,31 +6,32 @@
 %bcond_without	kerberos5	# build without kerberos5 support
 %bcond_without	ldap		# build without ldap support
 #
-%define		basever		1.8
+%define		basever		1.10
 %define		apiver		1.2
 Summary:	Evolution data server
-Summary(pl):	Serwer danych Evolution
+Summary(pl.UTF-8):	Serwer danych Evolution
 Name:		evolution-data-server
-Version:	1.8.0
+Version:	1.9.92
 Release:	1
 License:	GPL
 Group:		Libraries
-Source0:	http://ftp.gnome.org/pub/gnome/sources/evolution-data-server/1.8/%{name}-%{version}.tar.bz2
-# Source0-md5:	53f0885731440cb9cf0ca0601dd2105f
+Source0:	http://ftp.gnome.org/pub/gnome/sources/evolution-data-server/1.9/%{name}-%{version}.tar.bz2
+# Source0-md5:	01f7056966003c21e02272edfb5d44a2
 Patch0:		%{name}-as_needed-fix.patch
 URL:		http://www.ximian.com/products/ximian_evolution/
-BuildRequires:	ORBit2-devel >= 1:2.14.3
+BuildRequires:	ORBit2-devel >= 1:2.14.7
 BuildRequires:	autoconf >= 2.52
 BuildRequires:	automake
 BuildRequires:	bison
 BuildRequires:	db-devel
 BuildRequires:	gnome-common >= 2.12.0
-BuildRequires:	gnome-keyring-devel >= 0.6.0
+BuildRequires:	gnome-keyring-devel >= 0.7.92
+BuildRequires:	gtk-doc >= 1.8
 %{?with_kerberos5:BuildRequires:	heimdal-devel >= 0.7}
-BuildRequires:	intltool
+BuildRequires:	intltool >= 0.35.5
 BuildRequires:	libglade2-devel >= 1:2.6.0
-BuildRequires:	libgnomeui-devel >= 2.16.0
-BuildRequires:	libsoup-devel >= 2.2.96
+BuildRequires:	libgnomeui-devel >= 2.17.92
+BuildRequires:	libsoup-devel >= 2.2.100
 BuildRequires:	libstdc++-devel
 BuildRequires:	libtool
 BuildRequires:	nspr-devel
@@ -47,12 +48,12 @@ BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 %description
 The Evolution data server for the calendar and addressbook.
 
-%description -l pl
-Serwer danych Evolution dla kalendarza i ksi±¿ki adresowej.
+%description -l pl.UTF-8
+Serwer danych Evolution dla kalendarza i ksiÄ…Å¼ki adresowej.
 
 %package -n openldap-schema-evolutionperson
 Summary:	evolutionperson LDAP schema
-Summary(pl):	Schemat LDAP evolutionperson
+Summary(pl.UTF-8):	Schemat LDAP evolutionperson
 Group:		Networking/Daemons
 Requires(post,postun):	sed >= 4.0
 Requires:	openldap-servers
@@ -60,67 +61,67 @@ Requires:	openldap-servers
 %description -n openldap-schema-evolutionperson
 This package contains evolutionperson.schema for openldap server.
 
-%description -n openldap-schema-evolutionperson -l pl
+%description -n openldap-schema-evolutionperson -l pl.UTF-8
 Ten pakiet zawiera evolutionperson.schema dla serwera openldap.
 
 %package libs
 Summary:	Evolution Data Server library
-Summary(pl):	Biblioteka Evolution Data Server
+Summary(pl.UTF-8):	Biblioteka Evolution Data Server
 Group:		Libraries
-Requires:	libgnomeui >= 2.16.0
-Requires:	libsoup >= 2.2.96
+Requires:	libgnomeui >= 2.17.92
+Requires:	libsoup >= 2.2.100
 
 %description libs
 This package contains Evolution Data Server library.
 
-%description libs -l pl
-Ten pakiet zawiera bibliotekê Evolution Data Server.
+%description libs -l pl.UTF-8
+Ten pakiet zawiera bibliotekÄ™ Evolution Data Server.
 
 %package devel
 Summary:	Evolution data server development files
-Summary(pl):	Pliki programistyczne serwera danych evolution
+Summary(pl.UTF-8):	Pliki programistyczne serwera danych evolution
 Group:		Development/Libraries
 Requires:	%{name}-libs = %{version}-%{release}
 %{?with_kerberos5:Requires:	heimdal-devel >= 0.7}
 # for all but libegroupwise
-Requires:	GConf2-devel >= 2.14.0
-Requires:	ORBit2-devel >= 1:2.14.3
-Requires:	glib2-devel >= 1:2.12.3
-Requires:	libgnomeui-devel >= 2.16.0
-Requires:	libxml2-devel >= 1:2.6.26
+Requires:	GConf2-devel >= 2.16.1
+Requires:	ORBit2-devel >= 1:2.14.7
+Requires:	glib2-devel >= 1:2.12.9
+Requires:	libgnomeui-devel >= 2.17.92
+Requires:	libxml2-devel >= 1:2.6.27
 # for libegroupwise
-Requires:	libsoup-devel >= 2.2.96
+Requires:	libsoup-devel >= 2.2.100
 
 %description devel
 This package contains the files necessary to develop applications
 using Evolution's data server libraries.
 
-%description devel -l pl
+%description devel -l pl.UTF-8
 Ten pakiet zawiera pliki potrzebne do tworzenia aplikacji
-korzystaj±cych z bibliotek serwera danych Evolution.
+korzystajÄ…cych z bibliotek serwera danych Evolution.
 
 %package static
 Summary:	Evolution data server static libraries
-Summary(pl):	Statyczne biblioteki serwera danych Evolution
+Summary(pl.UTF-8):	Statyczne biblioteki serwera danych Evolution
 Group:		Development/Libraries
 Requires:	%{name}-devel = %{version}-%{release}
 
 %description static
 Evolution data server static libraries.
 
-%description static -l pl
+%description static -l pl.UTF-8
 Statyczne biblioteki serwera danych Evolution.
 
 %package apidocs
 Summary:	e-d-s API documentation
-Summary(pl):	Dokumentacja API e-d-s
+Summary(pl.UTF-8):	Dokumentacja API e-d-s
 Group:		Documentation
 Requires:	gtk-doc-common
 
 %description apidocs
 e-d-s API documentation.
 
-%description apidocs -l pl
+%description apidocs -l pl.UTF-8
 Dokumentacja API e-d-s.
 
 %prep
@@ -156,7 +157,7 @@ cd ../..
 	--with-nss-includes=%{_includedir}/nss \
 	--with-nss-libs=%{_libdir} \
 	--with-libdb=%{_libdir}
-	
+
 %{__make} \
 	HTML_DIR=%{_gtkdocdir} \
 	GTKHTML_DATADIR=%{_datadir}/idl
@@ -221,7 +222,7 @@ fi
 %{_datadir}/%{name}-%{basever}/glade
 %{_datadir}/%{name}-%{basever}/weather
 %{_datadir}/%{name}-%{basever}/zoneinfo
-%{_pixmapsdir}/%{name}-%{basever}
+%{_pixmapsdir}/%{name}
 
 %files -n openldap-schema-evolutionperson
 %defattr(644,root,root,755)
