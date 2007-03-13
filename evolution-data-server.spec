@@ -6,31 +6,32 @@
 %bcond_without	kerberos5	# build without kerberos5 support
 %bcond_without	ldap		# build without ldap support
 #
-%define		basever		1.8
+%define		basever		1.10
 %define		apiver		1.2
 Summary:	Evolution data server
 Summary(pl.UTF-8):	Serwer danych Evolution
 Name:		evolution-data-server
-Version:	1.8.3
+Version:	1.10.0
 Release:	1
 License:	GPL
 Group:		Libraries
-Source0:	http://ftp.gnome.org/pub/gnome/sources/evolution-data-server/1.8/%{name}-%{version}.tar.bz2
-# Source0-md5:	f6a824f2553fd97555b8785a452fb6ab
+Source0:	http://ftp.gnome.org/pub/gnome/sources/evolution-data-server/1.10/%{name}-%{version}.tar.bz2
+# Source0-md5:	390ea134306b667a2d77b7e859c8cba0
 Patch0:		%{name}-as_needed-fix.patch
 URL:		http://www.ximian.com/products/ximian_evolution/
-BuildRequires:	ORBit2-devel >= 1:2.14.4
+BuildRequires:	ORBit2-devel >= 1:2.14.7
 BuildRequires:	autoconf >= 2.52
 BuildRequires:	automake
 BuildRequires:	bison
 BuildRequires:	db-devel
 BuildRequires:	gnome-common >= 2.12.0
-BuildRequires:	gnome-keyring-devel >= 0.6.0
+BuildRequires:	gnome-keyring-devel >= 0.8
+BuildRequires:	gtk-doc >= 1.8
 %{?with_kerberos5:BuildRequires:	heimdal-devel >= 0.7}
-BuildRequires:	intltool
+BuildRequires:	intltool >= 0.35.5
 BuildRequires:	libglade2-devel >= 1:2.6.0
-BuildRequires:	libgnomeui-devel >= 2.16.1
-BuildRequires:	libsoup-devel >= 2.2.99
+BuildRequires:	libgnomeui-devel >= 2.18.0
+BuildRequires:	libsoup-devel >= 2.2.100
 BuildRequires:	libstdc++-devel
 BuildRequires:	libtool
 BuildRequires:	nspr-devel
@@ -67,8 +68,8 @@ Ten pakiet zawiera evolutionperson.schema dla serwera openldap.
 Summary:	Evolution Data Server library
 Summary(pl.UTF-8):	Biblioteka Evolution Data Server
 Group:		Libraries
-Requires:	libgnomeui >= 2.16.1
-Requires:	libsoup >= 2.2.99
+Requires:	libgnomeui >= 2.18.0
+Requires:	libsoup >= 2.2.100
 
 %description libs
 This package contains Evolution Data Server library.
@@ -83,13 +84,13 @@ Group:		Development/Libraries
 Requires:	%{name}-libs = %{version}-%{release}
 %{?with_kerberos5:Requires:	heimdal-devel >= 0.7}
 # for all but libegroupwise
-Requires:	GConf2-devel >= 2.16.0
-Requires:	ORBit2-devel >= 1:2.14.4
-Requires:	glib2-devel >= 1:2.12.6
-Requires:	libgnomeui-devel >= 2.16.1
+Requires:	GConf2-devel >= 2.18.0.1
+Requires:	ORBit2-devel >= 1:2.14.7
+Requires:	glib2-devel >= 1:2.12.11
+Requires:	libgnomeui-devel >= 2.18.0
 Requires:	libxml2-devel >= 1:2.6.27
 # for libegroupwise
-Requires:	libsoup-devel >= 2.2.99
+Requires:	libsoup-devel >= 2.2.100
 
 %description devel
 This package contains the files necessary to develop applications
@@ -221,7 +222,7 @@ fi
 %{_datadir}/%{name}-%{basever}/glade
 %{_datadir}/%{name}-%{basever}/weather
 %{_datadir}/%{name}-%{basever}/zoneinfo
-%{_pixmapsdir}/%{name}-%{basever}
+%{_pixmapsdir}/%{name}
 
 %files -n openldap-schema-evolutionperson
 %defattr(644,root,root,755)
