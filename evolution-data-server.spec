@@ -11,12 +11,12 @@
 Summary:	Evolution data server
 Summary(pl.UTF-8):	Serwer danych Evolution
 Name:		evolution-data-server
-Version:	1.10.2
+Version:	1.10.3.1
 Release:	1
 License:	GPL
 Group:		Libraries
 Source0:	http://ftp.gnome.org/pub/gnome/sources/evolution-data-server/1.10/%{name}-%{version}.tar.bz2
-# Source0-md5:	790dfc97a917dff8384dcb7cad42f87f
+# Source0-md5:	c6f804ac25f7c75dc9502b739bf99301
 Patch0:		%{name}-as_needed-fix.patch
 URL:		http://www.ximian.com/products/ximian_evolution/
 BuildRequires:	ORBit2-devel >= 1:2.14.7
