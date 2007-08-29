@@ -6,31 +6,30 @@
 %bcond_without	kerberos5	# build without kerberos5 support
 %bcond_without	ldap		# build without ldap support
 #
-%define		basever		1.10
+%define		basever		1.12
 %define		apiver		1.2
 Summary:	Evolution data server
 Summary(pl.UTF-8):	Serwer danych Evolution
 Name:		evolution-data-server
-Version:	1.10.3.1
-Release:	2
+Version:	1.11.91
+Release:	1
 License:	GPL
 Group:		Libraries
-Source0:	http://ftp.gnome.org/pub/gnome/sources/evolution-data-server/1.10/%{name}-%{version}.tar.bz2
-# Source0-md5:	c6f804ac25f7c75dc9502b739bf99301
-Patch0:		%{name}-as_needed-fix.patch
+Source0:	http://ftp.gnome.org/pub/gnome/sources/evolution-data-server/1.11/%{name}-%{version}.tar.bz2
+# Source0-md5:	5f405c32980d086091efbcedd4655724
 URL:		http://www.ximian.com/products/ximian_evolution/
-BuildRequires:	ORBit2-devel >= 1:2.14.7
+BuildRequires:	ORBit2-devel >= 1:2.14.8
 BuildRequires:	autoconf >= 2.52
 BuildRequires:	automake
 BuildRequires:	bison
 BuildRequires:	db-devel
 BuildRequires:	gnome-common >= 2.18.0
-BuildRequires:	gnome-keyring-devel >= 0.8.1
+BuildRequires:	gnome-keyring-devel >= 2.19.91
 BuildRequires:	gtk-doc >= 1.8
 %{?with_kerberos5:BuildRequires:	krb5-devel}
-BuildRequires:	intltool >= 0.35.5
-BuildRequires:	libglade2-devel >= 1:2.6.0
-BuildRequires:	libgnomeui-devel >= 2.18.1
+BuildRequires:	intltool >= 0.36.1
+BuildRequires:	libglade2-devel >= 1:2.6.2
+BuildRequires:	libgnomeui-devel >= 2.19.1
 BuildRequires:	libsoup-devel >= 2.2.100
 BuildRequires:	libstdc++-devel
 BuildRequires:	libtool
@@ -68,7 +67,7 @@ Ten pakiet zawiera evolutionperson.schema dla serwera openldap.
 Summary:	Evolution Data Server library
 Summary(pl.UTF-8):	Biblioteka Evolution Data Server
 Group:		Libraries
-Requires:	libgnomeui >= 2.18.1
+Requires:	libgnomeui >= 2.19.1
 Requires:	libsoup >= 2.2.100
 
 %description libs
@@ -84,11 +83,11 @@ Group:		Development/Libraries
 Requires:	%{name}-libs = %{version}-%{release}
 %{?with_kerberos5:Requires:	krb5-devel}
 # for all but libegroupwise
-Requires:	GConf2-devel >= 2.18.0.1
-Requires:	ORBit2-devel >= 1:2.14.7
-Requires:	glib2-devel >= 1:2.12.11
-Requires:	libgnomeui-devel >= 2.18.1
-Requires:	libxml2-devel >= 1:2.6.27
+Requires:	GConf2-devel >= 2.19.1
+Requires:	ORBit2-devel >= 1:2.14.8
+Requires:	glib2-devel >= 1:2.14.0
+Requires:	libgnomeui-devel >= 2.19.1
+Requires:	libxml2-devel >= 1:2.6.29
 # for libegroupwise
 Requires:	libsoup-devel >= 2.2.100
 
@@ -126,7 +125,6 @@ Dokumentacja API e-d-s.
 
 %prep
 %setup -q
-%patch0 -p1
 
 %build
 %{__glib_gettextize}
@@ -221,7 +219,6 @@ fi
 %dir %{_datadir}/%{name}-%{basever}
 %{_datadir}/%{name}-%{basever}/glade
 %{_datadir}/%{name}-%{basever}/weather
-%{_datadir}/%{name}-%{basever}/zoneinfo
 %{_pixmapsdir}/%{name}
 
 %files -n openldap-schema-evolutionperson
