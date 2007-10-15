@@ -11,25 +11,25 @@
 Summary:	Evolution data server
 Summary(pl.UTF-8):	Serwer danych Evolution
 Name:		evolution-data-server
-Version:	1.12.0
+Version:	1.12.1
 Release:	1
 License:	GPL
 Group:		Libraries
 Source0:	http://ftp.gnome.org/pub/GNOME/sources/evolution-data-server/1.12/%{name}-%{version}.tar.bz2
-# Source0-md5:	787cfe9d652f46395a9adce056bdb286
+# Source0-md5:	5b4d855ed1ceaaab7db14b50133b5252
 URL:		http://www.gnome.org/projects/evolution/
 BuildRequires:	ORBit2-devel >= 1:2.14.8
 BuildRequires:	autoconf >= 2.52
 BuildRequires:	automake
 BuildRequires:	bison
 BuildRequires:	db-devel
-BuildRequires:	gnome-common >= 2.18.0
-BuildRequires:	gnome-keyring-devel >= 2.19.91
+BuildRequires:	gnome-common >= 2.20.0
+BuildRequires:	gnome-keyring-devel >= 2.20.0
 BuildRequires:	gtk-doc >= 1.8
 %{?with_kerberos5:BuildRequires:	krb5-devel}
 BuildRequires:	intltool >= 0.36.1
 BuildRequires:	libglade2-devel >= 1:2.6.2
-BuildRequires:	libgnomeui-devel >= 2.19.1
+BuildRequires:	libgnomeui-devel >= 2.20.0
 BuildRequires:	libsoup-devel >= 2.2.100
 BuildRequires:	libstdc++-devel
 BuildRequires:	libtool
@@ -67,7 +67,7 @@ Ten pakiet zawiera evolutionperson.schema dla serwera openldap.
 Summary:	Evolution Data Server library
 Summary(pl.UTF-8):	Biblioteka Evolution Data Server
 Group:		Libraries
-Requires:	libgnomeui >= 2.19.1
+Requires:	libgnomeui >= 2.20.0
 Requires:	libsoup >= 2.2.100
 
 %description libs
@@ -83,10 +83,10 @@ Group:		Development/Libraries
 Requires:	%{name}-libs = %{version}-%{release}
 %{?with_kerberos5:Requires:	krb5-devel}
 # for all but libegroupwise
-Requires:	GConf2-devel >= 2.19.1
+Requires:	GConf2-devel >= 2.20.0
 Requires:	ORBit2-devel >= 1:2.14.8
-Requires:	glib2-devel >= 1:2.14.0
-Requires:	libgnomeui-devel >= 2.19.1
+Requires:	glib2-devel >= 1:2.14.1
+Requires:	libgnomeui-devel >= 2.20.0
 Requires:	libxml2-devel >= 1:2.6.29
 # for libegroupwise
 Requires:	libsoup-devel >= 2.2.100
