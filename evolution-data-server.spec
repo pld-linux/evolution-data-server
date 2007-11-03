@@ -35,7 +35,7 @@ BuildRequires:	libstdc++-devel
 BuildRequires:	libtool
 BuildRequires:	nspr-devel
 BuildRequires:	nss-devel
-%{?with_ldap:BuildRequires:	openldap-devel >= 2.3.0}
+%{?with_ldap:BuildRequires:	openldap-devel >= 2.4.6}
 BuildRequires:	pkgconfig
 BuildRequires:	rpmbuild(macros) >= 1.304
 Requires(post,postun):	scrollkeeper
