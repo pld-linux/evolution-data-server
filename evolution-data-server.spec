@@ -12,7 +12,7 @@ Summary:	Evolution data server
 Summary(pl.UTF-8):	Serwer danych Evolution
 Name:		evolution-data-server
 Version:	1.12.1
-Release:	2
+Release:	3
 License:	GPL
 Group:		Libraries
 Source0:	http://ftp.gnome.org/pub/GNOME/sources/evolution-data-server/1.12/%{name}-%{version}.tar.bz2
@@ -40,6 +40,8 @@ BuildRequires:	pkgconfig
 BuildRequires:	rpmbuild(macros) >= 1.304
 Requires(post,postun):	scrollkeeper
 Requires:	%{name}-libs = %{version}-%{release}
+# sr@Latn vs. sr@latin
+Conflicts:	glibc-misc < 6:2.7
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %define		schemadir	/usr/share/openldap/schema
@@ -174,6 +176,8 @@ rm $RPM_BUILD_ROOT%{_libdir}/%{name}-%{apiver}/{camel-providers,extensions}/*.{l
 install -d $RPM_BUILD_ROOT%{schemadir}
 install addressbook/backends/ldap/evolutionperson.schema $RPM_BUILD_ROOT%{schemadir}
 
+[ -d $RPM_BUILD_ROOT%{_datadir}/locale/sr@latin ] || \
+	mv -f $RPM_BUILD_ROOT%{_datadir}/locale/sr@{Latn,latin}
 %find_lang %{name} --all-name
 
 %clean
