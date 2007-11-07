@@ -23,6 +23,7 @@ BuildRequires:	ORBit2-devel >= 1:2.14.8
 BuildRequires:	autoconf >= 2.52
 BuildRequires:	automake
 BuildRequires:	bison
+BuildRequires:	cyrus-sasl-devel
 BuildRequires:	db-devel
 BuildRequires:	gnome-common >= 2.20.0
 BuildRequires:	gnome-keyring-devel >= 2.20.0
@@ -37,6 +38,7 @@ BuildRequires:	libtool
 BuildRequires:	nspr-devel
 BuildRequires:	nss-devel
 %{?with_ldap:BuildRequires:	openldap-evolution-devel >= 2.4.6}
+BuildRequires:	openssl-devel
 BuildRequires:	pkgconfig
 BuildRequires:	rpmbuild(macros) >= 1.304
 Requires(post,postun):	scrollkeeper
