@@ -12,11 +12,12 @@ Summary:	Evolution data server
 Summary(pl.UTF-8):	Serwer danych Evolution
 Name:		evolution-data-server
 Version:	1.12.1
-Release:	3
+Release:	4
 License:	GPL
 Group:		Libraries
 Source0:	http://ftp.gnome.org/pub/GNOME/sources/evolution-data-server/1.12/%{name}-%{version}.tar.bz2
 # Source0-md5:	5b4d855ed1ceaaab7db14b50133b5252
+Patch0:		%{name}-ntlm-ldap.patch
 URL:		http://www.gnome.org/projects/evolution/
 BuildRequires:	ORBit2-devel >= 1:2.14.8
 BuildRequires:	autoconf >= 2.52
@@ -35,7 +36,7 @@ BuildRequires:	libstdc++-devel
 BuildRequires:	libtool
 BuildRequires:	nspr-devel
 BuildRequires:	nss-devel
-%{?with_ldap:BuildRequires:	openldap-devel >= 2.4.6}
+%{?with_ldap:BuildRequires:	openldap-evolution-devel >= 2.4.6}
 BuildRequires:	pkgconfig
 BuildRequires:	rpmbuild(macros) >= 1.304
 Requires(post,postun):	scrollkeeper
@@ -127,6 +128,7 @@ Dokumentacja API e-d-s.
 
 %prep
 %setup -q
+%patch0 -p1
 
 %build
 %{__glib_gettextize}
@@ -144,10 +146,21 @@ cd calendar/libical
 %{__autoconf}
 %{__automake}
 cd ../..
+
+# Set LIBS so that configure will be able to link with static LDAP libraries,
+# which depend on Cyrus SASL and OpenSSL.
+if pkg-config openssl ; then
+	LIBS="-lsasl2 `pkg-config --libs openssl`"
+else
+	LIBS="-lsasl2 -lssl -lcrypto"
+fi
+export LIBS
+
 %configure \
 	%{?with_kerberos5:--with-krb5=%{_prefix}} \
 	%{!?with_kerberos5:--with-krb5=no} \
-	%{?with_ldap:--with-openldap=yes} \
+	%{?with_ldap:--with-openldap=%{_libdir}/evolution-openldap} \
+	%{?with_ldap:--with-static-ldap=yes} \
 	%{!?with_ldap:--with-openldap=no} \
 	--enable-gnome-keyring=yes \
 	--enable-gtk-doc \
