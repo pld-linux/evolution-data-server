@@ -11,12 +11,12 @@
 Summary:	Evolution data server
 Summary(pl.UTF-8):	Serwer danych Evolution
 Name:		evolution-data-server
-Version:	2.21.90
+Version:	2.21.91
 Release:	1
 License:	LGPL v2+
 Group:		X11/Libraries
 Source0:	http://ftp.gnome.org/pub/GNOME/sources/evolution-data-server/2.21/%{name}-%{version}.tar.bz2
-# Source0-md5:	7ad8abae672ccfd785888d191dce058b
+# Source0-md5:	abf3fde5f18c261c111b0382f9e2e424
 Patch0:		%{name}-ntlm-ldap.patch
 URL:		http://www.gnome.org/projects/evolution/
 BuildRequires:	GConf2-devel >= 2.21.90
@@ -29,18 +29,18 @@ BuildRequires:	db-devel
 BuildRequires:	gettext-devel
 BuildRequires:	glib2-devel >= 1:2.15.4
 BuildRequires:	gnome-common >= 2.20.0
-BuildRequires:	gnome-keyring-devel >= 2.21.5
-BuildRequires:	gnome-vfs2-devel >= 2.20.0
+BuildRequires:	gnome-keyring-devel >= 2.21.91
+BuildRequires:	gnome-vfs2-devel >= 2.21.90
 BuildRequires:	gtk+2-devel >= 2:2.12.5
 BuildRequires:	gtk-doc >= 1.9
-%{?with_kerberos5:BuildRequires:	krb5-devel}
 BuildRequires:	intltool >= 0.37.0
+%{?with_kerberos5:BuildRequires:	krb5-devel}
 BuildRequires:	libglade2-devel >= 1:2.6.2
 BuildRequires:	libgnomeui-devel >= 2.21.90
-BuildRequires:	libsoup-devel >= 2.3.0.1
-BuildRequires:	libxml2-devel >= 1:2.6.31
+BuildRequires:	libsoup-devel >= 2.3.2
 BuildRequires:	libstdc++-devel
 BuildRequires:	libtool
+BuildRequires:	libxml2-devel >= 1:2.6.31
 BuildRequires:	nspr-devel
 BuildRequires:	nss-devel
 %{?with_ldap:BuildRequires:	openldap-evolution-devel >= 2.4.6}
@@ -80,7 +80,7 @@ Summary:	Evolution Data Server library
 Summary(pl.UTF-8):	Biblioteka Evolution Data Server
 Group:		X11/Libraries
 Requires:	libgnomeui >= 2.21.90
-Requires:	libsoup >= 2.3.0.1
+Requires:	libsoup >= 2.3.2
 
 %description libs
 This package contains Evolution Data Server library.
@@ -97,13 +97,13 @@ Requires:	%{name}-libs = %{version}-%{release}
 # for all but libegroupwise
 Requires:	GConf2-devel >= 2.21.90
 Requires:	ORBit2-devel >= 1:2.14.8
-Requires:	glib2-devel >= 1:2.15.4
+Requires:	glib2-devel >= 1:2.15.5
+Requires:	gtk+2-devel >= 2:2.12.5
+Requires:	libglade2-devel >= 1:2.6.2
 Requires:	libgnomeui-devel >= 2.21.90
 Requires:	libxml2-devel >= 1:2.6.31
-Requires:	libglade2-devel >= 1:2.6.2
-Requires:	gtk+2-devel >= 2:2.12.5
 # for libegroupwise
-Requires:	libsoup-devel >= 2.3.0.1
+Requires:	libsoup-devel >= 2.3.2
 
 %description devel
 This package contains the files necessary to develop applications
@@ -116,7 +116,7 @@ korzystających z bibliotek serwera danych Evolution.
 %package static
 Summary:	Evolution data server static libraries
 Summary(pl.UTF-8):	Statyczne biblioteki serwera danych Evolution
-Group:		Development/Libraries
+Group:		X11/Development/Libraries
 Requires:	%{name}-devel = %{version}-%{release}
 
 %description static
