@@ -11,14 +11,13 @@
 Summary:	Evolution data server
 Summary(pl.UTF-8):	Serwer danych Evolution
 Name:		evolution-data-server
-Version:	2.22.1.1
-Release:	2
+Version:	2.22.2
+Release:	1
 License:	LGPL v2+
 Group:		X11/Libraries
 Source0:	http://ftp.gnome.org/pub/GNOME/sources/evolution-data-server/2.22/%{name}-%{version}.tar.bz2
-# Source0-md5:	53517ab651ba2a6fe57e00ef438c2ccb
+# Source0-md5:	4f00c92faf5fa85f3a141ebca401fc52
 Patch0:		%{name}-ntlm-ldap.patch
-Patch1:		%{name}-passwords.patch
 URL:		http://www.gnome.org/projects/evolution/
 BuildRequires:	GConf2-devel >= 2.22.0
 BuildRequires:	ORBit2-devel >= 1:2.14.8
@@ -141,7 +140,6 @@ Dokumentacja API e-d-s.
 %prep
 %setup -q
 %patch0 -p1
-%patch1 -p0
 
 sed -i -e 's#sr@Latn#sr@latin#' po/LINGUAS
 mv po/sr@{Latn,latin}.po
