@@ -11,12 +11,12 @@
 Summary:	Evolution data server
 Summary(pl.UTF-8):	Serwer danych Evolution
 Name:		evolution-data-server
-Version:	2.23.4
+Version:	2.23.5
 Release:	1
 License:	LGPL v2+
 Group:		X11/Libraries
 Source0:	http://ftp.gnome.org/pub/GNOME/sources/evolution-data-server/2.23/%{name}-%{version}.tar.bz2
-# Source0-md5:	2b86e018c8483e5cc2077303ca8e57a7
+# Source0-md5:	73847cb2caac32e45499bbe3b88353c2
 Patch0:		%{name}-ntlm-ldap.patch
 URL:		http://www.gnome.org/projects/evolution/
 BuildRequires:	GConf2-devel >= 2.22.0
@@ -252,9 +252,9 @@ fi
 %files libs
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_libdir}/libcamel-%{apiver}.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libcamel-%{apiver}.so.12
+%attr(755,root,root) %ghost %{_libdir}/libcamel-%{apiver}.so.13
 %attr(755,root,root) %{_libdir}/libcamel-provider-%{apiver}.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libcamel-provider-%{apiver}.so.12
+%attr(755,root,root) %ghost %{_libdir}/libcamel-provider-%{apiver}.so.13
 %attr(755,root,root) %{_libdir}/libebackend-%{apiver}.so.*.*.*
 %attr(755,root,root) %ghost %{_libdir}/libebackend-%{apiver}.so.0
 %attr(755,root,root) %{_libdir}/libebook-%{apiver}.so.*.*.*
