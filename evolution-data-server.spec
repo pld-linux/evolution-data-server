@@ -144,6 +144,9 @@ Dokumentacja API e-d-s.
 sed -i -e 's#sr@Latn#sr@latin#' po/LINGUAS
 mv po/sr@{Latn,latin}.po
 
+# kill -L$withval/lib
+sed -i -e 's/DB_LIBS="-L[^ "]* /DB_LIBS="/;s/ICONV_LIBS="[^ "]*/ICONV_LIBS="/' configure.in
+
 %build
 %{__gtkdocize}
 %{__glib_gettextize}
@@ -172,7 +175,7 @@ fi
 export LIBS
 
 %configure \
-	%{?with_kerberos5:--with-krb5=%{_prefix}} \
+	%{?with_kerberos5:--with-krb5=%{_prefix} --with-krb5-libs=%{_libdir}} \
 	%{!?with_kerberos5:--with-krb5=no} \
 	%{?with_ldap:--with-openldap=%{_libdir}/evolution-openldap} \
 	%{?with_ldap:--with-static-ldap=yes} \
