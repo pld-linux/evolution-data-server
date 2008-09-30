@@ -12,9 +12,9 @@ Summary:	Evolution data server
 Summary(pl.UTF-8):	Serwer danych Evolution
 Name:		evolution-data-server
 Version:	1.6.3
-Release:	4
+Release:	5
 License:	GPL
-Group:		Libraries
+Group:		X11/Libraries
 Source0:	http://ftp.gnome.org/pub/gnome/sources/evolution-data-server/1.6/%{name}-%{version}.tar.bz2
 # Source0-md5:	e40343fa6a80916da3f4d1ba5d118c89
 Patch0:		%{name}-system_db.patch
@@ -40,7 +40,7 @@ BuildRequires:	nspr-devel
 BuildRequires:	nss-devel
 %{?with_ldap:BuildRequires:	openldap-devel >= 2.3.0}
 BuildRequires:	pkgconfig
-BuildRequires:	rpmbuild(macros) >= 1.197
+BuildRequires:	rpmbuild(macros) >= 1.304
 Requires(post,postun):	scrollkeeper
 Requires:	%{name}-libs = %{version}-%{release}
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
@@ -69,7 +69,7 @@ Ten pakiet zawiera evolutionperson.schema dla serwera openldap.
 %package libs
 Summary:	Evolution Data Server library
 Summary(pl.UTF-8):	Biblioteka Evolution Data Server
-Group:		Libraries
+Group:		X11/Libraries
 Requires:	libgnomeui >= 2.14.1
 Requires:	libsoup >= 2.2.93
 
@@ -82,7 +82,7 @@ Ten pakiet zawiera bibliotekę Evolution Data Server.
 %package devel
 Summary:	Evolution data server development files
 Summary(pl.UTF-8):	Pliki programistyczne serwera danych evolution
-Group:		Development/Libraries
+Group:		X11/Development/Libraries
 Requires:	%{name}-libs = %{version}-%{release}
 %{?with_kerberos5:Requires:	heimdal-devel >= 0.7}
 # for all but libegroupwise
@@ -106,7 +106,7 @@ korzystających z bibliotek serwera danych Evolution.
 %package static
 Summary:	Evolution data server static libraries
 Summary(pl.UTF-8):	Statyczne biblioteki serwera danych Evolution
-Group:		Development/Libraries
+Group:		X11/Development/Libraries
 Requires:	%{name}-devel = %{version}-%{release}
 
 %description static
@@ -114,6 +114,18 @@ Evolution data server static libraries.
 
 %description static -l pl.UTF-8
 Statyczne biblioteki serwera danych Evolution.
+
+%package apidocs
+Summary:	e-d-s API documentation
+Summary(pl.UTF-8):	Dokumentacja API e-d-s
+Group:		Documentation
+Requires:	gtk-doc-common
+
+%description apidocs
+e-d-s API documentation.
+
+%description apidocs -l pl.UTF-8
+Dokumentacja API e-d-s.
 
 %prep
 %setup -q
@@ -188,30 +200,13 @@ rm -rf $RPM_BUILD_ROOT
 %postun	libs -p /sbin/ldconfig
 
 %post -n openldap-schema-evolutionperson
-if ! grep -q %{schemadir}/evolutionperson.schema /etc/openldap/slapd.conf; then
-	sed -i -e '
-		/^include.*local.schema/{
-			i\
-include		%{schemadir}/evolutionperson.schema
-		}
-	' /etc/openldap/slapd.conf
-fi
-
-if [ -f /var/lock/subsys/ldap ]; then
-	/etc/rc.d/init.d/ldap restart >&2
-fi
+%openldap_schema_register %{schemadir}/evolutionperson.schema
+%service -q ldap restart
 
 %postun -n openldap-schema-evolutionperson
 if [ "$1" = "0" ]; then
-	if grep -q %{schemadir}/evolutionperson.schema /etc/openldap/slapd.conf; then
-		sed -i -e '
-		/^include.*\/usr\/share\/openldap\/schema\/evolutionperson.schema/d
-		' /etc/openldap/slapd.conf
-	fi
-
-	if [ -f /var/lock/subsys/ldap ]; then
-		/etc/rc.d/init.d/ldap restart >&2 || :
-	fi
+	%openldap_schema_unregister %{schemadir}/evolutionperson.schema
+	%service -q ldap restart
 fi
 
 %files -f %{name}.lang
@@ -219,14 +214,14 @@ fi
 %doc AUTHORS ChangeLog NEWS* README
 %attr(755,root,root) %{_libdir}/camel-index-control-%{apiver}
 %attr(755,root,root) %{_libdir}/camel-lock-helper-%{apiver}
+%attr(755,root,root) %{_libdir}/evolution-data-server-%{basever}
 %dir %{_libdir}/%{name}-%{apiver}
 %dir %{_libdir}/%{name}-%{apiver}/camel-providers
-%attr(755,root,root) %{_libdir}/evolution-data-server-%{basever}
 %attr(755,root,root) %{_libdir}/%{name}-%{apiver}/camel-providers/*.so
 %{_libdir}/%{name}-%{apiver}/camel-providers/*.urls
 %dir %{_libdir}/%{name}-%{apiver}/extensions
 %attr(755,root,root) %{_libdir}/%{name}-%{apiver}/extensions/*.so
-%{_libdir}/bonobo/servers/*
+%{_libdir}/bonobo/servers/GNOME_Evolution_DataServer_1.2.server
 
 %if %{with ldap}
 %{_datadir}/%{name}-%{basever}/*.schema
@@ -240,21 +235,105 @@ fi
 
 %files -n openldap-schema-evolutionperson
 %defattr(644,root,root,755)
-%{schemadir}/*.schema
+%{schemadir}/evolutionperson.schema
 
 %files libs
 %defattr(644,root,root,755)
-%attr(755,root,root) %{_libdir}/*.so.*.*
+%attr(755,root,root) %{_libdir}/libcamel-%{apiver}.so.*.*.*
+%attr(755,root,root) %ghost %{_libdir}/libcamel-%{apiver}.so.13
+%attr(755,root,root) %{_libdir}/libcamel-provider-%{apiver}.so.*.*.*
+%attr(755,root,root) %ghost %{_libdir}/libcamel-provider-%{apiver}.so.13
+%attr(755,root,root) %{_libdir}/libebackend-%{apiver}.so.*.*.*
+%attr(755,root,root) %ghost %{_libdir}/libebackend-%{apiver}.so.0
+%attr(755,root,root) %{_libdir}/libebook-%{apiver}.so.*.*.*
+%attr(755,root,root) %ghost %{_libdir}/libebook-%{apiver}.so.9
+%attr(755,root,root) %{_libdir}/libecal-%{apiver}.so.*.*.*
+%attr(755,root,root) %ghost %{_libdir}/libecal-%{apiver}.so.7
+%attr(755,root,root) %{_libdir}/libedata-book-%{apiver}.so.*.*.*
+%attr(755,root,root) %ghost %{_libdir}/libedata-book-%{apiver}.so.2
+%attr(755,root,root) %{_libdir}/libedata-cal-%{apiver}.so.*.*.*
+%attr(755,root,root) %ghost %{_libdir}/libedata-cal-%{apiver}.so.6
+%attr(755,root,root) %{_libdir}/libedataserver-%{apiver}.so.*.*.*
+%attr(755,root,root) %ghost %{_libdir}/libedataserver-%{apiver}.so.11
+%attr(755,root,root) %{_libdir}/libedataserverui-%{apiver}.so.*.*.*
+%attr(755,root,root) %ghost %{_libdir}/libedataserverui-%{apiver}.so.8
+%attr(755,root,root) %{_libdir}/libegroupwise-%{apiver}.so.*.*.*
+%attr(755,root,root) %ghost %{_libdir}/libegroupwise-%{apiver}.so.13
+%attr(755,root,root) %{_libdir}/libexchange-storage-%{apiver}.so.*.*.*
+%attr(755,root,root) %ghost %{_libdir}/libexchange-storage-%{apiver}.so.3
+%attr(755,root,root) %{_libdir}/libgdata-%{apiver}.so.*.*.*
+%attr(755,root,root) %ghost %{_libdir}/libgdata-%{apiver}.so.1
+%attr(755,root,root) %{_libdir}/libgdata-google-%{apiver}.so.*.*.*
+%attr(755,root,root) %ghost %{_libdir}/libgdata-google-%{apiver}.so.1
 %{_datadir}/idl/%{name}-%{apiver}
 
 %files devel
 %defattr(644,root,root,755)
-%attr(755,root,root) %{_libdir}/*.so
-%{_libdir}/*.la
-%{_includedir}/*
-%{_pkgconfigdir}/*
-%{_gtkdocdir}/*
+%attr(755,root,root) %{_libdir}/libcamel-%{apiver}.so
+%attr(755,root,root) %{_libdir}/libcamel-provider-%{apiver}.so
+%attr(755,root,root) %{_libdir}/libebackend-%{apiver}.so
+%attr(755,root,root) %{_libdir}/libebook-%{apiver}.so
+%attr(755,root,root) %{_libdir}/libecal-%{apiver}.so
+%attr(755,root,root) %{_libdir}/libedata-book-%{apiver}.so
+%attr(755,root,root) %{_libdir}/libedata-cal-%{apiver}.so
+%attr(755,root,root) %{_libdir}/libedataserver-%{apiver}.so
+%attr(755,root,root) %{_libdir}/libedataserverui-%{apiver}.so
+%attr(755,root,root) %{_libdir}/libegroupwise-%{apiver}.so
+%attr(755,root,root) %{_libdir}/libexchange-storage-%{apiver}.so
+%attr(755,root,root) %{_libdir}/libgdata-%{apiver}.so
+%attr(755,root,root) %{_libdir}/libgdata-google-%{apiver}.so
+%{_libdir}/libcamel-%{apiver}.la
+%{_libdir}/libcamel-provider-%{apiver}.la
+%{_libdir}/libebackend-%{apiver}.la
+%{_libdir}/libebook-%{apiver}.la
+%{_libdir}/libecal-%{apiver}.la
+%{_libdir}/libedata-book-%{apiver}.la
+%{_libdir}/libedata-cal-%{apiver}.la
+%{_libdir}/libedataserver-%{apiver}.la
+%{_libdir}/libedataserverui-%{apiver}.la
+%{_libdir}/libegroupwise-%{apiver}.la
+%{_libdir}/libexchange-storage-%{apiver}.la
+%{_libdir}/libgdata-%{apiver}.la
+%{_libdir}/libgdata-google-%{apiver}.la
+%{_includedir}/evolution-data-server-%{basever}
+%{_pkgconfigdir}/camel-%{apiver}.pc
+%{_pkgconfigdir}/camel-provider-%{apiver}.pc
+%{_pkgconfigdir}/evolution-data-server-%{apiver}.pc
+%{_pkgconfigdir}/libebackend-%{apiver}.pc
+%{_pkgconfigdir}/libebook-%{apiver}.pc
+%{_pkgconfigdir}/libecal-%{apiver}.pc
+%{_pkgconfigdir}/libedata-book-%{apiver}.pc
+%{_pkgconfigdir}/libedata-cal-%{apiver}.pc
+%{_pkgconfigdir}/libedataserver-%{apiver}.pc
+%{_pkgconfigdir}/libedataserverui-%{apiver}.pc
+%{_pkgconfigdir}/libegroupwise-%{apiver}.pc
+%{_pkgconfigdir}/libexchange-storage-%{apiver}.pc
+%{_pkgconfigdir}/libgdata-%{apiver}.pc
+%{_pkgconfigdir}/libgdata-google-%{apiver}.pc
 
 %files static
 %defattr(644,root,root,755)
-%{_libdir}/*.a
+%{_libdir}/libcamel-%{apiver}.a
+%{_libdir}/libcamel-provider-%{apiver}.a
+%{_libdir}/libebackend-%{apiver}.a
+%{_libdir}/libebook-%{apiver}.a
+%{_libdir}/libecal-%{apiver}.a
+%{_libdir}/libedata-book-%{apiver}.a
+%{_libdir}/libedata-cal-%{apiver}.a
+%{_libdir}/libedataserver-%{apiver}.a
+%{_libdir}/libedataserverui-%{apiver}.a
+%{_libdir}/libegroupwise-%{apiver}.a
+%{_libdir}/libexchange-storage-%{apiver}.a
+%{_libdir}/libgdata-%{apiver}.a
+%{_libdir}/libgdata-google-%{apiver}.a
+
+%files apidocs
+%defattr(644,root,root,755)
+%{_gtkdocdir}/camel
+%{_gtkdocdir}/libebackend
+%{_gtkdocdir}/libebook
+%{_gtkdocdir}/libecal
+%{_gtkdocdir}/libedata-book
+%{_gtkdocdir}/libedata-cal
+%{_gtkdocdir}/libedataserver
+%{_gtkdocdir}/libedataserverui
