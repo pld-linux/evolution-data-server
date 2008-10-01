@@ -240,38 +240,31 @@ fi
 %files libs
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_libdir}/libcamel-%{apiver}.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libcamel-%{apiver}.so.13
+%attr(755,root,root) %ghost %{_libdir}/libcamel-%{apiver}.so.0
 %attr(755,root,root) %{_libdir}/libcamel-provider-%{apiver}.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libcamel-provider-%{apiver}.so.13
-%attr(755,root,root) %{_libdir}/libebackend-%{apiver}.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libebackend-%{apiver}.so.0
+%attr(755,root,root) %ghost %{_libdir}/libcamel-provider-%{apiver}.so.8
 %attr(755,root,root) %{_libdir}/libebook-%{apiver}.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libebook-%{apiver}.so.9
+%attr(755,root,root) %ghost %{_libdir}/libebook-%{apiver}.so.5
 %attr(755,root,root) %{_libdir}/libecal-%{apiver}.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libecal-%{apiver}.so.7
+%attr(755,root,root) %ghost %{_libdir}/libecal-%{apiver}.so.6
 %attr(755,root,root) %{_libdir}/libedata-book-%{apiver}.so.*.*.*
 %attr(755,root,root) %ghost %{_libdir}/libedata-book-%{apiver}.so.2
 %attr(755,root,root) %{_libdir}/libedata-cal-%{apiver}.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libedata-cal-%{apiver}.so.6
+%attr(755,root,root) %ghost %{_libdir}/libedata-cal-%{apiver}.so.5
 %attr(755,root,root) %{_libdir}/libedataserver-%{apiver}.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libedataserver-%{apiver}.so.11
+%attr(755,root,root) %ghost %{_libdir}/libedataserver-%{apiver}.so.7
 %attr(755,root,root) %{_libdir}/libedataserverui-%{apiver}.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libedataserverui-%{apiver}.so.8
+%attr(755,root,root) %ghost %{_libdir}/libedataserverui-%{apiver}.so.6
 %attr(755,root,root) %{_libdir}/libegroupwise-%{apiver}.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libegroupwise-%{apiver}.so.13
+%attr(755,root,root) %ghost %{_libdir}/libegroupwise-%{apiver}.so.10
 %attr(755,root,root) %{_libdir}/libexchange-storage-%{apiver}.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libexchange-storage-%{apiver}.so.3
-%attr(755,root,root) %{_libdir}/libgdata-%{apiver}.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libgdata-%{apiver}.so.1
-%attr(755,root,root) %{_libdir}/libgdata-google-%{apiver}.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libgdata-google-%{apiver}.so.1
+%attr(755,root,root) %ghost %{_libdir}/libexchange-storage-%{apiver}.so.1
 %{_datadir}/idl/%{name}-%{apiver}
 
 %files devel
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_libdir}/libcamel-%{apiver}.so
 %attr(755,root,root) %{_libdir}/libcamel-provider-%{apiver}.so
-%attr(755,root,root) %{_libdir}/libebackend-%{apiver}.so
 %attr(755,root,root) %{_libdir}/libebook-%{apiver}.so
 %attr(755,root,root) %{_libdir}/libecal-%{apiver}.so
 %attr(755,root,root) %{_libdir}/libedata-book-%{apiver}.so
@@ -280,11 +273,8 @@ fi
 %attr(755,root,root) %{_libdir}/libedataserverui-%{apiver}.so
 %attr(755,root,root) %{_libdir}/libegroupwise-%{apiver}.so
 %attr(755,root,root) %{_libdir}/libexchange-storage-%{apiver}.so
-%attr(755,root,root) %{_libdir}/libgdata-%{apiver}.so
-%attr(755,root,root) %{_libdir}/libgdata-google-%{apiver}.so
 %{_libdir}/libcamel-%{apiver}.la
 %{_libdir}/libcamel-provider-%{apiver}.la
-%{_libdir}/libebackend-%{apiver}.la
 %{_libdir}/libebook-%{apiver}.la
 %{_libdir}/libecal-%{apiver}.la
 %{_libdir}/libedata-book-%{apiver}.la
@@ -293,13 +283,10 @@ fi
 %{_libdir}/libedataserverui-%{apiver}.la
 %{_libdir}/libegroupwise-%{apiver}.la
 %{_libdir}/libexchange-storage-%{apiver}.la
-%{_libdir}/libgdata-%{apiver}.la
-%{_libdir}/libgdata-google-%{apiver}.la
 %{_includedir}/evolution-data-server-%{basever}
 %{_pkgconfigdir}/camel-%{apiver}.pc
 %{_pkgconfigdir}/camel-provider-%{apiver}.pc
 %{_pkgconfigdir}/evolution-data-server-%{apiver}.pc
-%{_pkgconfigdir}/libebackend-%{apiver}.pc
 %{_pkgconfigdir}/libebook-%{apiver}.pc
 %{_pkgconfigdir}/libecal-%{apiver}.pc
 %{_pkgconfigdir}/libedata-book-%{apiver}.pc
@@ -308,14 +295,11 @@ fi
 %{_pkgconfigdir}/libedataserverui-%{apiver}.pc
 %{_pkgconfigdir}/libegroupwise-%{apiver}.pc
 %{_pkgconfigdir}/libexchange-storage-%{apiver}.pc
-%{_pkgconfigdir}/libgdata-%{apiver}.pc
-%{_pkgconfigdir}/libgdata-google-%{apiver}.pc
 
 %files static
 %defattr(644,root,root,755)
 %{_libdir}/libcamel-%{apiver}.a
 %{_libdir}/libcamel-provider-%{apiver}.a
-%{_libdir}/libebackend-%{apiver}.a
 %{_libdir}/libebook-%{apiver}.a
 %{_libdir}/libecal-%{apiver}.a
 %{_libdir}/libedata-book-%{apiver}.a
@@ -324,16 +308,10 @@ fi
 %{_libdir}/libedataserverui-%{apiver}.a
 %{_libdir}/libegroupwise-%{apiver}.a
 %{_libdir}/libexchange-storage-%{apiver}.a
-%{_libdir}/libgdata-%{apiver}.a
-%{_libdir}/libgdata-google-%{apiver}.a
 
 %files apidocs
 %defattr(644,root,root,755)
-%{_gtkdocdir}/camel
-%{_gtkdocdir}/libebackend
 %{_gtkdocdir}/libebook
 %{_gtkdocdir}/libecal
-%{_gtkdocdir}/libedata-book
 %{_gtkdocdir}/libedata-cal
 %{_gtkdocdir}/libedataserver
-%{_gtkdocdir}/libedataserverui
