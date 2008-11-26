@@ -48,6 +48,7 @@ BuildRequires:	openssl-devel
 BuildRequires:	pkgconfig
 BuildRequires:	rpmbuild(macros) >= 1.304
 BuildRequires:	sed >= 4.0
+BuildRequires:	sqlite3-devel
 BuildRequires:	zlib-devel
 Requires:	%{name}-libs = %{version}-%{release}
 # sr@Latn vs. sr@latin
