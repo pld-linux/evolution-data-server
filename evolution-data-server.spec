@@ -1,25 +1,22 @@
 #
-# todo:
-# - system libical
-#
 # Conditional build:
 %bcond_without	kerberos5	# build without kerberos5 support
 %bcond_without	ldap		# build without ldap support
 #
-%define		basever		2.24
+%define		basever		2.26
 %define		apiver		1.2
 Summary:	Evolution data server
 Summary(pl.UTF-8):	Serwer danych Evolution
 Name:		evolution-data-server
-Version:	2.24.4.1
+Version:	2.25.92
 Release:	1
 License:	LGPL v2+
 Group:		X11/Libraries
-Source0:	http://ftp.gnome.org/pub/GNOME/sources/evolution-data-server/2.24/%{name}-%{version}.tar.bz2
-# Source0-md5:	3d6234ec417b2d9ab8dac6c45ec6ba97
+Source0:	http://ftp.gnome.org/pub/GNOME/sources/evolution-data-server/2.25/%{name}-%{version}.tar.bz2
+# Source0-md5:	d3705271d44f657f3ff0735b055845c4
 Patch0:		%{name}-ntlm-ldap.patch
 URL:		http://www.gnome.org/projects/evolution/
-BuildRequires:	GConf2-devel >= 2.24.0
+BuildRequires:	GConf2-devel >= 2.25.0
 BuildRequires:	ORBit2-devel >= 1:2.14.8
 BuildRequires:	autoconf >= 2.52
 BuildRequires:	automake
@@ -27,17 +24,19 @@ BuildRequires:	bison
 BuildRequires:	cyrus-sasl-devel
 BuildRequires:	db-devel
 BuildRequires:	gettext-devel
-BuildRequires:	glib2-devel >= 1:2.18.0
+BuildRequires:	glib2-devel >= 1:2.19.7
 BuildRequires:	gnome-common >= 2.20.0
-BuildRequires:	gnome-keyring-devel >= 2.24.0
-BuildRequires:	gnome-vfs2-devel >= 2.24.0
-BuildRequires:	gtk+2-devel >= 2:2.14.0
+BuildRequires:	gnome-keyring-devel >= 2.25.90
+BuildRequires:	gtk+2-devel >= 2:2.15.0
 BuildRequires:	gtk-doc >= 1.9
-BuildRequires:	intltool >= 0.37.0
+BuildRequires:	intltool >= 0.40.0
 %{?with_kerberos5:BuildRequires:	krb5-devel}
+BuildRequires:	libbonobo-devel >= 2.24.0
 BuildRequires:	libglade2-devel >= 1:2.6.2
 BuildRequires:	libgnomeui-devel >= 2.24.0
-BuildRequires:	libsoup-devel >= 2.4.0
+BuildRequires:	libgweather-devel >= 2.25.92
+BuildRequires:	libical-devel >= 0.43
+BuildRequires:	libsoup-devel >= 2.25.0
 BuildRequires:	libstdc++-devel
 BuildRequires:	libtool
 BuildRequires:	libxml2-devel >= 1:2.6.31
@@ -94,17 +93,17 @@ Summary:	Evolution data server development files
 Summary(pl.UTF-8):	Pliki programistyczne serwera danych evolution
 Group:		X11/Development/Libraries
 Requires:	%{name}-libs = %{version}-%{release}
-%{?with_kerberos5:Requires:	krb5-devel}
-# for all but libegroupwise
-Requires:	GConf2-devel >= 2.24.0
+Requires:	GConf2-devel >= 2.25.0
 Requires:	ORBit2-devel >= 1:2.14.8
-Requires:	glib2-devel >= 1:2.18.0
-Requires:	gtk+2-devel >= 2:2.14.0
+Requires:	glib2-devel >= 1:2.19.7
+Requires:	gtk+2-devel >= 2:2.15.0
+%{?with_kerberos5:Requires:	krb5-devel}
+Requires:	libbonobo-devel >= 2.24.0
 Requires:	libglade2-devel >= 1:2.6.2
-Requires:	libgnomeui-devel >= 2.24.0
+Requires:	libical-devel >= 0.43
+Requires:	libsoup-devel >= 2.25.0
 Requires:	libxml2-devel >= 1:2.6.31
-# for libegroupwise
-Requires:	libsoup-devel >= 2.4.0
+Requires:	sqlite3-devel
 
 %description devel
 This package contains the files necessary to develop applications
@@ -155,14 +154,6 @@ sed -i -e 's/DB_LIBS="-L[^ "]* /DB_LIBS="/;s/ICONV_LIBS="[^ "]*/ICONV_LIBS="/' c
 %{__autoconf}
 %{__automake}
 
-cd calendar/libical
-%{__libtoolize}
-%{__aclocal}
-%{__autoheader}
-%{__autoconf}
-%{__automake}
-cd ../..
-
 # Set LIBS so that configure will be able to link with static LDAP libraries,
 # which depend on Cyrus SASL and OpenSSL.
 if pkg-config openssl ; then
@@ -185,25 +176,22 @@ export LIBS
 	--with-nspr-libs=%{_libdir} \
 	--with-nss-includes=%{_includedir}/nss \
 	--with-nss-libs=%{_libdir} \
-	--with-libdb=%{_libdir}
+	--with-libdb=%{_libdir} \
+	--with-html-dir=%{_gtkdocdir}
 
-%{__make} \
-	HTML_DIR=%{_gtkdocdir} \
-	GTKHTML_DATADIR=%{_datadir}/idl
+%{__make}
 
 %install
 rm -rf $RPM_BUILD_ROOT
+install -d $RPM_BUILD_ROOT%{schemadir}
 
 %{__make} install \
 	DESTDIR=$RPM_BUILD_ROOT \
-	GTKHTML_DATADIR=%{_datadir}/idl \
-	HTML_DIR=%{_gtkdocdir} \
-	pkgconfigdir=%{_pkgconfigdir}
+	HTML_DIR=%{_gtkdocdir}
+
+install addressbook/backends/ldap/evolutionperson.schema $RPM_BUILD_ROOT%{schemadir}
 
 rm $RPM_BUILD_ROOT%{_libdir}/%{name}-%{apiver}/{camel-providers,extensions}/*.{la,a}
-
-install -d $RPM_BUILD_ROOT%{schemadir}
-install addressbook/backends/ldap/evolutionperson.schema $RPM_BUILD_ROOT%{schemadir}
 
 rm -rf $RPM_BUILD_ROOT%{_datadir}/locale/la
 
