@@ -1,5 +1,5 @@
---- evolution-data-server-1.12.1/configure.ac~	2007-10-14 19:39:02.000000000 +0200
-+++ evolution-data-server-1.12.1/configure.ac	2007-11-06 19:57:01.000000000 +0100
+--- evolution-data-server-1.12.1/configure.in~	2007-10-14 19:39:02.000000000 +0200
++++ evolution-data-server-1.12.1/configure.in	2007-11-06 19:57:01.000000000 +0100
 @@ -1256,7 +1256,7 @@
  SAVE_LIBS="$LIBS"
  LDAP_CFLAGS="$LDAP_CFLAGS -DLDAP_DEPRECATED"
