@@ -3,17 +3,17 @@
 %bcond_without	kerberos5	# build without kerberos5 support
 %bcond_without	ldap		# build without ldap support
 #
-%define		basever		2.26
+%define		basever		2.28
 %define		apiver		1.2
 Summary:	Evolution data server
 Summary(pl.UTF-8):	Serwer danych Evolution
 Name:		evolution-data-server
-Version:	2.26.2
+Version:	2.27.3
 Release:	1
 License:	LGPL v2+
 Group:		X11/Libraries
-Source0:	http://ftp.gnome.org/pub/GNOME/sources/evolution-data-server/2.26/%{name}-%{version}.tar.bz2
-# Source0-md5:	fdd2a38f885b466c3c65af0be3356dc2
+Source0:	http://ftp.gnome.org/pub/GNOME/sources/evolution-data-server/2.27/%{name}-%{version}.tar.bz2
+# Source0-md5:	9945260a68c91d8d088b8bbcf75ccd9a
 Patch0:		%{name}-ntlm-ldap.patch
 URL:		http://www.gnome.org/projects/evolution/
 BuildRequires:	GConf2-devel >= 2.26.0
@@ -142,7 +142,7 @@ Dokumentacja API e-d-s.
 %patch0 -p1
 
 # kill -L$withval/lib
-sed -i -e 's/DB_LIBS="-L[^ "]* /DB_LIBS="/;s/ICONV_LIBS="[^ "]*/ICONV_LIBS="/' configure.in
+sed -i -e 's/DB_LIBS="-L[^ "]* /DB_LIBS="/;s/ICONV_LIBS="[^ "]*/ICONV_LIBS="/' configure.ac
 
 %build
 %{__gtkdocize}
