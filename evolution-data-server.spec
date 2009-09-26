@@ -3,23 +3,23 @@
 %bcond_without	kerberos5	# build without kerberos5 support
 %bcond_without	ldap		# build without ldap support
 #
-%define		basever		2.26
+%define		basever		2.28
 %define		apiver		1.2
 Summary:	Evolution data server
 Summary(pl.UTF-8):	Serwer danych Evolution
 Name:		evolution-data-server
-Version:	2.26.3
-Release:	2
+Version:	2.28.0
+Release:	1
 License:	LGPL v2+
 Group:		X11/Libraries
-Source0:	http://ftp.gnome.org/pub/GNOME/sources/evolution-data-server/2.26/%{name}-%{version}.tar.bz2
-# Source0-md5:	01205605a598253bc227ff360c7c3dad
+Source0:	http://ftp.gnome.org/pub/GNOME/sources/evolution-data-server/2.28/%{name}-%{version}.tar.bz2
+# Source0-md5:	015a9692904c349034982c69d90b1b37
 Patch0:		%{name}-ntlm-ldap.patch
 URL:		http://www.gnome.org/projects/evolution/
 BuildRequires:	GConf2-devel >= 2.26.0
 BuildRequires:	ORBit2-devel >= 1:2.14.8
-BuildRequires:	autoconf >= 2.52
-BuildRequires:	automake
+BuildRequires:	autoconf >= 2.58
+BuildRequires:	automake >= 1:1.9
 BuildRequires:	bison
 BuildRequires:	cyrus-sasl-devel
 BuildRequires:	db-devel
@@ -33,7 +33,6 @@ BuildRequires:	intltool >= 0.40.0
 %{?with_kerberos5:BuildRequires:	heimdal-devel}
 BuildRequires:	libbonobo-devel >= 2.24.0
 BuildRequires:	libglade2-devel >= 1:2.6.2
-BuildRequires:	libgnomeui-devel >= 2.24.0
 BuildRequires:	libgweather-devel >= 2.26.0
 BuildRequires:	libical-devel >= 0.43
 BuildRequires:	libsoup-devel >= 2.26.0
@@ -47,7 +46,7 @@ BuildRequires:	openssl-devel
 BuildRequires:	pkgconfig
 BuildRequires:	rpmbuild(macros) >= 1.304
 BuildRequires:	sed >= 4.0
-BuildRequires:	sqlite3-devel
+BuildRequires:	sqlite3-devel >= 3.5
 BuildRequires:	zlib-devel
 Requires:	%{name}-libs = %{version}-%{release}
 # sr@Latn vs. sr@latin
@@ -79,8 +78,7 @@ Ten pakiet zawiera evolutionperson.schema dla serwera openldap.
 Summary:	Evolution Data Server library
 Summary(pl.UTF-8):	Biblioteka Evolution Data Server
 Group:		X11/Libraries
-Requires:	libgnomeui >= 2.24.0
-Requires:	libsoup >= 2.4.0
+Requires:	libsoup >= 2.26.0
 
 %description libs
 This package contains Evolution Data Server library.
@@ -142,14 +140,14 @@ Dokumentacja API e-d-s.
 %patch0 -p1
 
 # kill -L$withval/lib
-sed -i -e 's/DB_LIBS="-L[^ "]* /DB_LIBS="/;s/ICONV_LIBS="[^ "]*/ICONV_LIBS="/' configure.in
+sed -i -e 's/DB_LIBS="-L[^ "]* /DB_LIBS="/;s/ICONV_LIBS="[^ "]*/ICONV_LIBS="/' configure.ac
 
 %build
 %{__gtkdocize}
 %{__glib_gettextize}
 %{__intltoolize}
 %{__libtoolize}
-%{__aclocal}
+%{__aclocal} -I m4
 %{__autoheader}
 %{__autoconf}
 %{__automake}
