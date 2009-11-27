@@ -23,6 +23,7 @@ BuildRequires:	automake >= 1:1.9
 BuildRequires:	bison
 BuildRequires:	cyrus-sasl-devel
 BuildRequires:	db-devel
+BuildRequires:	docbook-dtd412-xml
 BuildRequires:	gettext-devel
 BuildRequires:	glib2-devel >= 1:2.20.0
 BuildRequires:	gnome-common >= 2.20.0
