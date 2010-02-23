@@ -8,12 +8,12 @@
 Summary:	Evolution data server
 Summary(pl.UTF-8):	Serwer danych Evolution
 Name:		evolution-data-server
-Version:	2.29.90
+Version:	2.29.91
 Release:	1
 License:	LGPL v2+
 Group:		X11/Libraries
 Source0:	http://ftp.gnome.org/pub/GNOME/sources/evolution-data-server/2.29/%{name}-%{version}.tar.bz2
-# Source0-md5:	69a18f130a80a6713e58572ce98f4c18
+# Source0-md5:	915bca59ee7212af12ff701d7d55cc23
 Patch0:		%{name}-heimdal-headers.patch
 URL:		http://www.gnome.org/projects/evolution/
 BuildRequires:	GConf2-devel >= 2.26.0
