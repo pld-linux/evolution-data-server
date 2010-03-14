@@ -174,10 +174,6 @@ export LIBS
 	--enable-gnome-keyring=yes \
 	--enable-gtk-doc \
 	--enable-static \
-	--with-nspr-includes=%{_includedir}/nspr \
-	--with-nspr-libs=%{_libdir} \
-	--with-nss-includes=%{_includedir}/nss \
-	--with-nss-libs=%{_libdir} \
 	--with-libdb=%{_libdir} \
 	--with-html-dir=%{_gtkdocdir}
 
