@@ -13,7 +13,7 @@ Release:	1
 License:	LGPL v2+
 Group:		X11/Libraries
 Source0:	http://ftp.gnome.org/pub/GNOME/sources/evolution-data-server/2.30/%{name}-%{version}.tar.bz2
-# Source0-md5:	499c1fe3007759aeaff164184a745798
+# Source0-md5:	a30de9370a9d388da1f9cc723126941c
 Patch0:		%{name}-heimdal-headers.patch
 URL:		http://www.gnome.org/projects/evolution/
 BuildRequires:	GConf2-devel >= 2.26.0
