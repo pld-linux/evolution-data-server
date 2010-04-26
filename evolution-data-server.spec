@@ -8,13 +8,12 @@
 Summary:	Evolution data server
 Summary(pl.UTF-8):	Serwer danych Evolution
 Name:		evolution-data-server
-Version:	2.30.0
-Release:	2
+Version:	2.30.1
+Release:	1
 License:	LGPL v2+
 Group:		X11/Libraries
 Source0:	http://ftp.gnome.org/pub/GNOME/sources/evolution-data-server/2.30/%{name}-%{version}.tar.bz2
-# Source0-md5:	a30de9370a9d388da1f9cc723126941c
-Patch0:		%{name}-heimdal-headers.patch
+# Source0-md5:	f177441d6fd4ef8c9a92d5706d290f10
 URL:		http://www.gnome.org/projects/evolution/
 BuildRequires:	GConf2-devel >= 2.26.0
 BuildRequires:	ORBit2-devel >= 1:2.14.8
@@ -138,7 +137,6 @@ Dokumentacja API e-d-s.
 
 %prep
 %setup -q
-%patch0 -p1
 
 # kill -L$withval/lib
 sed -i -e 's/DB_LIBS="-L[^ "]* /DB_LIBS="/;s/ICONV_LIBS="[^ "]*/ICONV_LIBS="/' configure.ac
