@@ -8,12 +8,12 @@
 Summary:	Evolution data server
 Summary(pl.UTF-8):	Serwer danych Evolution
 Name:		evolution-data-server
-Version:	2.30.2
+Version:	2.30.2.1
 Release:	1
 License:	LGPL v2+
 Group:		X11/Libraries
 Source0:	http://ftp.gnome.org/pub/GNOME/sources/evolution-data-server/2.30/%{name}-%{version}.tar.bz2
-# Source0-md5:	f9a70e43d98ae92ce886481e3b64e995
+# Source0-md5:	826d85fc6e088156154ae0c543454d7f
 URL:		http://www.gnome.org/projects/evolution/
 BuildRequires:	GConf2-devel >= 2.26.0
 BuildRequires:	ORBit2-devel >= 1:2.14.8
