@@ -9,12 +9,12 @@
 Summary:	Evolution data server
 Summary(pl.UTF-8):	Serwer danych Evolution
 Name:		evolution-data-server
-Version:	2.91.1.1
+Version:	2.91.2
 Release:	0.1
 License:	LGPL v2+
 Group:		X11/Libraries
 Source0:	http://ftp.gnome.org/pub/GNOME/sources/evolution-data-server/2.91/%{name}-%{version}.tar.bz2
-# Source0-md5:	a0d959d5445f29ad932540164e3cc23a
+# Source0-md5:	ccc624710e5a70ccc50c3357c322cff7
 URL:		http://www.gnome.org/projects/evolution/
 BuildRequires:	GConf2-devel >= 2.26.0
 BuildRequires:	ORBit2-devel >= 1:2.14.8
@@ -267,6 +267,8 @@ fi
 %attr(755,root,root) %ghost %{_libdir}/libedataserverui-%{apiver2}.so.0
 %attr(755,root,root) %{_libdir}/libegroupwise-%{apiver}.so.*.*.*
 %attr(755,root,root) %ghost %{_libdir}/libegroupwise-%{apiver}.so.13
+%{_libdir}/girepository-1.0/ECalendar-1.2.typelib
+%{_libdir}/girepository-1.0/EDataServer-1.2.typelib
 
 %files devel
 %defattr(644,root,root,755)
@@ -302,6 +304,8 @@ fi
 %{_pkgconfigdir}/libedataserver-%{apiver}.pc
 %{_pkgconfigdir}/libedataserverui-%{apiver2}.pc
 %{_pkgconfigdir}/libegroupwise-%{apiver}.pc
+%{_datadir}/gir-1.0/ECalendar-1.2.gir
+%{_datadir}/gir-1.0/EDataServer-1.2.gir
 
 %files static
 %defattr(644,root,root,755)
