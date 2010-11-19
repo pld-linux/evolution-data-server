@@ -99,6 +99,7 @@ Requires:	glib2-devel >= 1:2.26.0
 Requires:	gtk+2-devel >= 2:2.16.0
 %{?with_kerberos5:Requires:	heimdal-devel}
 Requires:	libbonobo-devel >= 2.24.0
+Requires:	libgdata-devel >= 0.6.3
 Requires:	libical-devel >= 0.43
 Requires:	libsoup-devel >= 2.26.0
 Requires:	libxml2-devel >= 1:2.6.31
