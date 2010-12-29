@@ -9,12 +9,12 @@
 Summary:	Evolution data server
 Summary(pl.UTF-8):	Serwer danych Evolution
 Name:		evolution-data-server
-Version:	2.91.2
+Version:	2.91.4.1
 Release:	0.1
 License:	LGPL v2+
 Group:		X11/Libraries
 Source0:	http://ftp.gnome.org/pub/GNOME/sources/evolution-data-server/2.91/%{name}-%{version}.tar.bz2
-# Source0-md5:	ccc624710e5a70ccc50c3357c322cff7
+# Source0-md5:	f8383802935db394cae823b112e9de0e
 URL:		http://www.gnome.org/projects/evolution/
 BuildRequires:	GConf2-devel >= 2.26.0
 BuildRequires:	ORBit2-devel >= 1:2.14.8
@@ -29,7 +29,7 @@ BuildRequires:	gettext-devel >= 0.17
 BuildRequires:	glib2-devel >= 1:2.26.0
 BuildRequires:	gnome-common >= 2.20.0
 BuildRequires:	gperf
-BuildRequires:	gtk+3-devel >= 2.90.4
+BuildRequires:	gtk+3-devel >= 2.91.7
 BuildRequires:	gtk-doc >= 1.9
 %{?with_kerberos5:BuildRequires:	heimdal-devel}
 BuildRequires:	intltool >= 0.40.0
@@ -238,7 +238,7 @@ fi
 %{_datadir}/dbus-1/services/org.gnome.evolution.dataserver.Calendar.service
 
 %dir %{_datadir}/%{name}-%{basever}
-%{_datadir}/%{name}-%{basever}/ui
+#%{_datadir}/%{name}-%{basever}/ui
 %{_pixmapsdir}/%{name}
 
 %files -n openldap-schema-evolutionperson
