@@ -9,7 +9,7 @@ Summary:	Evolution data server
 Summary(pl.UTF-8):	Serwer danych Evolution
 Name:		evolution-data-server
 Version:	2.32.1
-Release:	1
+Release:	2
 License:	LGPL v2+
 Group:		X11/Libraries
 Source0:	http://ftp.gnome.org/pub/GNOME/sources/evolution-data-server/2.32/%{name}-%{version}.tar.bz2
@@ -22,7 +22,6 @@ BuildRequires:	automake >= 1:1.10
 BuildRequires:	bison
 BuildRequires:	cyrus-sasl-devel
 BuildRequires:	db-devel
-BuildRequires:	dbus-glib-devel >= 0.60
 BuildRequires:	docbook-dtd412-xml
 BuildRequires:	gettext-devel
 BuildRequires:	glib2-devel >= 1:2.26.0
@@ -32,7 +31,6 @@ BuildRequires:	gtk+2-devel >= 2:2.16.0
 BuildRequires:	gtk-doc >= 1.9
 %{?with_kerberos5:BuildRequires:	heimdal-devel}
 BuildRequires:	intltool >= 0.40.0
-BuildRequires:	libbonobo-devel >= 2.24.0
 BuildRequires:	libgdata-devel >= 0.6.3
 BuildRequires:	libgnome-keyring-devel >= 2.26.0
 BuildRequires:	libgweather-devel >= 2.26.0
@@ -98,11 +96,12 @@ Requires:	ORBit2-devel >= 1:2.14.8
 Requires:	glib2-devel >= 1:2.26.0
 Requires:	gtk+2-devel >= 2:2.16.0
 %{?with_kerberos5:Requires:	heimdal-devel}
-Requires:	libbonobo-devel >= 2.24.0
 Requires:	libgdata-devel >= 0.6.3
 Requires:	libical-devel >= 0.43
 Requires:	libsoup-devel >= 2.26.0
 Requires:	libxml2-devel >= 1:2.6.31
+Requires:	nspr-devel
+Requires:	nss-devel
 Requires:	sqlite3-devel
 
 %description devel
