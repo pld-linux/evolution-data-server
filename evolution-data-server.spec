@@ -9,12 +9,12 @@
 Summary:	Evolution data server
 Summary(pl.UTF-8):	Serwer danych Evolution
 Name:		evolution-data-server
-Version:	2.91.4.1
+Version:	2.91.6
 Release:	0.1
 License:	LGPL v2+
 Group:		X11/Libraries
 Source0:	http://ftp.gnome.org/pub/GNOME/sources/evolution-data-server/2.91/%{name}-%{version}.tar.bz2
-# Source0-md5:	f8383802935db394cae823b112e9de0e
+# Source0-md5:	bc80989e8fd93eab471cb83f7c8db261
 URL:		http://www.gnome.org/projects/evolution/
 BuildRequires:	GConf2-devel >= 2.26.0
 BuildRequires:	ORBit2-devel >= 1:2.14.8
@@ -34,7 +34,7 @@ BuildRequires:	gtk-doc >= 1.9
 %{?with_kerberos5:BuildRequires:	heimdal-devel}
 BuildRequires:	intltool >= 0.40.0
 BuildRequires:	libbonobo-devel >= 2.24.0
-BuildRequires:	libgdata-devel >= 0.6.3
+BuildRequires:	libgdata-devel >= 0.7.0
 BuildRequires:	libgnome-keyring-devel >= 2.26.0
 BuildRequires:	libgweather-devel >= 2.91.0
 BuildRequires:	libical-devel >= 0.43
@@ -171,8 +171,6 @@ export LIBS
 	%{?with_ldap:--with-openldap=%{_libdir}/evolution-openldap} \
 	%{?with_ldap:--with-static-ldap=yes} \
 	%{!?with_ldap:--with-openldap=no} \
-	--enable-gnome-keyring=yes \
-	--enable-gtk3 \
 	--enable-ssl \
 	--enable-smime \
 	--enable-ipv6 \
@@ -196,7 +194,7 @@ install -d $RPM_BUILD_ROOT%{schemadir}
 
 install addressbook/backends/ldap/evolutionperson.schema $RPM_BUILD_ROOT%{schemadir}
 
-rm $RPM_BUILD_ROOT%{_libdir}/%{name}-%{apiver}/{camel-providers,extensions}/*.{la,a}
+%{__rm} $RPM_BUILD_ROOT%{_libdir}/%{name}/{camel-providers,calendar-backends,addressbook-backends}/*.{la,a}
 
 %find_lang %{name} --all-name
 
@@ -223,12 +221,14 @@ fi
 %attr(755,root,root) %{_libdir}/camel-lock-helper-%{apiver}
 %attr(755,root,root) %{_libdir}/e-addressbook-factory
 %attr(755,root,root) %{_libdir}/e-calendar-factory
-%dir %{_libdir}/%{name}-%{apiver}
-%dir %{_libdir}/%{name}-%{apiver}/camel-providers
-%attr(755,root,root) %{_libdir}/%{name}-%{apiver}/camel-providers/*.so
-%{_libdir}/%{name}-%{apiver}/camel-providers/*.urls
-%dir %{_libdir}/%{name}-%{apiver}/extensions
-%attr(755,root,root) %{_libdir}/%{name}-%{apiver}/extensions/*.so
+%dir %{_libdir}/%{name}
+%dir %{_libdir}/%{name}/camel-providers
+%attr(755,root,root) %{_libdir}/%{name}/camel-providers/*.so
+%{_libdir}/%{name}/camel-providers/*.urls
+%dir %{_libdir}/%{name}/addressbook-backends
+%attr(755,root,root) %{_libdir}/%{name}/addressbook-backends/*.so
+%dir %{_libdir}/%{name}/calendar-backends
+%attr(755,root,root) %{_libdir}/%{name}/calendar-backends/*.so
 
 %if %{with ldap}
 %{_datadir}/%{name}-%{basever}/*.schema
@@ -248,19 +248,19 @@ fi
 %files libs
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_libdir}/libcamel-%{apiver}.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libcamel-%{apiver}.so.21
+%attr(755,root,root) %ghost %{_libdir}/libcamel-%{apiver}.so.23
 %attr(755,root,root) %{_libdir}/libcamel-provider-%{apiver}.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libcamel-provider-%{apiver}.so.21
+%attr(755,root,root) %ghost %{_libdir}/libcamel-provider-%{apiver}.so.23
 %attr(755,root,root) %{_libdir}/libebackend-%{apiver}.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libebackend-%{apiver}.so.0
+%attr(755,root,root) %ghost %{_libdir}/libebackend-%{apiver}.so.1
 %attr(755,root,root) %{_libdir}/libebook-%{apiver}.so.*.*.*
 %attr(755,root,root) %ghost %{_libdir}/libebook-%{apiver}.so.10
 %attr(755,root,root) %{_libdir}/libecal-%{apiver}.so.*.*.*
 %attr(755,root,root) %ghost %{_libdir}/libecal-%{apiver}.so.8
 %attr(755,root,root) %{_libdir}/libedata-book-%{apiver}.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libedata-book-%{apiver}.so.8
+%attr(755,root,root) %ghost %{_libdir}/libedata-book-%{apiver}.so.9
 %attr(755,root,root) %{_libdir}/libedata-cal-%{apiver}.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libedata-cal-%{apiver}.so.10
+%attr(755,root,root) %ghost %{_libdir}/libedata-cal-%{apiver}.so.11
 %attr(755,root,root) %{_libdir}/libedataserver-%{apiver}.so.*.*.*
 %attr(755,root,root) %ghost %{_libdir}/libedataserver-%{apiver}.so.14
 %attr(755,root,root) %{_libdir}/libedataserverui-%{apiver2}.so.*.*.*
