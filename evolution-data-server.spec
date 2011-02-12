@@ -10,30 +10,26 @@ Summary:	Evolution data server
 Summary(pl.UTF-8):	Serwer danych Evolution
 Name:		evolution-data-server
 Version:	2.91.6
-Release:	0.1
+Release:	1
 License:	LGPL v2+
 Group:		X11/Libraries
 Source0:	http://ftp.gnome.org/pub/GNOME/sources/evolution-data-server/2.91/%{name}-%{version}.tar.bz2
 # Source0-md5:	bc80989e8fd93eab471cb83f7c8db261
 URL:		http://www.gnome.org/projects/evolution/
 BuildRequires:	GConf2-devel >= 2.26.0
-BuildRequires:	ORBit2-devel >= 1:2.14.8
-BuildRequires:	autoconf >= 2.58
+BuildRequires:	autoconf >= 2.62
 BuildRequires:	automake >= 1:1.10
 BuildRequires:	bison
-BuildRequires:	cyrus-sasl-devel
-BuildRequires:	db-devel
-BuildRequires:	dbus-glib-devel >= 0.60
 BuildRequires:	docbook-dtd412-xml
-BuildRequires:	gettext-devel >= 0.17
-BuildRequires:	glib2-devel >= 1:2.26.0
+BuildRequires:	gettext-devel >= 0.18.1
+BuildRequires:	glib2-devel >= 1:2.28.0
 BuildRequires:	gnome-common >= 2.20.0
+BuildRequires:	gobject-introspection-devel >= 0.9.12
 BuildRequires:	gperf
-BuildRequires:	gtk+3-devel >= 2.91.7
+BuildRequires:	gtk+3-devel >= 3.0.0
 BuildRequires:	gtk-doc >= 1.9
 %{?with_kerberos5:BuildRequires:	heimdal-devel}
 BuildRequires:	intltool >= 0.40.0
-BuildRequires:	libbonobo-devel >= 2.24.0
 BuildRequires:	libgdata-devel >= 0.7.0
 BuildRequires:	libgnome-keyring-devel >= 2.26.0
 BuildRequires:	libgweather-devel >= 2.91.0
@@ -95,11 +91,9 @@ Summary(pl.UTF-8):	Pliki programistyczne serwera danych evolution
 Group:		X11/Development/Libraries
 Requires:	%{name}-libs = %{version}-%{release}
 Requires:	GConf2-devel >= 2.26.0
-Requires:	ORBit2-devel >= 1:2.14.8
-Requires:	glib2-devel >= 1:2.26.0
-Requires:	gtk+2-devel >= 2:2.16.0
+Requires:	glib2-devel >= 1:2.28.0
+Requires:	gtk+3-devel >= 3.0.0
 %{?with_kerberos5:Requires:	heimdal-devel}
-Requires:	libbonobo-devel >= 2.24.0
 Requires:	libical-devel >= 0.43
 Requires:	libsoup-devel >= 2.26.0
 Requires:	libxml2-devel >= 1:2.6.31
@@ -144,7 +138,7 @@ Dokumentacja API e-d-s.
 sed -i -e 's/DB_LIBS="-L[^ "]* /DB_LIBS="/;s/ICONV_LIBS="[^ "]*/ICONV_LIBS="/' configure.ac
 
 sed -i -e 's/^en@shaw//' po/LINGUAS
-rm -f po/en@shaw.po
+%{__rm} po/en@shaw.po
 
 %build
 %{__gtkdocize}
@@ -195,6 +189,7 @@ install -d $RPM_BUILD_ROOT%{schemadir}
 install addressbook/backends/ldap/evolutionperson.schema $RPM_BUILD_ROOT%{schemadir}
 
 %{__rm} $RPM_BUILD_ROOT%{_libdir}/%{name}/{camel-providers,calendar-backends,addressbook-backends}/*.{la,a}
+%{__rm} $RPM_BUILD_ROOT%{_libdir}/*.la
 
 %find_lang %{name} --all-name
 
@@ -238,7 +233,6 @@ fi
 %{_datadir}/dbus-1/services/org.gnome.evolution.dataserver.Calendar.service
 
 %dir %{_datadir}/%{name}-%{basever}
-#%{_datadir}/%{name}-%{basever}/ui
 %{_pixmapsdir}/%{name}
 
 %files -n openldap-schema-evolutionperson
@@ -282,16 +276,6 @@ fi
 %attr(755,root,root) %{_libdir}/libedataserver-%{apiver}.so
 %attr(755,root,root) %{_libdir}/libedataserverui-%{apiver2}.so
 %attr(755,root,root) %{_libdir}/libegroupwise-%{apiver}.so
-%{_libdir}/libcamel-%{apiver}.la
-%{_libdir}/libcamel-provider-%{apiver}.la
-%{_libdir}/libebackend-%{apiver}.la
-%{_libdir}/libebook-%{apiver}.la
-%{_libdir}/libecal-%{apiver}.la
-%{_libdir}/libedata-book-%{apiver}.la
-%{_libdir}/libedata-cal-%{apiver}.la
-%{_libdir}/libedataserver-%{apiver}.la
-%{_libdir}/libedataserverui-%{apiver2}.la
-%{_libdir}/libegroupwise-%{apiver}.la
 %{_includedir}/evolution-data-server-%{basever}
 %{_pkgconfigdir}/camel-%{apiver}.pc
 %{_pkgconfigdir}/camel-provider-%{apiver}.pc
