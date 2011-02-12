@@ -14,6 +14,7 @@ License:	LGPL v2+
 Group:		X11/Libraries
 Source0:	http://ftp.gnome.org/pub/GNOME/sources/evolution-data-server/2.32/%{name}-%{version}.tar.bz2
 # Source0-md5:	230f9dee68855c8a0ca09f3c3fea8faf
+Patch0:		gtk224.patch
 URL:		http://www.gnome.org/projects/evolution/
 BuildRequires:	GConf2-devel >= 2.26.0
 BuildRequires:	ORBit2-devel >= 1:2.14.8
@@ -138,6 +139,7 @@ Dokumentacja API e-d-s.
 
 %prep
 %setup -q
+%patch0 -p1
 
 # kill -L$withval/lib
 sed -i -e 's/DB_LIBS="-L[^ "]* /DB_LIBS="/;s/ICONV_LIBS="[^ "]*/ICONV_LIBS="/' configure.ac
