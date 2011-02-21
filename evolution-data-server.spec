@@ -9,12 +9,12 @@
 Summary:	Evolution data server
 Summary(pl.UTF-8):	Serwer danych Evolution
 Name:		evolution-data-server
-Version:	2.91.6
+Version:	2.91.90
 Release:	1
 License:	LGPL v2+
 Group:		X11/Libraries
 Source0:	http://ftp.gnome.org/pub/GNOME/sources/evolution-data-server/2.91/%{name}-%{version}.tar.bz2
-# Source0-md5:	bc80989e8fd93eab471cb83f7c8db261
+# Source0-md5:	69cf059882c2685ba4096d2cc2aeedda
 URL:		http://www.gnome.org/projects/evolution/
 BuildRequires:	GConf2-devel >= 2.26.0
 BuildRequires:	autoconf >= 2.62
@@ -36,7 +36,7 @@ BuildRequires:	libgweather-devel >= 2.91.0
 BuildRequires:	libical-devel >= 0.43
 BuildRequires:	libsoup-devel >= 2.26.0
 BuildRequires:	libstdc++-devel
-BuildRequires:	libtool >= 2.2
+BuildRequires:	libtool >= 2:2.2
 BuildRequires:	libxml2-devel >= 1:2.6.31
 BuildRequires:	nspr-devel
 BuildRequires:	nss-devel
@@ -136,9 +136,6 @@ Dokumentacja API e-d-s.
 
 # kill -L$withval/lib
 sed -i -e 's/DB_LIBS="-L[^ "]* /DB_LIBS="/;s/ICONV_LIBS="[^ "]*/ICONV_LIBS="/' configure.ac
-
-sed -i -e 's/^en@shaw//' po/LINGUAS
-%{__rm} po/en@shaw.po
 
 %build
 %{__gtkdocize}
