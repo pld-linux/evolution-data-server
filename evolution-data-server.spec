@@ -3,18 +3,18 @@
 %bcond_without	kerberos5	# build without kerberos5 support
 %bcond_without	ldap		# build without ldap support
 #
-%define		basever		2.92
+%define		basever		3.0
 %define		apiver		1.2
 %define		apiver2		3.0
 Summary:	Evolution data server
 Summary(pl.UTF-8):	Serwer danych Evolution
 Name:		evolution-data-server
-Version:	2.91.90
+Version:	2.91.91
 Release:	1
 License:	LGPL v2+
 Group:		X11/Libraries
 Source0:	http://ftp.gnome.org/pub/GNOME/sources/evolution-data-server/2.91/%{name}-%{version}.tar.bz2
-# Source0-md5:	69cf059882c2685ba4096d2cc2aeedda
+# Source0-md5:	141ea873b8c03813eb86008346645b8b
 URL:		http://www.gnome.org/projects/evolution/
 BuildRequires:	GConf2-devel >= 2.26.0
 BuildRequires:	autoconf >= 2.62
