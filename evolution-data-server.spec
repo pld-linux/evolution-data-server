@@ -126,16 +126,16 @@ Evolution data server static libraries.
 Statyczne biblioteki serwera danych Evolution.
 
 %package apidocs
-Summary:	e-d-s API documentation
-Summary(pl.UTF-8):	Dokumentacja API e-d-s
+Summary:	Evolution data server API documentation
+Summary(pl.UTF-8):	Dokumentacja API serwera danych Evolution
 Group:		Documentation
 Requires:	gtk-doc-common
 
 %description apidocs
-e-d-s API documentation.
+Evolution data server API documentation.
 
 %description apidocs -l pl.UTF-8
-Dokumentacja API e-d-s.
+Dokumentacja API serwera danych Evolution.
 
 %prep
 %setup -q
@@ -143,9 +143,6 @@ Dokumentacja API e-d-s.
 
 # kill -L$withval/lib
 sed -i -e 's/DB_LIBS="-L[^ "]* /DB_LIBS="/;s/ICONV_LIBS="[^ "]*/ICONV_LIBS="/' configure.ac
-
-sed -i -e 's/^en@shaw//' po/LINGUAS
-rm -f po/en@shaw.po
 
 %build
 %{__gtkdocize}
@@ -191,7 +188,7 @@ install -d $RPM_BUILD_ROOT%{schemadir}
 
 install addressbook/backends/ldap/evolutionperson.schema $RPM_BUILD_ROOT%{schemadir}
 
-rm $RPM_BUILD_ROOT%{_libdir}/%{name}-%{apiver}/{camel-providers,extensions}/*.{la,a}
+%{__rm} $RPM_BUILD_ROOT%{_libdir}/%{name}-%{apiver}/{camel-providers,extensions}/*.{la,a}
 
 %find_lang %{name} --all-name
 
