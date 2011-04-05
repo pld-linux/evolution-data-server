@@ -32,7 +32,7 @@ BuildRequires:	gtk-doc >= 1.9
 BuildRequires:	intltool >= 0.40.0
 BuildRequires:	libgdata-devel >= 0.7.0
 BuildRequires:	libgnome-keyring-devel >= 2.26.0
-BuildRequires:	libgweather-devel >= 2.91.0
+BuildRequires:	libgweather-devel >= 3.0.0
 BuildRequires:	libical-devel >= 0.43
 BuildRequires:	libsoup-devel >= 2.26.0
 BuildRequires:	libstdc++-devel
