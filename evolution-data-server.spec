@@ -10,12 +10,12 @@
 Summary:	Evolution data server
 Summary(pl.UTF-8):	Serwer danych Evolution
 Name:		evolution-data-server
-Version:	3.0.1
+Version:	3.0.2
 Release:	1
 License:	LGPL v2+
 Group:		X11/Libraries
 Source0:	http://ftp.gnome.org/pub/GNOME/sources/evolution-data-server/3.0/%{name}-%{version}.tar.bz2
-# Source0-md5:	56c350f765c42f8f381140ffacf552e7
+# Source0-md5:	89518de33ca5761bd9946ceb56c23468
 URL:		http://www.gnome.org/projects/evolution/
 BuildRequires:	GConf2-devel >= 2.26.0
 BuildRequires:	autoconf >= 2.62
@@ -141,6 +141,10 @@ Dokumentacja API serwera danych Evolution.
 # kill -L$withval/lib
 %{__sed} -i -e 's/DB_LIBS="-L[^ "]* /DB_LIBS="/;s/ICONV_LIBS="[^ "]*/ICONV_LIBS="/' configure.ac
 
+# fix broken tarball
+mkdir vala
+touch vala/Makefile.in
+
 %build
 %{__gtkdocize}
 %{__gettextize}
@@ -262,6 +266,7 @@ fi
 %attr(755,root,root) %ghost %{_libdir}/libedataserverui-%{apiver2}.so.0
 %attr(755,root,root) %{_libdir}/libegroupwise-%{apiver}.so.*.*.*
 %attr(755,root,root) %ghost %{_libdir}/libegroupwise-%{apiver}.so.13
+%{_libdir}/girepository-1.0/EBook-1.2.typelib
 %{_libdir}/girepository-1.0/ECalendar-1.2.typelib
 %{_libdir}/girepository-1.0/EDataServer-1.2.typelib
 
@@ -289,6 +294,7 @@ fi
 %{_pkgconfigdir}/libedataserver-%{apiver}.pc
 %{_pkgconfigdir}/libedataserverui-%{apiver2}.pc
 %{_pkgconfigdir}/libegroupwise-%{apiver}.pc
+%{_datadir}/gir-1.0/EBook-1.2.gir
 %{_datadir}/gir-1.0/ECalendar-1.2.gir
 %{_datadir}/gir-1.0/EDataServer-1.2.gir
 
