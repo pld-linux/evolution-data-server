@@ -32,7 +32,7 @@ BuildRequires:	gtk+2-devel >= 2:2.16.0
 BuildRequires:	gtk-doc >= 1.9
 %{?with_kerberos5:BuildRequires:	heimdal-devel}
 BuildRequires:	intltool >= 0.40.0
-BuildRequires:	libgdata-devel >= 0.6.3
+BuildRequires:	libgdata-devel >= 1:0.6.3
 BuildRequires:	libgnome-keyring-devel >= 2.26.0
 BuildRequires:	libgweather-devel >= 2.26.0
 BuildRequires:	libical-devel >= 0.43
@@ -97,7 +97,7 @@ Requires:	ORBit2-devel >= 1:2.14.8
 Requires:	glib2-devel >= 1:2.26.0
 Requires:	gtk+2-devel >= 2:2.16.0
 %{?with_kerberos5:Requires:	heimdal-devel}
-Requires:	libgdata-devel >= 0.6.3
+Requires:	libgdata-devel >= 1:0.6.3
 Requires:	libical-devel >= 0.43
 Requires:	libsoup-devel >= 2.26.0
 Requires:	libxml2-devel >= 1:2.6.31
