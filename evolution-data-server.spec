@@ -9,7 +9,7 @@ Summary:	Evolution data server
 Summary(pl.UTF-8):	Serwer danych Evolution
 Name:		evolution-data-server
 Version:	2.32.2
-Release:	2
+Release:	3
 License:	LGPL v2+
 Group:		X11/Libraries
 Source0:	http://ftp.gnome.org/pub/GNOME/sources/evolution-data-server/2.32/%{name}-%{version}.tar.bz2
@@ -189,6 +189,7 @@ install -d $RPM_BUILD_ROOT%{schemadir}
 install addressbook/backends/ldap/evolutionperson.schema $RPM_BUILD_ROOT%{schemadir}
 
 %{__rm} $RPM_BUILD_ROOT%{_libdir}/%{name}-%{apiver}/{camel-providers,extensions}/*.{la,a}
+%{__rm} $RPM_BUILD_ROOT%{_libdir}/*.la
 
 %find_lang %{name} --all-name
 
@@ -273,16 +274,6 @@ fi
 %attr(755,root,root) %{_libdir}/libedataserver-%{apiver}.so
 %attr(755,root,root) %{_libdir}/libedataserverui-%{apiver}.so
 %attr(755,root,root) %{_libdir}/libegroupwise-%{apiver}.so
-%{_libdir}/libcamel-%{apiver}.la
-%{_libdir}/libcamel-provider-%{apiver}.la
-%{_libdir}/libebackend-%{apiver}.la
-%{_libdir}/libebook-%{apiver}.la
-%{_libdir}/libecal-%{apiver}.la
-%{_libdir}/libedata-book-%{apiver}.la
-%{_libdir}/libedata-cal-%{apiver}.la
-%{_libdir}/libedataserver-%{apiver}.la
-%{_libdir}/libedataserverui-%{apiver}.la
-%{_libdir}/libegroupwise-%{apiver}.la
 %{_includedir}/evolution-data-server-%{basever}
 %{_pkgconfigdir}/camel-%{apiver}.pc
 %{_pkgconfigdir}/camel-provider-%{apiver}.pc
