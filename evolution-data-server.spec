@@ -48,6 +48,7 @@ BuildRequires:	pkgconfig
 BuildRequires:	rpmbuild(macros) >= 1.304
 BuildRequires:	sed >= 4.0
 BuildRequires:	sqlite3-devel >= 3.5
+BuildRequires:	vala
 BuildRequires:	zlib-devel
 Requires:	%{name}-libs = %{version}-%{release}
 # sr@Latn vs. sr@latin
@@ -172,8 +173,10 @@ export LIBS
 	--enable-ipv6 \
 	--enable-calendar \
 	--enable-nntp \
+	--enable-gobject-introspection \
 	--enable-gtk-doc \
 	--enable-static \
+	--enable-vala-bindings \
 	--with-libdb=%{_libdir} \
 	--with-html-dir=%{_gtkdocdir} \
 	--disable-silent-rules
@@ -290,6 +293,9 @@ fi
 %{_datadir}/gir-1.0/EBook-1.2.gir
 %{_datadir}/gir-1.0/ECalendar-1.2.gir
 %{_datadir}/gir-1.0/EDataServer-1.2.gir
+%{_datadir}/vala/vapi/libebook-1.2.vapi
+%{_datadir}/vala/vapi/libebook-1.2.deps
+%{_datadir}/vala/vapi/libedataserver-1.2.vapi
 
 %files static
 %defattr(644,root,root,755)
