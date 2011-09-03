@@ -14,8 +14,8 @@ Version:	3.1.90
 Release:	1
 License:	LGPL v2+
 Group:		X11/Libraries
-Source0:	http://ftp.gnome.org/pub/GNOME/sources/evolution-data-server/3.1/%{name}-%{version}.tar.bz2
-# Source0-md5:	01dda78001ad1397c2a7d5d9a5666fff
+Source0:	http://ftp.gnome.org/pub/GNOME/sources/evolution-data-server/3.1/%{name}-%{version}.tar.xz
+# Source0-md5:	ae185aa6bca6b3f2689f2aecef56cd07
 URL:		http://www.gnome.org/projects/evolution/
 BuildRequires:	GConf2-devel >= 2.26.0
 BuildRequires:	autoconf >= 2.62
@@ -25,6 +25,7 @@ BuildRequires:	docbook-dtd412-xml
 BuildRequires:	gettext-devel >= 0.18.1
 BuildRequires:	glib2-devel >= 1:2.28.0
 BuildRequires:	gnome-common >= 2.20.0
+BuildRequires:	gnome-online-accounts >= 3.1.1
 BuildRequires:	gobject-introspection-devel >= 0.9.12
 BuildRequires:	gperf
 BuildRequires:	gtk+3-devel >= 3.0.0
