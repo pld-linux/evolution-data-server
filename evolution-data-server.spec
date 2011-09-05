@@ -10,12 +10,12 @@
 Summary:	Evolution data server
 Summary(pl.UTF-8):	Serwer danych Evolution
 Name:		evolution-data-server
-Version:	3.1.90
+Version:	3.1.91
 Release:	1
 License:	LGPL v2+
 Group:		X11/Libraries
 Source0:	http://ftp.gnome.org/pub/GNOME/sources/evolution-data-server/3.1/%{name}-%{version}.tar.xz
-# Source0-md5:	ae185aa6bca6b3f2689f2aecef56cd07
+# Source0-md5:	7524a514b679d8479819356ae38a5702
 URL:		http://www.gnome.org/projects/evolution/
 BuildRequires:	GConf2-devel >= 2.26.0
 BuildRequires:	autoconf >= 2.62
@@ -294,8 +294,10 @@ fi
 %{_datadir}/gir-1.0/EBook-1.2.gir
 %{_datadir}/gir-1.0/ECalendar-1.2.gir
 %{_datadir}/gir-1.0/EDataServer-1.2.gir
-%{_datadir}/vala/vapi/libebook-1.2.vapi
 %{_datadir}/vala/vapi/libebook-1.2.deps
+%{_datadir}/vala/vapi/libebook-1.2.vapi
+%{_datadir}/vala/vapi/libecalendar-1.2.deps
+%{_datadir}/vala/vapi/libecalendar-1.2.vapi
 %{_datadir}/vala/vapi/libedataserver-1.2.vapi
 
 %files static
