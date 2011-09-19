@@ -10,12 +10,12 @@
 Summary:	Evolution data server
 Summary(pl.UTF-8):	Serwer danych Evolution
 Name:		evolution-data-server
-Version:	3.1.91
+Version:	3.1.92
 Release:	1
 License:	LGPL v2+
 Group:		X11/Libraries
 Source0:	http://ftp.gnome.org/pub/GNOME/sources/evolution-data-server/3.1/%{name}-%{version}.tar.xz
-# Source0-md5:	7524a514b679d8479819356ae38a5702
+# Source0-md5:	1475c767d8d4ea67dcd2373f38367a25
 URL:		http://www.gnome.org/projects/evolution/
 BuildRequires:	GConf2-devel >= 2.26.0
 BuildRequires:	autoconf >= 2.62
@@ -26,7 +26,7 @@ BuildRequires:	gettext-devel >= 0.18.1
 BuildRequires:	glib2-devel >= 1:2.28.0
 BuildRequires:	gnome-common >= 2.20.0
 BuildRequires:	gnome-online-accounts >= 3.1.1
-BuildRequires:	gobject-introspection-devel >= 0.9.12
+BuildRequires:	gobject-introspection-devel >= 0.10.0
 BuildRequires:	gperf
 BuildRequires:	gtk+3-devel >= 3.0.0
 BuildRequires:	gtk-doc >= 1.9
@@ -36,8 +36,8 @@ BuildRequires:	libgdata-devel >= 0.9.1
 BuildRequires:	libgnome-keyring-devel >= 2.26.0
 BuildRequires:	libgweather-devel >= 3.0.0
 BuildRequires:	libical-devel >= 0.43
-BuildRequires:	liboauth-devel
-BuildRequires:	libsoup-devel >= 2.26.0
+BuildRequires:	liboauth-devel >= 0.9.4
+BuildRequires:	libsoup-devel >= 2.31.2
 BuildRequires:	libstdc++-devel
 BuildRequires:	libtool >= 2:2.2
 BuildRequires:	libxml2-devel >= 1:2.6.31
@@ -49,7 +49,9 @@ BuildRequires:	pkgconfig
 BuildRequires:	rpmbuild(macros) >= 1.304
 BuildRequires:	sed >= 4.0
 BuildRequires:	sqlite3-devel >= 3.5
-BuildRequires:	vala
+BuildRequires:	tar >= 1:1.22
+BuildRequires:	vala >= 1:0.14.0
+BuildRequires:	xz
 BuildRequires:	zlib-devel
 Requires:	%{name}-libs = %{version}-%{release}
 # sr@Latn vs. sr@latin
@@ -81,7 +83,7 @@ Ten pakiet zawiera evolutionperson.schema dla serwera openldap.
 Summary:	Evolution Data Server library
 Summary(pl.UTF-8):	Biblioteka Evolution Data Server
 Group:		X11/Libraries
-Requires:	libsoup >= 2.26.0
+Requires:	libsoup >= 2.31.2
 
 %description libs
 This package contains Evolution Data Server library.
@@ -100,7 +102,7 @@ Requires:	gtk+3-devel >= 3.0.0
 %{?with_kerberos5:Requires:	heimdal-devel}
 Requires:	libgdata-devel >= 0.9.1
 Requires:	libical-devel >= 0.43
-Requires:	libsoup-devel >= 2.26.0
+Requires:	libsoup-devel >= 2.31.2
 Requires:	libxml2-devel >= 1:2.6.31
 Requires:	nspr-devel
 Requires:	nss-devel
