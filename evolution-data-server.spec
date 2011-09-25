@@ -19,7 +19,7 @@ Source0:	http://ftp.gnome.org/pub/GNOME/sources/evolution-data-server/3.1/%{name
 URL:		http://www.gnome.org/projects/evolution/
 BuildRequires:	GConf2-devel >= 2.26.0
 BuildRequires:	autoconf >= 2.62
-BuildRequires:	automake >= 1:1.10
+BuildRequires:	automake >= 1:1.11
 BuildRequires:	bison
 BuildRequires:	docbook-dtd412-xml
 BuildRequires:	gettext-devel >= 0.18.1
