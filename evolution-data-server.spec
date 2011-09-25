@@ -3,39 +3,40 @@
 %bcond_without	kerberos5	# build without kerberos5 support
 %bcond_without	ldap		# build without ldap support
 #
-%define		basever		3.0
+%define		basever		3.2
 %define		apiver		1.2
 %define		apiver2		3.0
 #
 Summary:	Evolution data server
 Summary(pl.UTF-8):	Serwer danych Evolution
 Name:		evolution-data-server
-Version:	3.0.3
-Release:	2
-License:	LGPL v2+
+Version:	3.2.0
+Release:	1
 Group:		X11/Libraries
-Source0:	http://ftp.gnome.org/pub/GNOME/sources/evolution-data-server/3.0/%{name}-%{version}.tar.bz2
-# Source0-md5:	e19d404f5785fbe39c303b675e23e15c
+Source0:	http://ftp.gnome.org/pub/GNOME/sources/evolution-data-server/3.2/%{name}-%{version}.tar.xz
+# Source0-md5:	9973c9e4d2bd150c85e5fbe5fb9a83e3
 URL:		http://www.gnome.org/projects/evolution/
 BuildRequires:	GConf2-devel >= 2.26.0
 BuildRequires:	autoconf >= 2.62
-BuildRequires:	automake >= 1:1.10
+BuildRequires:	automake >= 1:1.11
 BuildRequires:	bison
 BuildRequires:	docbook-dtd412-xml
 BuildRequires:	gettext-devel >= 0.18.1
 BuildRequires:	glib2-devel >= 1:2.28.0
 BuildRequires:	gnome-common >= 2.20.0
-BuildRequires:	gobject-introspection-devel >= 0.9.12
+BuildRequires:	gnome-online-accounts >= 3.1.1
+BuildRequires:	gobject-introspection-devel >= 0.10.0
 BuildRequires:	gperf
 BuildRequires:	gtk+3-devel >= 3.0.0
 BuildRequires:	gtk-doc >= 1.9
 %{?with_kerberos5:BuildRequires:	heimdal-devel}
 BuildRequires:	intltool >= 0.40.0
-BuildRequires:	libgdata-devel >= 0.7.0
+BuildRequires:	libgdata-devel >= 0.9.1
 BuildRequires:	libgnome-keyring-devel >= 2.26.0
 BuildRequires:	libgweather-devel >= 3.0.0
 BuildRequires:	libical-devel >= 0.43
-BuildRequires:	libsoup-devel >= 2.26.0
+BuildRequires:	liboauth-devel >= 0.9.4
+BuildRequires:	libsoup-devel >= 2.31.2
 BuildRequires:	libstdc++-devel
 BuildRequires:	libtool >= 2:2.2
 BuildRequires:	libxml2-devel >= 1:2.6.31
@@ -47,6 +48,9 @@ BuildRequires:	pkgconfig
 BuildRequires:	rpmbuild(macros) >= 1.304
 BuildRequires:	sed >= 4.0
 BuildRequires:	sqlite3-devel >= 3.5
+BuildRequires:	tar >= 1:1.22
+BuildRequires:	vala >= 1:0.14.0
+BuildRequires:	xz
 BuildRequires:	zlib-devel
 Requires:	%{name}-libs = %{version}-%{release}
 # sr@Latn vs. sr@latin
@@ -78,7 +82,7 @@ Ten pakiet zawiera evolutionperson.schema dla serwera openldap.
 Summary:	Evolution Data Server library
 Summary(pl.UTF-8):	Biblioteka Evolution Data Server
 Group:		X11/Libraries
-Requires:	libsoup >= 2.26.0
+Requires:	libsoup >= 2.31.2
 
 %description libs
 This package contains Evolution Data Server library.
@@ -95,9 +99,9 @@ Requires:	GConf2-devel >= 2.26.0
 Requires:	glib2-devel >= 1:2.28.0
 Requires:	gtk+3-devel >= 3.0.0
 %{?with_kerberos5:Requires:	heimdal-devel}
-Requires:	libgdata-devel >= 0.6.3
+Requires:	libgdata-devel >= 0.9.1
 Requires:	libical-devel >= 0.43
-Requires:	libsoup-devel >= 2.26.0
+Requires:	libsoup-devel >= 2.31.2
 Requires:	libxml2-devel >= 1:2.6.31
 Requires:	nspr-devel
 Requires:	nss-devel
@@ -141,10 +145,6 @@ Dokumentacja API serwera danych Evolution.
 # kill -L$withval/lib
 %{__sed} -i -e 's/DB_LIBS="-L[^ "]* /DB_LIBS="/;s/ICONV_LIBS="[^ "]*/ICONV_LIBS="/' configure.ac
 
-# fix broken tarball
-mkdir vala
-touch vala/Makefile.in
-
 %build
 %{__gtkdocize}
 %{__gettextize}
@@ -175,8 +175,10 @@ export LIBS
 	--enable-ipv6 \
 	--enable-calendar \
 	--enable-nntp \
+	--enable-gobject-introspection \
 	--enable-gtk-doc \
 	--enable-static \
+	--enable-vala-bindings \
 	--with-libdb=%{_libdir} \
 	--with-html-dir=%{_gtkdocdir} \
 	--disable-silent-rules
@@ -247,25 +249,23 @@ fi
 %files libs
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_libdir}/libcamel-%{apiver}.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libcamel-%{apiver}.so.23
+%attr(755,root,root) %ghost %{_libdir}/libcamel-%{apiver}.so.29
 %attr(755,root,root) %{_libdir}/libcamel-provider-%{apiver}.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libcamel-provider-%{apiver}.so.23
+%attr(755,root,root) %ghost %{_libdir}/libcamel-provider-%{apiver}.so.29
 %attr(755,root,root) %{_libdir}/libebackend-%{apiver}.so.*.*.*
 %attr(755,root,root) %ghost %{_libdir}/libebackend-%{apiver}.so.1
 %attr(755,root,root) %{_libdir}/libebook-%{apiver}.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libebook-%{apiver}.so.10
+%attr(755,root,root) %ghost %{_libdir}/libebook-%{apiver}.so.12
 %attr(755,root,root) %{_libdir}/libecal-%{apiver}.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libecal-%{apiver}.so.8
+%attr(755,root,root) %ghost %{_libdir}/libecal-%{apiver}.so.10
 %attr(755,root,root) %{_libdir}/libedata-book-%{apiver}.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libedata-book-%{apiver}.so.9
+%attr(755,root,root) %ghost %{_libdir}/libedata-book-%{apiver}.so.11
 %attr(755,root,root) %{_libdir}/libedata-cal-%{apiver}.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libedata-cal-%{apiver}.so.11
+%attr(755,root,root) %ghost %{_libdir}/libedata-cal-%{apiver}.so.13
 %attr(755,root,root) %{_libdir}/libedataserver-%{apiver}.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libedataserver-%{apiver}.so.14
+%attr(755,root,root) %ghost %{_libdir}/libedataserver-%{apiver}.so.15
 %attr(755,root,root) %{_libdir}/libedataserverui-%{apiver2}.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libedataserverui-%{apiver2}.so.0
-%attr(755,root,root) %{_libdir}/libegroupwise-%{apiver}.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libegroupwise-%{apiver}.so.13
+%attr(755,root,root) %ghost %{_libdir}/libedataserverui-%{apiver2}.so.1
 %{_libdir}/girepository-1.0/EBook-1.2.typelib
 %{_libdir}/girepository-1.0/ECalendar-1.2.typelib
 %{_libdir}/girepository-1.0/EDataServer-1.2.typelib
@@ -281,7 +281,6 @@ fi
 %attr(755,root,root) %{_libdir}/libedata-cal-%{apiver}.so
 %attr(755,root,root) %{_libdir}/libedataserver-%{apiver}.so
 %attr(755,root,root) %{_libdir}/libedataserverui-%{apiver2}.so
-%attr(755,root,root) %{_libdir}/libegroupwise-%{apiver}.so
 %{_includedir}/evolution-data-server-%{basever}
 %{_pkgconfigdir}/camel-%{apiver}.pc
 %{_pkgconfigdir}/camel-provider-%{apiver}.pc
@@ -293,10 +292,14 @@ fi
 %{_pkgconfigdir}/libedata-cal-%{apiver}.pc
 %{_pkgconfigdir}/libedataserver-%{apiver}.pc
 %{_pkgconfigdir}/libedataserverui-%{apiver2}.pc
-%{_pkgconfigdir}/libegroupwise-%{apiver}.pc
 %{_datadir}/gir-1.0/EBook-1.2.gir
 %{_datadir}/gir-1.0/ECalendar-1.2.gir
 %{_datadir}/gir-1.0/EDataServer-1.2.gir
+%{_datadir}/vala/vapi/libebook-1.2.deps
+%{_datadir}/vala/vapi/libebook-1.2.vapi
+%{_datadir}/vala/vapi/libecalendar-1.2.deps
+%{_datadir}/vala/vapi/libecalendar-1.2.vapi
+%{_datadir}/vala/vapi/libedataserver-1.2.vapi
 
 %files static
 %defattr(644,root,root,755)
@@ -309,7 +312,6 @@ fi
 %{_libdir}/libedata-cal-%{apiver}.a
 %{_libdir}/libedataserver-%{apiver}.a
 %{_libdir}/libedataserverui-%{apiver2}.a
-%{_libdir}/libegroupwise-%{apiver}.a
 
 %files apidocs
 %defattr(644,root,root,755)
