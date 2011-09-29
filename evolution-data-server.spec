@@ -11,7 +11,7 @@ Summary:	Evolution data server
 Summary(pl.UTF-8):	Serwer danych Evolution
 Name:		evolution-data-server
 Version:	3.2.0
-Release:	1
+Release:	2
 License:	LGPL v2+
 Group:		X11/Libraries
 Source0:	http://ftp.gnome.org/pub/GNOME/sources/evolution-data-server/3.2/%{name}-%{version}.tar.xz
@@ -25,7 +25,7 @@ BuildRequires:	docbook-dtd412-xml
 BuildRequires:	gettext-devel >= 0.18.1
 BuildRequires:	glib2-devel >= 1:2.28.0
 BuildRequires:	gnome-common >= 2.20.0
-BuildRequires:	gnome-online-accounts >= 3.1.1
+BuildRequires:	gnome-online-accounts-devel >= 3.1.1
 BuildRequires:	gobject-introspection-devel >= 0.10.0
 BuildRequires:	gperf
 BuildRequires:	gtk+3-devel >= 3.0.0
