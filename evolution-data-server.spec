@@ -9,7 +9,7 @@ Summary:	Evolution data server
 Summary(pl.UTF-8):	Serwer danych Evolution
 Name:		evolution-data-server
 Version:	2.32.3
-Release:	1
+Release:	2
 License:	LGPL v2+
 Group:		X11/Libraries
 Source0:	http://ftp.gnome.org/pub/GNOME/sources/evolution-data-server/2.32/%{name}-%{version}.tar.bz2
@@ -32,7 +32,7 @@ BuildRequires:	gtk+2-devel >= 2:2.16.0
 BuildRequires:	gtk-doc >= 1.9
 %{?with_kerberos5:BuildRequires:	heimdal-devel}
 BuildRequires:	intltool >= 0.40.0
-BuildRequires:	libgdata-devel >= 1:0.6.3
+BuildRequires:	libgdata-devel >= 0.6.3
 BuildRequires:	libgnome-keyring-devel >= 2.26.0
 BuildRequires:	libgweather-devel >= 2.26.0
 BuildRequires:	libical-devel >= 0.43
