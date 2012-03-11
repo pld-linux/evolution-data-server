@@ -186,6 +186,7 @@ export LIBS
 
 %install
 rm -rf $RPM_BUILD_ROOT
+install -d $RPM_BUILD_ROOT%{_libdir}/%{name}-%{basever}
 install -d $RPM_BUILD_ROOT%{schemadir}
 
 %{__make} install \
@@ -236,6 +237,8 @@ fi
 %attr(755,root,root) %{_libdir}/%{name}/addressbook-backends/*.so
 %dir %{_libdir}/%{name}/calendar-backends
 %attr(755,root,root) %{_libdir}/%{name}/calendar-backends/*.so
+
+%dir %{_libdir}/%{name}-%{basever}
 
 %if %{with ldap}
 %{_datadir}/%{name}-%{basever}/*.schema
