@@ -10,12 +10,13 @@
 Summary:	Evolution data server
 Summary(pl.UTF-8):	Serwer danych Evolution
 Name:		evolution-data-server
-Version:	3.4.2
+Version:	3.4.3
 Release:	1
 License:	LGPL v2+
 Group:		X11/Libraries
 Source0:	http://ftp.gnome.org/pub/GNOME/sources/evolution-data-server/3.4/%{name}-%{version}.tar.xz
-# Source0-md5:	7ff02af7daf6b279094ad0768679802c
+# Source0-md5:	1e423c57891603207bd5950b706d0202
+Patch0:		%{name}-am-Werror.patch
 URL:		http://www.gnome.org/projects/evolution/
 BuildRequires:	GConf2-devel >= 2.26.0
 BuildRequires:	autoconf >= 2.62
@@ -144,6 +145,7 @@ Dokumentacja API serwera danych Evolution.
 
 %prep
 %setup -q
+%patch0 -p1
 
 # kill -L$withval/lib
 %{__sed} -i -e 's/DB_LIBS="-L[^ "]* /DB_LIBS="/;s/ICONV_LIBS="[^ "]*/ICONV_LIBS="/' configure.ac
