@@ -1,0 +1,22 @@
+From 3c249a79110ea44e1a1e604c910e14a19c23d8e7 Mon Sep 17 00:00:00 2001
+From: Matthew Barnes <mbarnes@redhat.com>
+Date: Sun, 17 Jun 2012 14:37:30 +0000
+Subject: Remove -Werror from AM_INIT_AUTOMAKE.
+
+Can't guarantee external software packages will not cause warnings.
+---
+diff --git a/configure.ac b/configure.ac
+index b11f9cb..dff9bda 100644
+--- a/configure.ac
++++ b/configure.ac
+@@ -21,7 +21,7 @@ m4_define([api_version], [1.2])
+ dnl Autoconf / Automake Initialization
+ AC_PREREQ(2.62)
+ AC_INIT([evolution-data-server],[eds_version],[http://bugzilla.gnome.org/enter_bug.cgi?product=Evolution-Data-Server])
+-AM_INIT_AUTOMAKE([gnu 1.10 tar-ustar dist-xz no-dist-gzip -Wall -Wno-portability -Werror foreign])
++AM_INIT_AUTOMAKE([gnu 1.10 tar-ustar dist-xz no-dist-gzip -Wall -Wno-portability foreign])
+ AC_CONFIG_MACRO_DIR([m4])
+ AC_CONFIG_SRCDIR(README)
+ AC_CONFIG_HEADERS(config.h)
+--
+cgit v0.9.0.2
