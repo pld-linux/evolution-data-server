@@ -1,7 +1,10 @@
 #
 # Conditional build:
+%bcond_without	apidocs		# do not build and package API docs
 %bcond_without	kerberos5	# build without kerberos5 support
 %bcond_without	ldap		# build without ldap support
+%bcond_without	static_libs	# do not build static libs
+%bcond_without	vala		# do not build Vala API
 #
 %define		basever		3.4
 %define		apiver		1.2
@@ -10,12 +13,12 @@
 Summary:	Evolution data server
 Summary(pl.UTF-8):	Serwer danych Evolution
 Name:		evolution-data-server
-Version:	3.4.3
+Version:	3.4.4
 Release:	1
 License:	LGPL v2+
 Group:		X11/Libraries
 Source0:	http://ftp.gnome.org/pub/GNOME/sources/evolution-data-server/3.4/%{name}-%{version}.tar.xz
-# Source0-md5:	1e423c57891603207bd5950b706d0202
+# Source0-md5:	4d822c44f00d1f6327433cebdf2443f3
 Patch0:		%{name}-am-Werror.patch
 URL:		http://www.gnome.org/projects/evolution/
 BuildRequires:	GConf2-devel >= 2.26.0
@@ -31,7 +34,7 @@ BuildRequires:	gnome-online-accounts-devel >= 3.2.0
 BuildRequires:	gobject-introspection-devel >= 0.10.0
 BuildRequires:	gperf
 BuildRequires:	gtk+3-devel >= 3.2.0
-BuildRequires:	gtk-doc >= 1.14
+%{?with_apidocs:BuildRequires:	gtk-doc >= 1.14}
 %{?with_kerberos5:BuildRequires:	heimdal-devel}
 BuildRequires:	intltool >= 0.40.0
 BuildRequires:	libgdata-devel >= 0.10.0
@@ -52,7 +55,7 @@ BuildRequires:	rpmbuild(macros) >= 1.304
 BuildRequires:	sed >= 4.0
 BuildRequires:	sqlite3-devel >= 3.5
 BuildRequires:	tar >= 1:1.22
-BuildRequires:	vala >= 2:0.14.0
+%{?with_vala:BuildRequires:	vala >= 2:0.14.0}
 BuildRequires:	xz
 BuildRequires:	zlib-devel
 Requires(post,postun):	glib2 >= 1:2.26.0
@@ -143,6 +146,18 @@ Evolution data server API documentation.
 %description apidocs -l pl.UTF-8
 Dokumentacja API serwera danych Evolution.
 
+%package -n vala-evolution-data-server
+Summary:	Evolution data server API for Vala language
+Summary(pl.UTF-8):	API serwera danych Evolution dla języka Vala
+Group:		Development/Libraries
+Requires:	%{name}-devel = %{version}-%{release}
+
+%description -n vala-evolution-data-server
+Evolution data server API for Vala language.
+
+%description -n vala-evolution-data-server -l pl.UTF-8
+API serwera danych Evolution dla języka Vala.
+
 %prep
 %setup -q
 %patch0 -p1
@@ -178,9 +193,9 @@ export LIBS
 	--enable-smime \
 	--enable-ipv6 \
 	--enable-nntp \
-	--enable-gtk-doc \
-	--enable-static \
-	--enable-vala-bindings \
+	%{__enable_disable apidocs gtk-doc} \
+	%{__enable_disable static_libs static} \
+	%{__enable_disable vala vala-bindings} \
 	--with-libdb=%{_libdir} \
 	--with-html-dir=%{_gtkdocdir} \
 	--disable-silent-rules
@@ -279,9 +294,9 @@ fi
 %attr(755,root,root) %ghost %{_libdir}/libedataserver-%{apiver}.so.16
 %attr(755,root,root) %{_libdir}/libedataserverui-%{apiver2}.so.*.*.*
 %attr(755,root,root) %ghost %{_libdir}/libedataserverui-%{apiver2}.so.1
-%{_libdir}/girepository-1.0/EBook-1.2.typelib
-%{_libdir}/girepository-1.0/ECalendar-1.2.typelib
-%{_libdir}/girepository-1.0/EDataServer-1.2.typelib
+%{_libdir}/girepository-1.0/EBook-%{apiver}.typelib
+%{_libdir}/girepository-1.0/ECalendar-%{apiver}.typelib
+%{_libdir}/girepository-1.0/EDataServer-%{apiver}.typelib
 
 %files devel
 %defattr(644,root,root,755)
@@ -303,15 +318,11 @@ fi
 %{_pkgconfigdir}/libedata-cal-%{apiver}.pc
 %{_pkgconfigdir}/libedataserver-%{apiver}.pc
 %{_pkgconfigdir}/libedataserverui-%{apiver2}.pc
-%{_datadir}/gir-1.0/EBook-1.2.gir
-%{_datadir}/gir-1.0/ECalendar-1.2.gir
-%{_datadir}/gir-1.0/EDataServer-1.2.gir
-%{_datadir}/vala/vapi/libebook-1.2.deps
-%{_datadir}/vala/vapi/libebook-1.2.vapi
-%{_datadir}/vala/vapi/libecalendar-1.2.deps
-%{_datadir}/vala/vapi/libecalendar-1.2.vapi
-%{_datadir}/vala/vapi/libedataserver-1.2.vapi
+%{_datadir}/gir-1.0/EBook-%{apiver}.gir
+%{_datadir}/gir-1.0/ECalendar-%{apiver}.gir
+%{_datadir}/gir-1.0/EDataServer-%{apiver}.gir
 
+%if %{with static_libs}
 %files static
 %defattr(644,root,root,755)
 %{_libdir}/libcamel-%{apiver}.a
@@ -322,7 +333,9 @@ fi
 %{_libdir}/libedata-cal-%{apiver}.a
 %{_libdir}/libedataserver-%{apiver}.a
 %{_libdir}/libedataserverui-%{apiver2}.a
+%endif
 
+%if %{with apidocs}
 %files apidocs
 %defattr(644,root,root,755)
 %{_gtkdocdir}/camel
@@ -333,3 +346,14 @@ fi
 %{_gtkdocdir}/libedata-cal
 %{_gtkdocdir}/libedataserver
 %{_gtkdocdir}/libedataserverui
+%endif
+
+%if %{with vala}
+%files -n vala-evolution-data-server
+%defattr(644,root,root,755)
+%{_datadir}/vala/vapi/libebook-%{apiver}.deps
+%{_datadir}/vala/vapi/libebook-%{apiver}.vapi
+%{_datadir}/vala/vapi/libecalendar-%{apiver}.deps
+%{_datadir}/vala/vapi/libecalendar-%{apiver}.vapi
+%{_datadir}/vala/vapi/libedataserver-%{apiver}.vapi
+%endif
