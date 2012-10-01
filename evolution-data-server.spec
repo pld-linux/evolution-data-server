@@ -14,7 +14,7 @@ Summary:	Evolution data server
 Summary(pl.UTF-8):	Serwer danych Evolution
 Name:		evolution-data-server
 Version:	3.6.0
-Release:	1
+Release:	2
 License:	LGPL v2+
 Group:		X11/Libraries
 Source0:	http://ftp.gnome.org/pub/GNOME/sources/evolution-data-server/3.6/%{name}-%{version}.tar.xz
@@ -241,7 +241,7 @@ fi
 %attr(755,root,root) %{_libdir}/camel-lock-helper-%{apiver}
 %attr(755,root,root) %{_libdir}/evolution-addressbook-factory
 %attr(755,root,root) %{_libdir}/evolution-calendar-factory
-%{_libdir}/evolution-source-registry
+%attr(755,root,root) %{_libdir}/evolution-source-registry
 %dir %{_libdir}/%{name}
 %dir %{_libdir}/%{name}/camel-providers
 %attr(755,root,root) %{_libdir}/%{name}/camel-providers/*.so
