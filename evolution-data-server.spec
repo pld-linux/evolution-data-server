@@ -5,11 +5,10 @@
 %bcond_without	ldap		# build without ldap support
 %bcond_without	static_libs	# do not build static libs
 %bcond_without	vala		# do not build Vala API
-#
+
 %define		basever		3.8
 %define		apiver		1.2
 %define		apiver2		3.0
-#
 Summary:	Evolution data server
 Summary(pl.UTF-8):	Serwer danych Evolution
 Name:		evolution-data-server
@@ -75,6 +74,9 @@ Summary(pl.UTF-8):	Schemat LDAP evolutionperson
 Group:		Networking/Daemons
 Requires(post,postun):	sed >= 4.0
 Requires:	openldap-servers
+%if "%{_rpmversion}" >= "5"
+BuildArch:	noarch
+%endif
 
 %description -n openldap-schema-evolutionperson
 This package contains evolutionperson.schema for openldap server.
