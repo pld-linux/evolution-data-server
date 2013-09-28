@@ -6,18 +6,18 @@
 %bcond_without	static_libs	# do not build static libs
 %bcond_without	vala		# do not build Vala API
 
-%define		basever		3.8
+%define		basever		3.10
 %define		apiver		1.2
 %define		apiver2		3.0
 Summary:	Evolution data server
 Summary(pl.UTF-8):	Serwer danych Evolution
 Name:		evolution-data-server
-Version:	3.8.4
+Version:	3.10.0
 Release:	1
 License:	LGPL v2+
 Group:		X11/Libraries
-Source0:	http://ftp.gnome.org/pub/GNOME/sources/evolution-data-server/3.8/%{name}-%{version}.tar.xz
-# Source0-md5:	49ce0f209a4d293099fb1c17001f7290
+Source0:	http://ftp.gnome.org/pub/GNOME/sources/evolution-data-server/3.10/%{name}-%{version}.tar.xz
+# Source0-md5:	51e841e328add1950839c3d5b24db85f
 URL:		http://www.gnome.org/projects/evolution/
 BuildRequires:	autoconf >= 2.62
 BuildRequires:	automake >= 1:1.11
@@ -26,7 +26,7 @@ BuildRequires:	gcr-devel >= 3.4.0
 BuildRequires:	gettext-devel >= 0.18.1
 BuildRequires:	glib2-devel >= 1:2.34.0
 BuildRequires:	gnome-common >= 2.20.0
-BuildRequires:	gnome-online-accounts-devel >= 3.5.0
+BuildRequires:	gnome-online-accounts-devel >= 3.8.0
 BuildRequires:	gobject-introspection-devel >= 0.10.0
 BuildRequires:	gperf
 BuildRequires:	gtk+3-devel >= 3.2.0
@@ -36,7 +36,6 @@ BuildRequires:	intltool >= 0.40.0
 BuildRequires:	libgdata-devel >= 0.10.0
 BuildRequires:	libgweather-devel >= 3.5.0
 BuildRequires:	libical-devel >= 0.43
-BuildRequires:	liboauth-devel >= 0.9.4
 BuildRequires:	libsecret-devel >= 0.5
 BuildRequires:	libsoup-devel >= 2.40.3
 BuildRequires:	libstdc++-devel
@@ -45,7 +44,6 @@ BuildRequires:	libxml2-devel >= 1:2.6.31
 BuildRequires:	nspr-devel
 BuildRequires:	nss-devel
 %{?with_ldap:BuildRequires:	openldap-evolution-devel >= 2.4.6}
-BuildRequires:	openssl-devel
 BuildRequires:	pkgconfig
 BuildRequires:	rpmbuild(macros) >= 1.304
 BuildRequires:	sed >= 4.0
@@ -286,21 +284,21 @@ fi
 %files libs
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_libdir}/libcamel-%{apiver}.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libcamel-%{apiver}.so.43
+%attr(755,root,root) %ghost %{_libdir}/libcamel-%{apiver}.so.45
 %attr(755,root,root) %{_libdir}/libebackend-%{apiver}.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libebackend-%{apiver}.so.6
+%attr(755,root,root) %ghost %{_libdir}/libebackend-%{apiver}.so.7
 %attr(755,root,root) %{_libdir}/libebook-%{apiver}.so.*.*.*
 %attr(755,root,root) %ghost %{_libdir}/libebook-%{apiver}.so.14
 %attr(755,root,root) %{_libdir}/libebook-contacts-%{apiver}.so.*.*.*
 %attr(755,root,root) %ghost %{_libdir}/libebook-contacts-%{apiver}.so.0
 %attr(755,root,root) %{_libdir}/libecal-%{apiver}.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libecal-%{apiver}.so.15
+%attr(755,root,root) %ghost %{_libdir}/libecal-%{apiver}.so.16
 %attr(755,root,root) %{_libdir}/libedata-book-%{apiver}.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libedata-book-%{apiver}.so.17
+%attr(755,root,root) %ghost %{_libdir}/libedata-book-%{apiver}.so.20
 %attr(755,root,root) %{_libdir}/libedata-cal-%{apiver}.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libedata-cal-%{apiver}.so.20
+%attr(755,root,root) %ghost %{_libdir}/libedata-cal-%{apiver}.so.23
 %attr(755,root,root) %{_libdir}/libedataserver-%{apiver}.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libedataserver-%{apiver}.so.17
+%attr(755,root,root) %ghost %{_libdir}/libedataserver-%{apiver}.so.18
 %{_libdir}/girepository-1.0/EBook-%{apiver}.typelib
 %{_libdir}/girepository-1.0/EBookContacts-%{apiver}.typelib
 %{_libdir}/girepository-1.0/EDataServer-%{apiver}.typelib
