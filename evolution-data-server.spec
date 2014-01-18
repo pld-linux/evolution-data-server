@@ -1,3 +1,4 @@
+# TODO: uoa (BR: libaccounts-glib >= 1.4, libsignon-glib >= 1.8, json-glib, rest >= 0.7)
 #
 # Conditional build:
 %bcond_without	apidocs		# do not build and package API docs
@@ -8,16 +9,15 @@
 
 %define		basever		3.10
 %define		apiver		1.2
-%define		apiver2		3.0
 Summary:	Evolution data server
 Summary(pl.UTF-8):	Serwer danych Evolution
 Name:		evolution-data-server
-Version:	3.10.1
+Version:	3.10.3
 Release:	1
 License:	LGPL v2+
 Group:		X11/Libraries
 Source0:	http://ftp.gnome.org/pub/GNOME/sources/evolution-data-server/3.10/%{name}-%{version}.tar.xz
-# Source0-md5:	53c396d9c287f9811f0b489c9ea7032b
+# Source0-md5:	6635876365318d2e87d6357348bab18c
 URL:		http://www.gnome.org/projects/evolution/
 BuildRequires:	autoconf >= 2.62
 BuildRequires:	automake >= 1:1.11
@@ -34,15 +34,15 @@ BuildRequires:	gtk+3-devel >= 3.2.0
 %{?with_kerberos5:BuildRequires:	heimdal-devel}
 BuildRequires:	intltool >= 0.40.0
 BuildRequires:	libgdata-devel >= 0.10.0
-BuildRequires:	libgweather-devel >= 3.5.0
+BuildRequires:	libgweather-devel >= 3.8
 BuildRequires:	libical-devel >= 0.43
 BuildRequires:	libsecret-devel >= 0.5
 BuildRequires:	libsoup-devel >= 2.40.3
 BuildRequires:	libstdc++-devel
 BuildRequires:	libtool >= 2:2.2
 BuildRequires:	libxml2-devel >= 1:2.6.31
-BuildRequires:	nspr-devel
-BuildRequires:	nss-devel
+BuildRequires:	nspr-devel >= 4
+BuildRequires:	nss-devel >= 3
 %{?with_ldap:BuildRequires:	openldap-evolution-devel >= 2.4.6}
 BuildRequires:	pkgconfig
 BuildRequires:	rpmbuild(macros) >= 1.304
@@ -54,6 +54,10 @@ BuildRequires:	xz
 BuildRequires:	zlib-devel
 Requires(post,postun):	glib2 >= 1:2.34.0
 Requires:	%{name}-libs = %{version}-%{release}
+Requires:	gnome-online-accounts-libs >= 3.8.0
+Requires:	gtk+3 >= 3.2.0
+Requires:	libgdata >= 0.10.0
+Requires:	libgweather >= 3.8
 # sr@Latn vs. sr@latin
 Conflicts:	glibc-misc < 6:2.7
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
@@ -77,16 +81,22 @@ BuildArch:	noarch
 %endif
 
 %description -n openldap-schema-evolutionperson
-This package contains evolutionperson.schema for openldap server.
+This package contains evolutionperson.schema for OpenLDAP server.
 
 %description -n openldap-schema-evolutionperson -l pl.UTF-8
-Ten pakiet zawiera evolutionperson.schema dla serwera openldap.
+Ten pakiet zawiera evolutionperson.schema dla serwera OpenLDAP.
 
 %package libs
 Summary:	Evolution Data Server library
 Summary(pl.UTF-8):	Biblioteka Evolution Data Server
 Group:		X11/Libraries
+Requires:	gcr-libs >= 3.4.0
+Requires:	glib2 >= 1:2.34.0
+Requires:	libical >= 0.43
+Requires:	libsecret >= 0.5
 Requires:	libsoup >= 2.40.3
+Requires:	libxml2 >= 1:2.6.31
+Requires:	sqlite3 >= 3.5
 
 %description libs
 This package contains Evolution Data Server library.
@@ -99,16 +109,17 @@ Summary:	Evolution data server development files
 Summary(pl.UTF-8):	Pliki programistyczne serwera danych evolution
 Group:		X11/Development/Libraries
 Requires:	%{name}-libs = %{version}-%{release}
+Requires:	gcr-devel >= 3.4.0
 Requires:	glib2-devel >= 1:2.34.0
-Requires:	gtk+3-devel >= 3.2.0
 %{?with_kerberos5:Requires:	heimdal-devel}
 Requires:	libgdata-devel >= 0.10.0
 Requires:	libical-devel >= 0.43
+Requires:	libsecret-devel >= 0.5
 Requires:	libsoup-devel >= 2.40.3
 Requires:	libxml2-devel >= 1:2.6.31
-Requires:	nspr-devel
-Requires:	nss-devel
-Requires:	sqlite3-devel
+Requires:	nspr-devel >= 4
+Requires:	nss-devel >= 3
+Requires:	sqlite3-devel >= 3.5
 
 %description devel
 This package contains the files necessary to develop applications
@@ -147,6 +158,7 @@ Summary:	Evolution data server API for Vala language
 Summary(pl.UTF-8):	API serwera danych Evolution dla języka Vala
 Group:		Development/Libraries
 Requires:	%{name}-devel = %{version}-%{release}
+Requires:	vala >= 2:0.14.0
 
 %description -n vala-evolution-data-server
 Evolution data server API for Vala language.
@@ -211,7 +223,7 @@ install addressbook/backends/ldap/evolutionperson.schema $RPM_BUILD_ROOT%{schema
 %{__rm} $RPM_BUILD_ROOT%{_libdir}/%{name}/{camel-providers,calendar-backends,addressbook-backends,registry-modules}/*.{la,a}
 %{__rm} $RPM_BUILD_ROOT%{_libdir}/*.la
 
-%find_lang %{name} --all-name
+%find_lang %{name}-%{basever}
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -235,15 +247,16 @@ if [ "$1" = "0" ]; then
 	%service -q ldap restart
 fi
 
-%files -f %{name}.lang
+%files -f %{name}-%{basever}.lang
 %defattr(644,root,root,755)
 %doc AUTHORS ChangeLog NEWS* README
-%attr(755,root,root) %{_libdir}/camel-index-control-%{apiver}
-%attr(755,root,root) %{_libdir}/camel-lock-helper-%{apiver}
-%attr(755,root,root) %{_libdir}/evolution-addressbook-factory
-%attr(755,root,root) %{_libdir}/evolution-calendar-factory
-%attr(755,root,root) %{_libdir}/evolution-source-registry
-%attr(755,root,root) %{_libdir}/evolution-user-prompter
+%attr(755,root,root) %{_libexecdir}/camel-index-control-%{apiver}
+%attr(755,root,root) %{_libexecdir}/camel-lock-helper-%{apiver}
+%attr(755,root,root) %{_libexecdir}/evolution-addressbook-factory
+%attr(755,root,root) %{_libexecdir}/evolution-calendar-factory
+%attr(755,root,root) %{_libexecdir}/evolution-scan-gconf-tree-xml
+%attr(755,root,root) %{_libexecdir}/evolution-source-registry
+%attr(755,root,root) %{_libexecdir}/evolution-user-prompter
 %dir %{_libdir}/%{name}
 %dir %{_libdir}/%{name}/camel-providers
 %attr(755,root,root) %{_libdir}/%{name}/camel-providers/*.so
@@ -257,17 +270,16 @@ fi
 
 %dir %{_libdir}/%{name}-%{basever}
 
+%dir %{_datadir}/%{name}
 %if %{with ldap}
 %{_datadir}/%{name}/*.schema
 %endif
+%{_pixmapsdir}/%{name}
 
 %{_datadir}/dbus-1/services/org.gnome.evolution.dataserver.AddressBook.service
 %{_datadir}/dbus-1/services/org.gnome.evolution.dataserver.Calendar.service
 %{_datadir}/dbus-1/services/org.gnome.evolution.dataserver.Sources.service
 %{_datadir}/dbus-1/services/org.gnome.evolution.dataserver.UserPrompter.service
-
-%dir %{_datadir}/%{name}
-%{_pixmapsdir}/%{name}
 
 %{_datadir}/GConf/gsettings/evolution-data-server.convert
 %{_datadir}/GConf/gsettings/libedataserver.convert
@@ -358,8 +370,8 @@ fi
 %defattr(644,root,root,755)
 %{_datadir}/vala/vapi/libebook-%{apiver}.deps
 %{_datadir}/vala/vapi/libebook-%{apiver}.vapi
-%{_datadir}/vala/vapi/libebook-contacts-1.2.deps
-%{_datadir}/vala/vapi/libebook-contacts-1.2.vapi
-%{_datadir}/vala/vapi/libedataserver-1.2.deps
+%{_datadir}/vala/vapi/libebook-contacts-%{apiver}.deps
+%{_datadir}/vala/vapi/libebook-contacts-%{apiver}.vapi
+%{_datadir}/vala/vapi/libedataserver-%{apiver}.deps
 %{_datadir}/vala/vapi/libedataserver-%{apiver}.vapi
 %endif
