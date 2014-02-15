@@ -1,10 +1,10 @@
-# TODO: uoa (BR: libaccounts-glib >= 1.4, libsignon-glib >= 1.8, json-glib, rest >= 0.7)
 #
 # Conditional build:
 %bcond_without	apidocs		# do not build and package API docs
 %bcond_without	kerberos5	# build without kerberos5 support
 %bcond_without	ldap		# build without ldap support
 %bcond_without	static_libs	# do not build static libs
+%bcond_without	uoa		# single sign-on (aka Ubuntu Online Accounts)
 %bcond_without	vala		# do not build Vala API
 
 %define		basever		3.10
@@ -33,10 +33,13 @@ BuildRequires:	gtk+3-devel >= 3.2.0
 %{?with_apidocs:BuildRequires:	gtk-doc >= 1.14}
 %{?with_kerberos5:BuildRequires:	heimdal-devel}
 BuildRequires:	intltool >= 0.40.0
+%{?with_uoa:BuildRequires:	json-glib-devel}
+%{?with_uoa:BuildRequires:	libaccounts-glib-devel >= 1.4}
 BuildRequires:	libgdata-devel >= 0.10.0
 BuildRequires:	libgweather-devel >= 3.8
 BuildRequires:	libical-devel >= 0.43
 BuildRequires:	libsecret-devel >= 0.5
+%{?with_uoa:BuildRequires:	libsignon-glib-devel >= 1.8}
 BuildRequires:	libsoup-devel >= 2.40.3
 BuildRequires:	libstdc++-devel
 BuildRequires:	libtool >= 2:2.2
@@ -45,6 +48,7 @@ BuildRequires:	nspr-devel >= 4
 BuildRequires:	nss-devel >= 3
 %{?with_ldap:BuildRequires:	openldap-evolution-devel >= 2.4.6}
 BuildRequires:	pkgconfig
+%{?with_uoa:BuildRequires:	rest-devel >= 0.7}
 BuildRequires:	rpmbuild(macros) >= 1.304
 BuildRequires:	sed >= 4.0
 BuildRequires:	sqlite3-devel >= 3.5
@@ -202,7 +206,7 @@ export LIBS
 	%{__enable_disable apidocs gtk-doc} \
 	%{__enable_disable static_libs static} \
 	%{__enable_disable vala vala-bindings} \
-	--disable-uoa \
+	%{!?with_uoa:--disable-uoa} \
 	--with-libdb=%{_libdir} \
 	--with-html-dir=%{_gtkdocdir} \
 	--disable-silent-rules
@@ -258,23 +262,65 @@ fi
 %attr(755,root,root) %{_libexecdir}/evolution-source-registry
 %attr(755,root,root) %{_libexecdir}/evolution-user-prompter
 %dir %{_libdir}/%{name}
-%dir %{_libdir}/%{name}/camel-providers
-%attr(755,root,root) %{_libdir}/%{name}/camel-providers/*.so
-%{_libdir}/%{name}/camel-providers/*.urls
 %dir %{_libdir}/%{name}/addressbook-backends
-%attr(755,root,root) %{_libdir}/%{name}/addressbook-backends/*.so
+%attr(755,root,root) %{_libdir}/%{name}/addressbook-backends/libebookbackendfile.so
+%attr(755,root,root) %{_libdir}/%{name}/addressbook-backends/libebookbackendgoogle.so
+%if %{with ldap}
+%attr(755,root,root) %{_libdir}/%{name}/addressbook-backends/libebookbackendldap.so
+%endif
+%attr(755,root,root) %{_libdir}/%{name}/addressbook-backends/libebookbackendwebdav.so
 %dir %{_libdir}/%{name}/calendar-backends
-%attr(755,root,root) %{_libdir}/%{name}/calendar-backends/*.so
+%attr(755,root,root) %{_libdir}/%{name}/calendar-backends/libecalbackendcaldav.so
+%attr(755,root,root) %{_libdir}/%{name}/calendar-backends/libecalbackendcontacts.so
+%attr(755,root,root) %{_libdir}/%{name}/calendar-backends/libecalbackendfile.so
+%attr(755,root,root) %{_libdir}/%{name}/calendar-backends/libecalbackendhttp.so
+%attr(755,root,root) %{_libdir}/%{name}/calendar-backends/libecalbackendweather.so
+%dir %{_libdir}/%{name}/camel-providers
+%attr(755,root,root) %{_libdir}/%{name}/camel-providers/libcamelimapx.so
+%{_libdir}/%{name}/camel-providers/libcamelimapx.urls
+%attr(755,root,root) %{_libdir}/%{name}/camel-providers/libcamellocal.so
+%{_libdir}/%{name}/camel-providers/libcamellocal.urls
+%attr(755,root,root) %{_libdir}/%{name}/camel-providers/libcamelnntp.so
+%{_libdir}/%{name}/camel-providers/libcamelnntp.urls
+%attr(755,root,root) %{_libdir}/%{name}/camel-providers/libcamelpop3.so
+%{_libdir}/%{name}/camel-providers/libcamelpop3.urls
+%attr(755,root,root) %{_libdir}/%{name}/camel-providers/libcamelsendmail.so
+%{_libdir}/%{name}/camel-providers/libcamelsendmail.urls
+%attr(755,root,root) %{_libdir}/%{name}/camel-providers/libcamelsmtp.so
+%{_libdir}/%{name}/camel-providers/libcamelsmtp.urls
 %dir %{_libdir}/evolution-data-server/registry-modules
-%attr(755,root,root) %{_libdir}/evolution-data-server/registry-modules/*.so
+%attr(755,root,root) %{_libdir}/evolution-data-server/registry-modules/module-cache-reaper.so
+%attr(755,root,root) %{_libdir}/evolution-data-server/registry-modules/module-gnome-online-accounts.so
+%attr(755,root,root) %{_libdir}/evolution-data-server/registry-modules/module-google-backend.so
+%attr(755,root,root) %{_libdir}/evolution-data-server/registry-modules/module-outlook-backend.so
+%attr(755,root,root) %{_libdir}/evolution-data-server/registry-modules/module-owncloud-backend.so
+%attr(755,root,root) %{_libdir}/evolution-data-server/registry-modules/module-trust-prompt.so
+%if %{with uoa}
+%attr(755,root,root) %{_libdir}/evolution-data-server/registry-modules/module-ubuntu-online-accounts.so
+%endif
+%attr(755,root,root) %{_libdir}/evolution-data-server/registry-modules/module-yahoo-backend.so
 
 %dir %{_libdir}/%{name}-%{basever}
 
 %dir %{_datadir}/%{name}
 %if %{with ldap}
-%{_datadir}/%{name}/*.schema
+%{_datadir}/%{name}/evolutionperson.schema
 %endif
 %{_pixmapsdir}/%{name}
+
+%if %{with uoa}
+%{_desktopdir}/evolution-data-server-uoa.desktop
+%{_datadir}/accounts/applications/evolution-data-server.application
+%{_datadir}/accounts/service_types/calendar.service-type
+%{_datadir}/accounts/service_types/contacts.service-type
+%{_datadir}/accounts/service_types/mail.service-type
+%{_datadir}/accounts/services/google-calendar.service
+%{_datadir}/accounts/services/google-contacts.service
+%{_datadir}/accounts/services/google-gmail.service
+%{_datadir}/accounts/services/windows-live-mail.service
+%{_datadir}/accounts/services/yahoo-calendar.service
+%{_datadir}/accounts/services/yahoo-mail.service
+%endif
 
 %{_datadir}/dbus-1/services/org.gnome.evolution.dataserver.AddressBook.service
 %{_datadir}/dbus-1/services/org.gnome.evolution.dataserver.Calendar.service
