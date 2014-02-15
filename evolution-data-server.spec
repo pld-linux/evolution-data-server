@@ -74,6 +74,36 @@ The Evolution data server for the calendar and addressbook.
 %description -l pl.UTF-8
 Serwer danych Evolution dla kalendarza i książki adresowej.
 
+%package ldap
+Summary:	LDAP support for Evolution data server
+Summary(pl.UTF-8):	Obsługa LDAP dla serwera danych Evolution
+Group:		Libraries
+Requires:	%{name} = %{version}-%{release}
+
+%description ldap
+LDAP support for Evolution data server (address book backend module).
+
+%description ldap -l pl.UTF-8
+Obsługa LDAP dla serwera danych Evolution (moduł dla książki
+adresowej).
+
+%package uoa
+Summary:	Ubuntu Online Accounts support for Evolution data server
+Summary(pl.UTF-8):	Obsługa Ubuntu Online Accounts dla serwera danych Evolution
+Group:		Libraries
+Requires:	%{name} = %{version}-%{release}
+Requires:	libaccounts-glib >= 1.4
+Requires:	libsignon-glib >= 1.8
+Requires:	rest >= 0.7
+
+%description uoa
+Ubuntu Online Accounts (single sign-on) support for Evolution data
+server.
+
+%description uoa -l pl.UTF-8
+Obsługa Ubuntu Online Accounts (pojedynczego logowania) dla serwera
+danych Evolution.
+
 %package -n openldap-schema-evolutionperson
 Summary:	evolutionperson LDAP schema
 Summary(pl.UTF-8):	Schemat LDAP evolutionperson
@@ -265,9 +295,6 @@ fi
 %dir %{_libdir}/%{name}/addressbook-backends
 %attr(755,root,root) %{_libdir}/%{name}/addressbook-backends/libebookbackendfile.so
 %attr(755,root,root) %{_libdir}/%{name}/addressbook-backends/libebookbackendgoogle.so
-%if %{with ldap}
-%attr(755,root,root) %{_libdir}/%{name}/addressbook-backends/libebookbackendldap.so
-%endif
 %attr(755,root,root) %{_libdir}/%{name}/addressbook-backends/libebookbackendwebdav.so
 %dir %{_libdir}/%{name}/calendar-backends
 %attr(755,root,root) %{_libdir}/%{name}/calendar-backends/libecalbackendcaldav.so
@@ -295,32 +322,11 @@ fi
 %attr(755,root,root) %{_libdir}/evolution-data-server/registry-modules/module-outlook-backend.so
 %attr(755,root,root) %{_libdir}/evolution-data-server/registry-modules/module-owncloud-backend.so
 %attr(755,root,root) %{_libdir}/evolution-data-server/registry-modules/module-trust-prompt.so
-%if %{with uoa}
-%attr(755,root,root) %{_libdir}/evolution-data-server/registry-modules/module-ubuntu-online-accounts.so
-%endif
 %attr(755,root,root) %{_libdir}/evolution-data-server/registry-modules/module-yahoo-backend.so
 
 %dir %{_libdir}/%{name}-%{basever}
-
 %dir %{_datadir}/%{name}
-%if %{with ldap}
-%{_datadir}/%{name}/evolutionperson.schema
-%endif
 %{_pixmapsdir}/%{name}
-
-%if %{with uoa}
-%{_desktopdir}/evolution-data-server-uoa.desktop
-%{_datadir}/accounts/applications/evolution-data-server.application
-%{_datadir}/accounts/service_types/calendar.service-type
-%{_datadir}/accounts/service_types/contacts.service-type
-%{_datadir}/accounts/service_types/mail.service-type
-%{_datadir}/accounts/services/google-calendar.service
-%{_datadir}/accounts/services/google-contacts.service
-%{_datadir}/accounts/services/google-gmail.service
-%{_datadir}/accounts/services/windows-live-mail.service
-%{_datadir}/accounts/services/yahoo-calendar.service
-%{_datadir}/accounts/services/yahoo-mail.service
-%endif
 
 %{_datadir}/dbus-1/services/org.gnome.evolution.dataserver.AddressBook.service
 %{_datadir}/dbus-1/services/org.gnome.evolution.dataserver.Calendar.service
@@ -334,6 +340,35 @@ fi
 %{_datadir}/glib-2.0/schemas/org.gnome.Evolution.DefaultSources.gschema.xml
 %{_datadir}/glib-2.0/schemas/org.gnome.evolution-data-server.addressbook.gschema.xml
 %{_datadir}/glib-2.0/schemas/org.gnome.evolution-data-server.calendar.gschema.xml
+
+%if %{with ldap}
+%files ldap
+%defattr(644,root,root,755)
+%attr(755,root,root) %{_libdir}/%{name}/addressbook-backends/libebookbackendldap.so
+%{_datadir}/%{name}/evolutionperson.schema
+%endif
+
+%if %{with uoa}
+%files uoa
+%defattr(644,root,root,755)
+%attr(755,root,root) %{_libdir}/evolution-data-server/registry-modules/module-ubuntu-online-accounts.so
+%{_desktopdir}/evolution-data-server-uoa.desktop
+# XXX: which package should own these dirs?
+%dir %{_datadir}/accounts
+%dir %{_datadir}/accounts/applications
+%{_datadir}/accounts/applications/evolution-data-server.application
+%dir %{_datadir}/accounts/service_types
+%{_datadir}/accounts/service_types/calendar.service-type
+%{_datadir}/accounts/service_types/contacts.service-type
+%{_datadir}/accounts/service_types/mail.service-type
+%dir %{_datadir}/accounts/services
+%{_datadir}/accounts/services/google-calendar.service
+%{_datadir}/accounts/services/google-contacts.service
+%{_datadir}/accounts/services/google-gmail.service
+%{_datadir}/accounts/services/windows-live-mail.service
+%{_datadir}/accounts/services/yahoo-calendar.service
+%{_datadir}/accounts/services/yahoo-mail.service
+%endif
 
 %files -n openldap-schema-evolutionperson
 %defattr(644,root,root,755)
