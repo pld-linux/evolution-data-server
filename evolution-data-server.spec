@@ -7,24 +7,24 @@
 %bcond_without	uoa		# single sign-on (aka Ubuntu Online Accounts)
 %bcond_without	vala		# do not build Vala API
 
-%define		basever		3.10
+%define		basever		3.12
 %define		apiver		1.2
 Summary:	Evolution data server
 Summary(pl.UTF-8):	Serwer danych Evolution
 Name:		evolution-data-server
-Version:	3.10.4
+Version:	3.12.0
 Release:	1
 License:	LGPL v2+
 Group:		X11/Libraries
-Source0:	http://ftp.gnome.org/pub/GNOME/sources/evolution-data-server/3.10/%{name}-%{version}.tar.xz
-# Source0-md5:	62b365fa50f13a0be85eec67115742c8
+Source0:	http://ftp.gnome.org/pub/GNOME/sources/evolution-data-server/3.12/%{name}-%{version}.tar.xz
+# Source0-md5:	a2e5b9dbf1ee8f879a7a7f162e5ea88c
 URL:		http://www.gnome.org/projects/evolution/
 BuildRequires:	autoconf >= 2.62
 BuildRequires:	automake >= 1:1.11
 BuildRequires:	docbook-dtd412-xml
 BuildRequires:	gcr-devel >= 3.4.0
 BuildRequires:	gettext-devel >= 0.18.1
-BuildRequires:	glib2-devel >= 1:2.34.0
+BuildRequires:	glib2-devel >= 1:2.36.0
 BuildRequires:	gnome-common >= 2.20.0
 BuildRequires:	gnome-online-accounts-devel >= 3.8.0
 BuildRequires:	gobject-introspection-devel >= 0.10.0
@@ -40,7 +40,7 @@ BuildRequires:	libgweather-devel >= 3.8
 BuildRequires:	libical-devel >= 0.43
 BuildRequires:	libsecret-devel >= 0.5
 %{?with_uoa:BuildRequires:	libsignon-glib-devel >= 1.8}
-BuildRequires:	libsoup-devel >= 2.40.3
+BuildRequires:	libsoup-devel >= 2.42.0
 BuildRequires:	libstdc++-devel
 BuildRequires:	libtool >= 2:2.2
 BuildRequires:	libxml2-devel >= 1:2.6.31
@@ -125,10 +125,10 @@ Summary:	Evolution Data Server library
 Summary(pl.UTF-8):	Biblioteka Evolution Data Server
 Group:		X11/Libraries
 Requires:	gcr-libs >= 3.4.0
-Requires:	glib2 >= 1:2.34.0
+Requires:	glib2 >= 1:2.36.0
 Requires:	libical >= 0.43
 Requires:	libsecret >= 0.5
-Requires:	libsoup >= 2.40.3
+Requires:	libsoup >= 2.42.0
 Requires:	libxml2 >= 1:2.6.31
 Requires:	sqlite3 >= 3.5
 
@@ -144,12 +144,12 @@ Summary(pl.UTF-8):	Pliki programistyczne serwera danych evolution
 Group:		X11/Development/Libraries
 Requires:	%{name}-libs = %{version}-%{release}
 Requires:	gcr-devel >= 3.4.0
-Requires:	glib2-devel >= 1:2.34.0
+Requires:	glib2-devel >= 1:2.36.0
 %{?with_kerberos5:Requires:	heimdal-devel}
 Requires:	libgdata-devel >= 0.10.0
 Requires:	libical-devel >= 0.43
 Requires:	libsecret-devel >= 0.5
-Requires:	libsoup-devel >= 2.40.3
+Requires:	libsoup-devel >= 2.42.0
 Requires:	libxml2-devel >= 1:2.6.31
 Requires:	nspr-devel >= 4
 Requires:	nss-devel >= 3
@@ -232,7 +232,6 @@ export LIBS
 	%{!?with_ldap:--with-openldap=no} \
 	--enable-smime \
 	--enable-ipv6 \
-	--enable-nntp \
 	%{__enable_disable apidocs gtk-doc} \
 	%{__enable_disable static_libs static} \
 	%{__enable_disable vala vala-bindings} \
@@ -321,6 +320,7 @@ fi
 %attr(755,root,root) %{_libdir}/evolution-data-server/registry-modules/module-google-backend.so
 %attr(755,root,root) %{_libdir}/evolution-data-server/registry-modules/module-outlook-backend.so
 %attr(755,root,root) %{_libdir}/evolution-data-server/registry-modules/module-owncloud-backend.so
+%attr(755,root,root) %{_libdir}/evolution-data-server/registry-modules/module-secret-monitor.so
 %attr(755,root,root) %{_libdir}/evolution-data-server/registry-modules/module-trust-prompt.so
 %attr(755,root,root) %{_libdir}/evolution-data-server/registry-modules/module-yahoo-backend.so
 
@@ -334,7 +334,6 @@ fi
 %{_datadir}/dbus-1/services/org.gnome.evolution.dataserver.UserPrompter.service
 
 %{_datadir}/GConf/gsettings/evolution-data-server.convert
-%{_datadir}/GConf/gsettings/libedataserver.convert
 %{_datadir}/glib-2.0/schemas/org.gnome.evolution.eds-shell.gschema.xml
 %{_datadir}/glib-2.0/schemas/org.gnome.evolution.shell.network-config.gschema.xml
 %{_datadir}/glib-2.0/schemas/org.gnome.Evolution.DefaultSources.gschema.xml
@@ -377,7 +376,7 @@ fi
 %files libs
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_libdir}/libcamel-%{apiver}.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libcamel-%{apiver}.so.45
+%attr(755,root,root) %ghost %{_libdir}/libcamel-%{apiver}.so.49
 %attr(755,root,root) %{_libdir}/libebackend-%{apiver}.so.*.*.*
 %attr(755,root,root) %ghost %{_libdir}/libebackend-%{apiver}.so.7
 %attr(755,root,root) %{_libdir}/libebook-%{apiver}.so.*.*.*
@@ -437,13 +436,7 @@ fi
 %files apidocs
 %defattr(644,root,root,755)
 %{_gtkdocdir}/camel
-%{_gtkdocdir}/libebackend
-%{_gtkdocdir}/libebook
-%{_gtkdocdir}/libebook-contacts
-%{_gtkdocdir}/libecal
-%{_gtkdocdir}/libedata-book
-%{_gtkdocdir}/libedata-cal
-%{_gtkdocdir}/libedataserver
+%{_gtkdocdir}/eds
 %endif
 
 %if %{with vala}
