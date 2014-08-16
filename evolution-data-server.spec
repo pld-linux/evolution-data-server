@@ -12,12 +12,12 @@
 Summary:	Evolution data server
 Summary(pl.UTF-8):	Serwer danych Evolution
 Name:		evolution-data-server
-Version:	3.12.4
+Version:	3.12.5
 Release:	1
 License:	LGPL v2+
 Group:		X11/Libraries
 Source0:	http://ftp.gnome.org/pub/GNOME/sources/evolution-data-server/3.12/%{name}-%{version}.tar.xz
-# Source0-md5:	9097a93b2a27ed0a795adb8acd145187
+# Source0-md5:	bac1e9fd362c553dedbaa31ba1dc5e9a
 URL:		http://www.gnome.org/projects/evolution/
 BuildRequires:	autoconf >= 2.62
 BuildRequires:	automake >= 1:1.11
@@ -251,7 +251,7 @@ install -d $RPM_BUILD_ROOT%{schemadir}
 	DESTDIR=$RPM_BUILD_ROOT \
 	HTML_DIR=%{_gtkdocdir}
 
-install addressbook/backends/ldap/evolutionperson.schema $RPM_BUILD_ROOT%{schemadir}
+cp -p addressbook/backends/ldap/evolutionperson.schema $RPM_BUILD_ROOT%{schemadir}
 
 %{__rm} $RPM_BUILD_ROOT%{_libdir}/%{name}/{camel-providers,calendar-backends,addressbook-backends,registry-modules}/*.{la,a}
 %{__rm} $RPM_BUILD_ROOT%{_libdir}/*.la
