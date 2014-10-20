@@ -12,12 +12,12 @@
 Summary:	Evolution data server
 Summary(pl.UTF-8):	Serwer danych Evolution
 Name:		evolution-data-server
-Version:	3.12.6
-Release:	3
+Version:	3.12.7.1
+Release:	1
 License:	LGPL v2+
 Group:		X11/Libraries
 Source0:	http://ftp.gnome.org/pub/GNOME/sources/evolution-data-server/3.12/%{name}-%{version}.tar.xz
-# Source0-md5:	7139ecf28182d49c96c717f3d3f82fa4
+# Source0-md5:	cf78e9e77e753cdc3e4f8d1a7e844b17
 URL:		http://www.gnome.org/projects/evolution/
 BuildRequires:	autoconf >= 2.62
 BuildRequires:	automake >= 1:1.11
@@ -35,9 +35,10 @@ BuildRequires:	gtk+3-devel >= 3.2.0
 BuildRequires:	intltool >= 0.40.0
 %{?with_uoa:BuildRequires:	json-glib-devel}
 %{?with_uoa:BuildRequires:	libaccounts-glib-devel >= 1.4}
-BuildRequires:	libgdata-devel >= 0.10.0
+BuildRequires:	libgdata-devel >= 0.15.1
 BuildRequires:	libgweather-devel >= 3.8
 BuildRequires:	libical-devel >= 0.43
+BuildRequires:	libicu-devel
 BuildRequires:	libsecret-devel >= 0.5
 %{?with_uoa:BuildRequires:	libsignon-glib-devel >= 1.8}
 BuildRequires:	libsoup-devel >= 2.42.0
@@ -60,7 +61,7 @@ Requires(post,postun):	glib2 >= 1:2.34.0
 Requires:	%{name}-libs = %{version}-%{release}
 Requires:	gnome-online-accounts-libs >= 3.8.0
 Requires:	gtk+3 >= 3.2.0
-Requires:	libgdata >= 0.10.0
+Requires:	libgdata >= 0.15.1
 Requires:	libgweather >= 3.8
 # sr@Latn vs. sr@latin
 Conflicts:	glibc-misc < 6:2.7
@@ -146,7 +147,7 @@ Requires:	%{name}-libs = %{version}-%{release}
 Requires:	gcr-devel >= 3.4.0
 Requires:	glib2-devel >= 1:2.36.0
 %{?with_kerberos5:Requires:	heimdal-devel}
-Requires:	libgdata-devel >= 0.10.0
+Requires:	libgdata-devel >= 0.15.1
 Requires:	libical-devel >= 0.43
 Requires:	libsecret-devel >= 0.5
 Requires:	libsoup-devel >= 2.42.0
@@ -299,6 +300,7 @@ fi
 %attr(755,root,root) %{_libdir}/%{name}/calendar-backends/libecalbackendcaldav.so
 %attr(755,root,root) %{_libdir}/%{name}/calendar-backends/libecalbackendcontacts.so
 %attr(755,root,root) %{_libdir}/%{name}/calendar-backends/libecalbackendfile.so
+%attr(755,root,root) %{_libdir}/%{name}/calendar-backends/libecalbackendgtasks.so
 %attr(755,root,root) %{_libdir}/%{name}/calendar-backends/libecalbackendhttp.so
 %attr(755,root,root) %{_libdir}/%{name}/calendar-backends/libecalbackendweather.so
 %dir %{_libdir}/%{name}/camel-providers
