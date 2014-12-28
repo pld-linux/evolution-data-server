@@ -23,7 +23,7 @@ BuildRequires:	autoconf >= 2.62
 BuildRequires:	automake >= 1:1.11
 BuildRequires:	docbook-dtd412-xml
 BuildRequires:	gcr-devel >= 3.4.0
-BuildRequires:	gettext-devel >= 0.18.1
+BuildRequires:	gettext-tools >= 0.18.1
 BuildRequires:	glib2-devel >= 1:2.36.0
 BuildRequires:	gnome-common >= 2.20.0
 BuildRequires:	gnome-online-accounts-devel >= 3.8.0
