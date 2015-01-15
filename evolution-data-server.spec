@@ -12,12 +12,12 @@
 Summary:	Evolution data server
 Summary(pl.UTF-8):	Serwer danych Evolution
 Name:		evolution-data-server
-Version:	3.12.9
+Version:	3.12.10
 Release:	1
 License:	LGPL v2+
 Group:		X11/Libraries
 Source0:	http://ftp.gnome.org/pub/GNOME/sources/evolution-data-server/3.12/%{name}-%{version}.tar.xz
-# Source0-md5:	0310c186afbf417e05e98072e8fd44af
+# Source0-md5:	3069c344bd9af0e92db66f123958ea9d
 URL:		http://www.gnome.org/projects/evolution/
 BuildRequires:	autoconf >= 2.62
 BuildRequires:	automake >= 1:1.11
@@ -54,7 +54,7 @@ BuildRequires:	rpmbuild(macros) >= 1.304
 BuildRequires:	sed >= 4.0
 BuildRequires:	sqlite3-devel >= 3.5
 BuildRequires:	tar >= 1:1.22
-%{?with_vala:BuildRequires:	vala >= 2:0.14.0}
+%{?with_vala:BuildRequires:	vala >= 2:0.22.0}
 BuildRequires:	xz
 BuildRequires:	zlib-devel
 Requires(post,postun):	glib2 >= 1:2.34.0
@@ -193,7 +193,7 @@ Summary:	Evolution data server API for Vala language
 Summary(pl.UTF-8):	API serwera danych Evolution dla języka Vala
 Group:		Development/Libraries
 Requires:	%{name}-devel = %{version}-%{release}
-Requires:	vala >= 2:0.14.0
+Requires:	vala >= 2:0.22.0
 
 %description -n vala-evolution-data-server
 Evolution data server API for Vala language.
