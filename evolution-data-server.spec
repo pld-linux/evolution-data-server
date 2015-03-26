@@ -7,29 +7,29 @@
 %bcond_without	uoa		# single sign-on (aka Ubuntu Online Accounts)
 %bcond_without	vala		# do not build Vala API
 
-%define		basever		3.12
+%define		basever		3.16
 %define		apiver		1.2
 Summary:	Evolution data server
 Summary(pl.UTF-8):	Serwer danych Evolution
 Name:		evolution-data-server
-Version:	3.12.11
-Release:	2
+Version:	3.16.0
+Release:	1
 License:	LGPL v2+
 Group:		X11/Libraries
-Source0:	http://ftp.gnome.org/pub/GNOME/sources/evolution-data-server/3.12/%{name}-%{version}.tar.xz
-# Source0-md5:	a05df58de484bb6ff6fe23e3eee71db3
+Source0:	http://ftp.gnome.org/pub/GNOME/sources/evolution-data-server/3.16/%{name}-%{version}.tar.xz
+# Source0-md5:	faaca749cf6ec936d43d485ba584380a
 URL:		http://www.gnome.org/projects/evolution/
 BuildRequires:	autoconf >= 2.62
 BuildRequires:	automake >= 1:1.11
 BuildRequires:	docbook-dtd412-xml
 BuildRequires:	gcr-devel >= 3.4.0
 BuildRequires:	gettext-tools >= 0.18.1
-BuildRequires:	glib2-devel >= 1:2.36.0
+BuildRequires:	glib2-devel >= 1:2.40.0
 BuildRequires:	gnome-common >= 2.20.0
 BuildRequires:	gnome-online-accounts-devel >= 3.8.0
 BuildRequires:	gobject-introspection-devel >= 0.10.0
 BuildRequires:	gperf
-BuildRequires:	gtk+3-devel >= 3.2.0
+BuildRequires:	gtk+3-devel >= 3.6.0
 %{?with_apidocs:BuildRequires:	gtk-doc >= 1.14}
 %{?with_kerberos5:BuildRequires:	heimdal-devel}
 BuildRequires:	intltool >= 0.40.0
@@ -57,10 +57,10 @@ BuildRequires:	tar >= 1:1.22
 %{?with_vala:BuildRequires:	vala >= 2:0.22.0}
 BuildRequires:	xz
 BuildRequires:	zlib-devel
-Requires(post,postun):	glib2 >= 1:2.34.0
+Requires(post,postun):	glib2 >= 1:2.40.0
 Requires:	%{name}-libs = %{version}-%{release}
 Requires:	gnome-online-accounts-libs >= 3.8.0
-Requires:	gtk+3 >= 3.2.0
+Requires:	gtk+3 >= 3.6.0
 Requires:	libgdata >= 0.15.1
 Requires:	libgweather >= 3.8
 # sr@Latn vs. sr@latin
@@ -126,7 +126,7 @@ Summary:	Evolution Data Server library
 Summary(pl.UTF-8):	Biblioteka Evolution Data Server
 Group:		X11/Libraries
 Requires:	gcr-libs >= 3.4.0
-Requires:	glib2 >= 1:2.36.0
+Requires:	glib2 >= 1:2.40.0
 Requires:	libical >= 0.43
 Requires:	libsecret >= 0.5
 Requires:	libsoup >= 2.42.0
@@ -145,7 +145,7 @@ Summary(pl.UTF-8):	Pliki programistyczne serwera danych evolution
 Group:		X11/Development/Libraries
 Requires:	%{name}-libs = %{version}-%{release}
 Requires:	gcr-devel >= 3.4.0
-Requires:	glib2-devel >= 1:2.36.0
+Requires:	glib2-devel >= 1:2.40.0
 %{?with_kerberos5:Requires:	heimdal-devel}
 Requires:	libgdata-devel >= 0.15.1
 Requires:	libical-devel >= 0.43
@@ -254,7 +254,8 @@ install -d $RPM_BUILD_ROOT%{schemadir}
 
 cp -p addressbook/backends/ldap/evolutionperson.schema $RPM_BUILD_ROOT%{schemadir}
 
-%{__rm} $RPM_BUILD_ROOT%{_libdir}/%{name}/{camel-providers,calendar-backends,addressbook-backends,registry-modules}/*.{la,a}
+%{__rm} $RPM_BUILD_ROOT%{_libdir}/%{name}/{camel-providers,calendar-backends,addressbook-backends,credential-modules,registry-modules}/*.{la,a}
+%{__rm} $RPM_BUILD_ROOT%{_libdir}/%{name}/*.{a,la}
 %{__rm} $RPM_BUILD_ROOT%{_libdir}/*.la
 
 %find_lang %{name}-%{basever}
@@ -286,12 +287,15 @@ fi
 %doc AUTHORS ChangeLog NEWS* README
 %attr(755,root,root) %{_libexecdir}/camel-index-control-%{apiver}
 %attr(755,root,root) %{_libexecdir}/camel-lock-helper-%{apiver}
+%attr(755,root,root) %{_libexecdir}/evolution-addressbook-factory-subprocess
 %attr(755,root,root) %{_libexecdir}/evolution-addressbook-factory
+%attr(755,root,root) %{_libexecdir}/evolution-calendar-factory-subprocess
 %attr(755,root,root) %{_libexecdir}/evolution-calendar-factory
 %attr(755,root,root) %{_libexecdir}/evolution-scan-gconf-tree-xml
 %attr(755,root,root) %{_libexecdir}/evolution-source-registry
 %attr(755,root,root) %{_libexecdir}/evolution-user-prompter
 %dir %{_libdir}/%{name}
+%attr(755,root,root) %{_libdir}/%{name}/libedbus-private.so
 %dir %{_libdir}/%{name}/addressbook-backends
 %attr(755,root,root) %{_libdir}/%{name}/addressbook-backends/libebookbackendfile.so
 %attr(755,root,root) %{_libdir}/%{name}/addressbook-backends/libebookbackendgoogle.so
@@ -316,6 +320,8 @@ fi
 %{_libdir}/%{name}/camel-providers/libcamelsendmail.urls
 %attr(755,root,root) %{_libdir}/%{name}/camel-providers/libcamelsmtp.so
 %{_libdir}/%{name}/camel-providers/libcamelsmtp.urls
+%dir %{_libdir}/%{name}/credential-modules
+%attr(755,root,root) %{_libdir}/%{name}/credential-modules/module-credentials-goa.so
 %dir %{_libdir}/evolution-data-server/registry-modules
 %attr(755,root,root) %{_libdir}/evolution-data-server/registry-modules/module-cache-reaper.so
 %attr(755,root,root) %{_libdir}/evolution-data-server/registry-modules/module-gnome-online-accounts.so
@@ -341,6 +347,7 @@ fi
 %{_datadir}/glib-2.0/schemas/org.gnome.Evolution.DefaultSources.gschema.xml
 %{_datadir}/glib-2.0/schemas/org.gnome.evolution-data-server.addressbook.gschema.xml
 %{_datadir}/glib-2.0/schemas/org.gnome.evolution-data-server.calendar.gschema.xml
+%{_datadir}/glib-2.0/schemas/org.gnome.evolution-data-server.gschema.xml
 
 %if %{with ldap}
 %files ldap
@@ -352,6 +359,7 @@ fi
 %if %{with uoa}
 %files uoa
 %defattr(644,root,root,755)
+%attr(755,root,root) %{_libdir}/evolution-data-server/credential-modules/module-credentials-uoa.so
 %attr(755,root,root) %{_libdir}/evolution-data-server/registry-modules/module-ubuntu-online-accounts.so
 %{_desktopdir}/evolution-data-server-uoa.desktop
 # XXX: which package should own these dirs?
@@ -378,21 +386,23 @@ fi
 %files libs
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_libdir}/libcamel-%{apiver}.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libcamel-%{apiver}.so.49
+%attr(755,root,root) %ghost %{_libdir}/libcamel-%{apiver}.so.52
 %attr(755,root,root) %{_libdir}/libebackend-%{apiver}.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libebackend-%{apiver}.so.7
+%attr(755,root,root) %ghost %{_libdir}/libebackend-%{apiver}.so.10
 %attr(755,root,root) %{_libdir}/libebook-%{apiver}.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libebook-%{apiver}.so.14
+%attr(755,root,root) %ghost %{_libdir}/libebook-%{apiver}.so.16
 %attr(755,root,root) %{_libdir}/libebook-contacts-%{apiver}.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libebook-contacts-%{apiver}.so.0
+%attr(755,root,root) %ghost %{_libdir}/libebook-contacts-%{apiver}.so.1
 %attr(755,root,root) %{_libdir}/libecal-%{apiver}.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libecal-%{apiver}.so.16
+%attr(755,root,root) %ghost %{_libdir}/libecal-%{apiver}.so.18
 %attr(755,root,root) %{_libdir}/libedata-book-%{apiver}.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libedata-book-%{apiver}.so.20
+%attr(755,root,root) %ghost %{_libdir}/libedata-book-%{apiver}.so.25
 %attr(755,root,root) %{_libdir}/libedata-cal-%{apiver}.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libedata-cal-%{apiver}.so.23
+%attr(755,root,root) %ghost %{_libdir}/libedata-cal-%{apiver}.so.27
 %attr(755,root,root) %{_libdir}/libedataserver-%{apiver}.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libedataserver-%{apiver}.so.18
+%attr(755,root,root) %ghost %{_libdir}/libedataserver-%{apiver}.so.20
+%attr(755,root,root) %{_libdir}/libedataserverui-%{apiver}.so.*.*.*
+%attr(755,root,root) %ghost %{_libdir}/libedataserverui-%{apiver}.so.1
 %{_libdir}/girepository-1.0/EBook-%{apiver}.typelib
 %{_libdir}/girepository-1.0/EBookContacts-%{apiver}.typelib
 %{_libdir}/girepository-1.0/EDataServer-%{apiver}.typelib
@@ -407,6 +417,7 @@ fi
 %attr(755,root,root) %{_libdir}/libedata-book-%{apiver}.so
 %attr(755,root,root) %{_libdir}/libedata-cal-%{apiver}.so
 %attr(755,root,root) %{_libdir}/libedataserver-%{apiver}.so
+%attr(755,root,root) %{_libdir}/libedataserverui-%{apiver}.so
 %{_includedir}/evolution-data-server
 %{_pkgconfigdir}/camel-%{apiver}.pc
 %{_pkgconfigdir}/evolution-data-server-%{apiver}.pc
@@ -417,6 +428,7 @@ fi
 %{_pkgconfigdir}/libedata-book-%{apiver}.pc
 %{_pkgconfigdir}/libedata-cal-%{apiver}.pc
 %{_pkgconfigdir}/libedataserver-%{apiver}.pc
+%{_pkgconfigdir}/libedataserverui-%{apiver}.pc
 %{_datadir}/gir-1.0/EBook-%{apiver}.gir
 %{_datadir}/gir-1.0/EBookContacts-%{apiver}.gir
 %{_datadir}/gir-1.0/EDataServer-%{apiver}.gir
@@ -432,6 +444,7 @@ fi
 %{_libdir}/libedata-book-%{apiver}.a
 %{_libdir}/libedata-cal-%{apiver}.a
 %{_libdir}/libedataserver-%{apiver}.a
+%{_libdir}/libedataserverui-%{apiver}.a
 %endif
 
 %if %{with apidocs}
