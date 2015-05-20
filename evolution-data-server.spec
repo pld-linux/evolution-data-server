@@ -23,6 +23,7 @@ BuildRequires:	autoconf >= 2.62
 BuildRequires:	automake >= 1:1.11
 BuildRequires:	docbook-dtd412-xml
 BuildRequires:	gcr-devel >= 3.4.0
+BuildRequires:	gcr-ui-devel >= 3.4.0
 BuildRequires:	gettext-tools >= 0.18.1
 BuildRequires:	glib2-devel >= 1:2.40.0
 BuildRequires:	gnome-common >= 2.20.0
@@ -126,6 +127,7 @@ Summary:	Evolution Data Server library
 Summary(pl.UTF-8):	Biblioteka Evolution Data Server
 Group:		X11/Libraries
 Requires:	gcr-libs >= 3.4.0
+Requires:	gcr-ui >= 3.4.0
 Requires:	glib2 >= 1:2.40.0
 Requires:	libical >= 0.43
 Requires:	libsecret >= 0.5
@@ -145,6 +147,7 @@ Summary(pl.UTF-8):	Pliki programistyczne serwera danych evolution
 Group:		X11/Development/Libraries
 Requires:	%{name}-libs = %{version}-%{release}
 Requires:	gcr-devel >= 3.4.0
+Requires:	gcr-ui-devel >= 3.4.0
 Requires:	glib2-devel >= 1:2.40.0
 %{?with_kerberos5:Requires:	heimdal-devel}
 Requires:	libgdata-devel >= 0.15.1
