@@ -12,12 +12,12 @@
 Summary:	Evolution data server
 Summary(pl.UTF-8):	Serwer danych Evolution
 Name:		evolution-data-server
-Version:	3.16.4
+Version:	3.16.5
 Release:	1
 License:	LGPL v2+
 Group:		X11/Libraries
 Source0:	http://ftp.gnome.org/pub/GNOME/sources/evolution-data-server/3.16/%{name}-%{version}.tar.xz
-# Source0-md5:	76a1acb53265fcea217d65c48ec8852f
+# Source0-md5:	a25fe5ce0bceec89f18263ec6290667d
 URL:		http://www.gnome.org/projects/evolution/
 BuildRequires:	autoconf >= 2.62
 BuildRequires:	automake >= 1:1.11
@@ -53,7 +53,7 @@ BuildRequires:	pkgconfig
 %{?with_uoa:BuildRequires:	rest-devel >= 0.7}
 BuildRequires:	rpmbuild(macros) >= 1.304
 BuildRequires:	sed >= 4.0
-BuildRequires:	sqlite3-devel >= 3.5
+BuildRequires:	sqlite3-devel >= 3.7.17
 BuildRequires:	tar >= 1:1.22
 %{?with_vala:BuildRequires:	vala >= 2:0.22.0}
 BuildRequires:	xz
@@ -133,7 +133,7 @@ Requires:	libical >= 0.43
 Requires:	libsecret >= 0.5
 Requires:	libsoup >= 2.42.0
 Requires:	libxml2 >= 1:2.6.31
-Requires:	sqlite3 >= 3.5
+Requires:	sqlite3 >= 3.7.17
 
 %description libs
 This package contains Evolution Data Server library.
@@ -157,7 +157,7 @@ Requires:	libsoup-devel >= 2.42.0
 Requires:	libxml2-devel >= 1:2.6.31
 Requires:	nspr-devel >= 4
 Requires:	nss-devel >= 3
-Requires:	sqlite3-devel >= 3.5
+Requires:	sqlite3-devel >= 3.7.17
 
 %description devel
 This package contains the files necessary to develop applications
