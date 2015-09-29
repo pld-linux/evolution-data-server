@@ -1,8 +1,8 @@
 #
 # Conditional build:
 %bcond_without	apidocs		# do not build and package API docs
-%bcond_without	kerberos5	# build without kerberos5 support
-%bcond_without	ldap		# build without ldap support
+%bcond_without	kerberos5	# build without Kerberos5 support
+%bcond_without	ldap		# build without LDAP support
 %bcond_without	static_libs	# do not build static libs
 %bcond_without	uoa		# single sign-on (aka Ubuntu Online Accounts)
 %bcond_without	vala		# do not build Vala API
@@ -48,11 +48,10 @@ BuildRequires:	libtool >= 2:2.2
 BuildRequires:	libxml2-devel >= 1:2.6.31
 BuildRequires:	nspr-devel >= 4
 BuildRequires:	nss-devel >= 3
-%{?with_ldap:BuildRequires:	openldap-evolution-devel >= 2.4.6}
+%{?with_ldap:BuildRequires:	openldap-devel >= 2.4.6}
 BuildRequires:	pkgconfig
 %{?with_uoa:BuildRequires:	rest-devel >= 0.7}
 BuildRequires:	rpmbuild(macros) >= 1.304
-BuildRequires:	sed >= 4.0
 BuildRequires:	sqlite3-devel >= 3.7.17
 BuildRequires:	tar >= 1:1.22
 %{?with_vala:BuildRequires:	vala >= 2:0.22.0}
@@ -210,9 +209,6 @@ API serwera danych Evolution dla języka Vala.
 %prep
 %setup -q
 
-# kill -L$withval/lib
-%{__sed} -i -e 's/DB_LIBS="-L[^ "]* /DB_LIBS="/;s/ICONV_LIBS="[^ "]*/ICONV_LIBS="/' configure.ac
-
 %build
 %{__gtkdocize}
 %{__intltoolize}
@@ -222,28 +218,18 @@ API serwera danych Evolution dla języka Vala.
 %{__autoconf}
 %{__automake}
 
-# Set LIBS so that configure will be able to link with static LDAP libraries,
-# which depend on Cyrus SASL and OpenSSL.
-if pkg-config openssl ; then
-	LIBS="-lsasl2 `pkg-config --libs openssl`"
-else
-	LIBS="-lsasl2 -lssl -lcrypto"
-fi
-export LIBS
-
 %configure \
+	DB_LIBS="-ldb" \
+	ac_cv_libiconv=no \
 	%{?with_kerberos5:--with-krb5=%{_prefix} --with-krb5-libs=%{_libdir}} \
 	%{!?with_kerberos5:--with-krb5=no} \
-	%{?with_ldap:--with-openldap=%{_libdir}/evolution-openldap} \
-	%{?with_ldap:--with-static-ldap=yes} \
-	%{!?with_ldap:--with-openldap=no} \
+	--with-openldap%{!?with_ldap:=no} \
 	--enable-smime \
 	--enable-ipv6 \
 	%{__enable_disable apidocs gtk-doc} \
 	%{__enable_disable static_libs static} \
 	%{__enable_disable vala vala-bindings} \
 	%{!?with_uoa:--disable-uoa} \
-	--with-libdb=%{_libdir} \
 	--with-html-dir=%{_gtkdocdir} \
 	--disable-silent-rules
 
