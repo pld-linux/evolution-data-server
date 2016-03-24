@@ -7,17 +7,17 @@
 %bcond_without	uoa		# single sign-on (aka Ubuntu Online Accounts)
 %bcond_without	vala		# do not build Vala API
 
-%define		basever		3.18
+%define		basever		3.20
 %define		apiver		1.2
 Summary:	Evolution data server
 Summary(pl.UTF-8):	Serwer danych Evolution
 Name:		evolution-data-server
-Version:	3.18.5
+Version:	3.20.0
 Release:	1
 License:	LGPL v2+
 Group:		X11/Libraries
-Source0:	http://ftp.gnome.org/pub/GNOME/sources/evolution-data-server/3.18/%{name}-%{version}.tar.xz
-# Source0-md5:	9ebf160a827ebdcf556f1147734ceb6c
+Source0:	http://ftp.gnome.org/pub/GNOME/sources/evolution-data-server/3.20/%{name}-%{version}.tar.xz
+# Source0-md5:	09773d7ee81948a191a43bd235ba04d0
 URL:		http://www.gnome.org/projects/evolution/
 BuildRequires:	autoconf >= 2.62
 BuildRequires:	automake >= 1:1.11
@@ -31,13 +31,14 @@ BuildRequires:	gnome-online-accounts-devel >= 3.8.0
 BuildRequires:	gobject-introspection-devel >= 0.10.0
 BuildRequires:	gperf
 BuildRequires:	gtk+3-devel >= 3.10.0
+BuildRequires:	gtk-webkit3-devel >= 2.4.9
 %{?with_apidocs:BuildRequires:	gtk-doc >= 1.14}
 %{?with_kerberos5:BuildRequires:	heimdal-devel}
 BuildRequires:	intltool >= 0.40.0
-%{?with_uoa:BuildRequires:	json-glib-devel}
+BuildRequires:	json-glib-devel >= 1.0.4
 %{?with_uoa:BuildRequires:	libaccounts-glib-devel >= 1.4}
 BuildRequires:	libgdata-devel >= 0.15.1
-BuildRequires:	libgweather-devel >= 3.8
+BuildRequires:	libgweather-devel >= 3.10
 BuildRequires:	libical-devel >= 0.43
 BuildRequires:	libicu-devel
 BuildRequires:	libsecret-devel >= 0.5
@@ -62,7 +63,7 @@ Requires:	%{name}-libs = %{version}-%{release}
 Requires:	gnome-online-accounts-libs >= 3.8.0
 Requires:	gtk+3 >= 3.10.0
 Requires:	libgdata >= 0.15.1
-Requires:	libgweather >= 3.8
+Requires:	libgweather >= 3.10
 # sr@Latn vs. sr@latin
 Conflicts:	glibc-misc < 6:2.7
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
@@ -324,6 +325,11 @@ fi
 %attr(755,root,root) %{_libdir}/evolution-data-server/registry-modules/module-trust-prompt.so
 %attr(755,root,root) %{_libdir}/evolution-data-server/registry-modules/module-yahoo-backend.so
 
+%{systemduserunitdir}/evolution-addressbook-factory.service
+%{systemduserunitdir}/evolution-calendar-factory.service
+%{systemduserunitdir}/evolution-source-registry.service
+%{systemduserunitdir}/evolution-user-prompter.service
+
 %dir %{_libdir}/%{name}-%{basever}
 %dir %{_datadir}/%{name}
 %{_pixmapsdir}/%{name}
@@ -378,7 +384,7 @@ fi
 %files libs
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_libdir}/libcamel-%{apiver}.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libcamel-%{apiver}.so.54
+%attr(755,root,root) %ghost %{_libdir}/libcamel-%{apiver}.so.57
 %attr(755,root,root) %{_libdir}/libebackend-%{apiver}.so.*.*.*
 %attr(755,root,root) %ghost %{_libdir}/libebackend-%{apiver}.so.10
 %attr(755,root,root) %{_libdir}/libebook-%{apiver}.so.*.*.*
@@ -421,6 +427,7 @@ fi
 %{_pkgconfigdir}/libedata-cal-%{apiver}.pc
 %{_pkgconfigdir}/libedataserver-%{apiver}.pc
 %{_pkgconfigdir}/libedataserverui-%{apiver}.pc
+%{_datadir}/gir-1.0/Camel-1.2.gir
 %{_datadir}/gir-1.0/EBook-%{apiver}.gir
 %{_datadir}/gir-1.0/EBookContacts-%{apiver}.gir
 %{_datadir}/gir-1.0/EDataServer-%{apiver}.gir
@@ -449,6 +456,8 @@ fi
 %if %{with vala}
 %files -n vala-evolution-data-server
 %defattr(644,root,root,755)
+%{_datadir}/vala/vapi/camel-1.2.deps
+%{_datadir}/vala/vapi/camel-1.2.vapi
 %{_datadir}/vala/vapi/libebook-%{apiver}.deps
 %{_datadir}/vala/vapi/libebook-%{apiver}.vapi
 %{_datadir}/vala/vapi/libebook-contacts-%{apiver}.deps
