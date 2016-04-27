@@ -129,6 +129,7 @@ Group:		X11/Libraries
 Requires:	gcr-libs >= 3.4.0
 Requires:	gcr-ui >= 3.4.0
 Requires:	glib2 >= 1:2.40.0
+Requires:	json-glib >= 1.0.4
 Requires:	libical >= 0.43
 Requires:	libsecret >= 0.5
 Requires:	libsoup >= 2.42.0
