@@ -7,31 +7,32 @@
 %bcond_without	uoa		# single sign-on (aka Ubuntu Online Accounts)
 %bcond_without	vala		# do not build Vala API
 
-%define		basever		3.20
+%define		basever		3.22
 %define		apiver		1.2
 Summary:	Evolution data server
 Summary(pl.UTF-8):	Serwer danych Evolution
 Name:		evolution-data-server
-Version:	3.20.4
+Version:	3.22.0
 Release:	1
 License:	LGPL v2+
 Group:		X11/Libraries
-Source0:	http://ftp.gnome.org/pub/GNOME/sources/evolution-data-server/3.20/%{name}-%{version}.tar.xz
-# Source0-md5:	4ff1006726066a34bc214064135655e8
+Source0:	http://ftp.gnome.org/pub/GNOME/sources/evolution-data-server/3.22/%{name}-%{version}.tar.xz
+# Source0-md5:	0d459dbc5e1a945d5b4b01fe6d26c635
 URL:		http://www.gnome.org/projects/evolution/
 BuildRequires:	autoconf >= 2.62
 BuildRequires:	automake >= 1:1.11
+BuildRequires:	db-devel
 BuildRequires:	docbook-dtd412-xml
 BuildRequires:	gcr-devel >= 3.4.0
 BuildRequires:	gcr-ui-devel >= 3.4.0
 BuildRequires:	gettext-tools >= 0.18.1
-BuildRequires:	glib2-devel >= 1:2.40.0
+BuildRequires:	glib2-devel >= 1:2.46.0
 BuildRequires:	gnome-common >= 2.20.0
 BuildRequires:	gnome-online-accounts-devel >= 3.8.0
 BuildRequires:	gobject-introspection-devel >= 0.10.0
 BuildRequires:	gperf
 BuildRequires:	gtk+3-devel >= 3.10.0
-BuildRequires:	gtk-webkit3-devel >= 2.4.9
+BuildRequires:	gtk-webkit4-devel >= 2.12.0
 %{?with_apidocs:BuildRequires:	gtk-doc >= 1.14}
 %{?with_kerberos5:BuildRequires:	heimdal-devel}
 BuildRequires:	intltool >= 0.40.0
@@ -58,7 +59,7 @@ BuildRequires:	tar >= 1:1.22
 %{?with_vala:BuildRequires:	vala >= 2:0.22.0}
 BuildRequires:	xz
 BuildRequires:	zlib-devel
-Requires(post,postun):	glib2 >= 1:2.40.0
+Requires(post,postun):	glib2 >= 1:2.46.0
 Requires:	%{name}-libs = %{version}-%{release}
 Requires:	gnome-online-accounts-libs >= 3.8.0
 Requires:	gtk+3 >= 3.10.0
@@ -128,7 +129,7 @@ Summary(pl.UTF-8):	Biblioteka Evolution Data Server
 Group:		X11/Libraries
 Requires:	gcr-libs >= 3.4.0
 Requires:	gcr-ui >= 3.4.0
-Requires:	glib2 >= 1:2.40.0
+Requires:	glib2 >= 1:2.46.0
 Requires:	json-glib >= 1.0.4
 Requires:	libical >= 0.43
 Requires:	libsecret >= 0.5
@@ -149,7 +150,7 @@ Group:		X11/Development/Libraries
 Requires:	%{name}-libs = %{version}-%{release}
 Requires:	gcr-devel >= 3.4.0
 Requires:	gcr-ui-devel >= 3.4.0
-Requires:	glib2-devel >= 1:2.40.0
+Requires:	glib2-devel >= 1:2.46.0
 %{?with_kerberos5:Requires:	heimdal-devel}
 Requires:	libgdata-devel >= 0.15.1
 Requires:	libical-devel >= 0.43
@@ -282,6 +283,7 @@ fi
 %files -f %{name}-%{basever}.lang
 %defattr(644,root,root,755)
 %doc AUTHORS ChangeLog NEWS* README
+%attr(755,root,root) %{_libexecdir}/camel-gpg-photo-saver
 %attr(755,root,root) %{_libexecdir}/camel-index-control-%{apiver}
 %attr(755,root,root) %{_libexecdir}/camel-lock-helper-%{apiver}
 %attr(755,root,root) %{_libexecdir}/evolution-addressbook-factory-subprocess
@@ -292,6 +294,8 @@ fi
 %attr(755,root,root) %{_libexecdir}/evolution-source-registry
 %attr(755,root,root) %{_libexecdir}/evolution-user-prompter
 %dir %{_libdir}/%{name}
+%attr(755,root,root) %{_libdir}/%{name}/addressbook-export
+%attr(755,root,root) %{_libdir}/%{name}/csv2vcard
 %attr(755,root,root) %{_libdir}/%{name}/libedbus-private.so
 %dir %{_libdir}/%{name}/addressbook-backends
 %attr(755,root,root) %{_libdir}/%{name}/addressbook-backends/libebookbackendfile.so
@@ -388,7 +392,7 @@ fi
 %files libs
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_libdir}/libcamel-%{apiver}.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libcamel-%{apiver}.so.57
+%attr(755,root,root) %ghost %{_libdir}/libcamel-%{apiver}.so.59
 %attr(755,root,root) %{_libdir}/libebackend-%{apiver}.so.*.*.*
 %attr(755,root,root) %ghost %{_libdir}/libebackend-%{apiver}.so.10
 %attr(755,root,root) %{_libdir}/libebook-%{apiver}.so.*.*.*
@@ -402,7 +406,7 @@ fi
 %attr(755,root,root) %{_libdir}/libedata-cal-%{apiver}.so.*.*.*
 %attr(755,root,root) %ghost %{_libdir}/libedata-cal-%{apiver}.so.28
 %attr(755,root,root) %{_libdir}/libedataserver-%{apiver}.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libedataserver-%{apiver}.so.21
+%attr(755,root,root) %ghost %{_libdir}/libedataserver-%{apiver}.so.22
 %attr(755,root,root) %{_libdir}/libedataserverui-%{apiver}.so.*.*.*
 %attr(755,root,root) %ghost %{_libdir}/libedataserverui-%{apiver}.so.1
 %{_libdir}/girepository-1.0/EBook-%{apiver}.typelib
