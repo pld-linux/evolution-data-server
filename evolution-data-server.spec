@@ -3,24 +3,23 @@
 %bcond_without	apidocs		# do not build and package API docs
 %bcond_without	kerberos5	# build without Kerberos5 support
 %bcond_without	ldap		# build without LDAP support
-%bcond_without	static_libs	# do not build static libs
 %bcond_without	uoa		# single sign-on (aka Ubuntu Online Accounts)
 %bcond_without	vala		# do not build Vala API
 
-%define		basever		3.22
+%define		basever		3.24
 %define		apiver		1.2
 Summary:	Evolution data server
 Summary(pl.UTF-8):	Serwer danych Evolution
 Name:		evolution-data-server
-Version:	3.22.6
+Version:	3.24.0
 Release:	1
 License:	LGPL v2+
 Group:		X11/Libraries
-Source0:	http://ftp.gnome.org/pub/GNOME/sources/evolution-data-server/3.22/%{name}-%{version}.tar.xz
+Source0:	http://ftp.gnome.org/pub/GNOME/sources/evolution-data-server/3.24/%{name}-%{version}.tar.xz
 # Source0-md5:	186ab6778fe651a2d07339fe7a0cf154
+Patch0:		%{name}-gtkdoc.patch
 URL:		http://www.gnome.org/projects/evolution/
-BuildRequires:	autoconf >= 2.62
-BuildRequires:	automake >= 1:1.11
+BuildRequires:	cmake >= 3.1
 BuildRequires:	db-devel
 BuildRequires:	docbook-dtd412-xml
 BuildRequires:	gcr-devel >= 3.4.0
@@ -137,6 +136,7 @@ Requires:	libsecret >= 0.5
 Requires:	libsoup >= 2.42.0
 Requires:	libxml2 >= 1:2.6.31
 Requires:	sqlite3 >= 3.7.17
+Obsoletes:	evolution-data-server-static
 
 %description libs
 This package contains Evolution Data Server library.
@@ -215,30 +215,19 @@ API serwera danych Evolution dla języka Vala.
 
 %prep
 %setup -q
+%patch0 -p1
 
 %build
-%{__gtkdocize}
-%{__intltoolize}
-%{__libtoolize}
-%{__aclocal} -I m4
-%{__autoheader}
-%{__autoconf}
-%{__automake}
-
-%configure \
-	DB_LIBS="-ldb" \
-	ac_cv_libiconv=no \
-	%{?with_kerberos5:--with-krb5=%{_prefix} --with-krb5-libs=%{_libdir}} \
-	%{!?with_kerberos5:--with-krb5=no} \
-	--with-openldap%{!?with_ldap:=no} \
-	--enable-smime \
-	--enable-ipv6 \
-	%{__enable_disable apidocs gtk-doc} \
-	%{__enable_disable static_libs static} \
-	%{__enable_disable vala vala-bindings} \
-	%{!?with_uoa:--disable-uoa} \
-	--with-html-dir=%{_gtkdocdir} \
-	--disable-silent-rules
+%cmake \
+	-DLIBEXEC_INSTALL_DIR=%{_libdir} \
+	%{?with_kerberos5:-DWITH_KRB5=%{_prefix} -DWITH_KRB5_LIBS=%{_libdir}} \
+	%{!?with_kerberos5:-DWITH_KRB5=OFF} \
+	%{!?with_ldap:-DWITH_OPENLDAP=OFF} \
+	%{?with_apidocs:-DENABLE_GTK_DOC=ON} \
+	%{?with_vala:-DENABLE_VALA_BINDINGS=ON} \
+	%{!?with_uoa:-DENABLE_UOA=OFF} \
+	-DENABLE_SCHEMAS_COMPILE=OFF \
+	-DENABLE_INTROSPECTION=ON
 
 %{__make}
 
@@ -248,14 +237,9 @@ install -d $RPM_BUILD_ROOT%{_libdir}/%{name}-%{basever}
 install -d $RPM_BUILD_ROOT%{schemadir}
 
 %{__make} install \
-	DESTDIR=$RPM_BUILD_ROOT \
-	HTML_DIR=%{_gtkdocdir}
+	DESTDIR=$RPM_BUILD_ROOT
 
-cp -p addressbook/backends/ldap/evolutionperson.schema $RPM_BUILD_ROOT%{schemadir}
-
-%{__rm} $RPM_BUILD_ROOT%{_libdir}/%{name}/{camel-providers,calendar-backends,addressbook-backends,credential-modules,registry-modules}/*.{la,a}
-%{__rm} $RPM_BUILD_ROOT%{_libdir}/%{name}/*.{a,la}
-%{__rm} $RPM_BUILD_ROOT%{_libdir}/*.la
+cp -p src/addressbook/backends/ldap/evolutionperson.schema $RPM_BUILD_ROOT%{schemadir}
 
 %find_lang %{name}-%{basever}
 
@@ -393,11 +377,11 @@ fi
 %files libs
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_libdir}/libcamel-%{apiver}.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libcamel-%{apiver}.so.59
+%attr(755,root,root) %ghost %{_libdir}/libcamel-%{apiver}.so.60
 %attr(755,root,root) %{_libdir}/libebackend-%{apiver}.so.*.*.*
 %attr(755,root,root) %ghost %{_libdir}/libebackend-%{apiver}.so.10
 %attr(755,root,root) %{_libdir}/libebook-%{apiver}.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libebook-%{apiver}.so.16
+%attr(755,root,root) %ghost %{_libdir}/libebook-%{apiver}.so.19
 %attr(755,root,root) %{_libdir}/libebook-contacts-%{apiver}.so.*.*.*
 %attr(755,root,root) %ghost %{_libdir}/libebook-contacts-%{apiver}.so.2
 %attr(755,root,root) %{_libdir}/libecal-%{apiver}.so.*.*.*
@@ -410,9 +394,11 @@ fi
 %attr(755,root,root) %ghost %{_libdir}/libedataserver-%{apiver}.so.22
 %attr(755,root,root) %{_libdir}/libedataserverui-%{apiver}.so.*.*.*
 %attr(755,root,root) %ghost %{_libdir}/libedataserverui-%{apiver}.so.1
+%{_libdir}/girepository-1.0/Camel-1.2.typelib
 %{_libdir}/girepository-1.0/EBook-%{apiver}.typelib
 %{_libdir}/girepository-1.0/EBookContacts-%{apiver}.typelib
 %{_libdir}/girepository-1.0/EDataServer-%{apiver}.typelib
+%{_libdir}/girepository-1.0/EDataServerUI-1.2.typelib
 
 %files devel
 %defattr(644,root,root,755)
@@ -440,26 +426,13 @@ fi
 %{_datadir}/gir-1.0/EBook-%{apiver}.gir
 %{_datadir}/gir-1.0/EBookContacts-%{apiver}.gir
 %{_datadir}/gir-1.0/EDataServer-%{apiver}.gir
-
-%if %{with static_libs}
-%files static
-%defattr(644,root,root,755)
-%{_libdir}/libcamel-%{apiver}.a
-%{_libdir}/libebackend-%{apiver}.a
-%{_libdir}/libebook-%{apiver}.a
-%{_libdir}/libebook-contacts-%{apiver}.a
-%{_libdir}/libecal-%{apiver}.a
-%{_libdir}/libedata-book-%{apiver}.a
-%{_libdir}/libedata-cal-%{apiver}.a
-%{_libdir}/libedataserver-%{apiver}.a
-%{_libdir}/libedataserverui-%{apiver}.a
-%endif
+%{_datadir}/gir-1.0/EDataServerUI-1.2.gir
 
 %if %{with apidocs}
 %files apidocs
 %defattr(644,root,root,755)
 %{_gtkdocdir}/camel
-%{_gtkdocdir}/eds
+%{_gtkdocdir}/evolution-data-server
 %endif
 
 %if %{with vala}
@@ -473,4 +446,6 @@ fi
 %{_datadir}/vala/vapi/libebook-contacts-%{apiver}.vapi
 %{_datadir}/vala/vapi/libedataserver-%{apiver}.deps
 %{_datadir}/vala/vapi/libedataserver-%{apiver}.vapi
+%{_datadir}/vala/vapi/libedataserverui-%{apiver}.deps
+%{_datadir}/vala/vapi/libedataserverui-%{apiver}.vapi
 %endif

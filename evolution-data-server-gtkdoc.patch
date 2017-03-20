@@ -1,0 +1,11 @@
+--- evolution-data-server-3.24.0/cmake/modules/GtkDoc.cmake.fixgtkdoc	2017-03-20 19:52:48.389756275 +0100
++++ evolution-data-server-3.24.0/cmake/modules/GtkDoc.cmake	2017-03-20 19:53:06.978322900 +0100
+@@ -48,7 +48,7 @@ macro(add_gtkdoc _module _namespace _dep
+ 		@ONLY
+ 	)
+ 
+-	set(OUTPUT_DOCDIR ${SHARE_INSTALL_PREFIX}/gtk-doc/html/${_module})
++	set(OUTPUT_DOCDIR ${SHARE_INSTALL_PREFIX}/doc/gtk-doc/html/${_module})
+ 
+ 	set(_filedeps)
+ 	set(_srcdirs)
