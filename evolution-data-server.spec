@@ -16,7 +16,7 @@ Release:	1
 License:	LGPL v2+
 Group:		X11/Libraries
 Source0:	http://ftp.gnome.org/pub/GNOME/sources/evolution-data-server/3.24/%{name}-%{version}.tar.xz
-# Source0-md5:	186ab6778fe651a2d07339fe7a0cf154
+# Source0-md5:	5e3016f3c65033d66726b97cb3f81f4a
 Patch0:		%{name}-gtkdoc.patch
 URL:		http://www.gnome.org/projects/evolution/
 BuildRequires:	cmake >= 3.1
