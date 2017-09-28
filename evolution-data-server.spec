@@ -6,17 +6,17 @@
 %bcond_without	uoa		# single sign-on (aka Ubuntu Online Accounts)
 %bcond_without	vala		# do not build Vala API
 
-%define		basever		3.24
+%define		basever		3.26
 %define		apiver		1.2
 Summary:	Evolution data server
 Summary(pl.UTF-8):	Serwer danych Evolution
 Name:		evolution-data-server
-Version:	3.24.4
+Version:	3.26.0
 Release:	1
 License:	LGPL v2+
 Group:		X11/Libraries
-Source0:	http://ftp.gnome.org/pub/GNOME/sources/evolution-data-server/3.24/%{name}-%{version}.tar.xz
-# Source0-md5:	c8c4141219162f5f323c2a3c1bb27de1
+Source0:	http://ftp.gnome.org/pub/GNOME/sources/evolution-data-server/3.26/%{name}-%{version}.tar.xz
+# Source0-md5:	136b07f7745806617928c4ac1df6e6aa
 Patch0:		%{name}-gtkdoc.patch
 URL:		http://www.gnome.org/projects/evolution/
 BuildRequires:	cmake >= 3.1
@@ -39,7 +39,7 @@ BuildRequires:	json-glib-devel >= 1.0.4
 %{?with_uoa:BuildRequires:	libaccounts-glib-devel >= 1.4}
 BuildRequires:	libgdata-devel >= 0.15.1
 BuildRequires:	libgweather-devel >= 3.10
-BuildRequires:	libical-devel >= 0.43
+BuildRequires:	libical-devel >= 2.0
 BuildRequires:	libicu-devel
 BuildRequires:	libsecret-devel >= 0.5
 %{?with_uoa:BuildRequires:	libsignon-glib-devel >= 1.8}
@@ -131,7 +131,7 @@ Requires:	gcr-ui >= 3.4.0
 Requires:	glib2 >= 1:2.46.0
 Requires:	gtk-webkit4 >= 2.12.0
 Requires:	json-glib >= 1.0.4
-Requires:	libical >= 0.43
+Requires:	libical >= 2.0
 Requires:	libsecret >= 0.5
 Requires:	libsoup >= 2.42.0
 Requires:	libxml2 >= 1:2.6.31
@@ -241,7 +241,7 @@ install -d $RPM_BUILD_ROOT%{schemadir}
 
 cp -p src/addressbook/backends/ldap/evolutionperson.schema $RPM_BUILD_ROOT%{schemadir}
 
-%find_lang %{name}-%{basever}
+%find_lang %{name}
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -265,7 +265,7 @@ if [ "$1" = "0" ]; then
 	%service -q ldap restart
 fi
 
-%files -f %{name}-%{basever}.lang
+%files -f %{name}.lang
 %defattr(644,root,root,755)
 %doc AUTHORS ChangeLog NEWS* README
 %attr(755,root,root) %{_libexecdir}/camel-gpg-photo-saver
@@ -281,6 +281,7 @@ fi
 %dir %{_libdir}/%{name}
 %attr(755,root,root) %{_libdir}/%{name}/addressbook-export
 %attr(755,root,root) %{_libdir}/%{name}/csv2vcard
+%attr(755,root,root) %{_libdir}/%{name}/list-sources
 %attr(755,root,root) %{_libdir}/%{name}/libedbus-private.so
 %dir %{_libdir}/%{name}/addressbook-backends
 %attr(755,root,root) %{_libdir}/%{name}/addressbook-backends/libebookbackendfile.so
@@ -313,9 +314,9 @@ fi
 %attr(755,root,root) %{_libdir}/evolution-data-server/registry-modules/module-gnome-online-accounts.so
 %attr(755,root,root) %{_libdir}/evolution-data-server/registry-modules/module-google-backend.so
 %attr(755,root,root) %{_libdir}/evolution-data-server/registry-modules/module-outlook-backend.so
-%attr(755,root,root) %{_libdir}/evolution-data-server/registry-modules/module-owncloud-backend.so
 %attr(755,root,root) %{_libdir}/evolution-data-server/registry-modules/module-secret-monitor.so
 %attr(755,root,root) %{_libdir}/evolution-data-server/registry-modules/module-trust-prompt.so
+%attr(755,root,root) %{_libdir}/evolution-data-server/registry-modules/module-webdav-backend.so
 %attr(755,root,root) %{_libdir}/evolution-data-server/registry-modules/module-yahoo-backend.so
 
 %{systemduserunitdir}/evolution-addressbook-factory.service
