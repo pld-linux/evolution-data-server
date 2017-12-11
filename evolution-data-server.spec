@@ -11,12 +11,12 @@
 Summary:	Evolution data server
 Summary(pl.UTF-8):	Serwer danych Evolution
 Name:		evolution-data-server
-Version:	3.26.2.1
+Version:	3.26.3
 Release:	1
 License:	LGPL v2+
 Group:		X11/Libraries
 Source0:	http://ftp.gnome.org/pub/GNOME/sources/evolution-data-server/3.26/%{name}-%{version}.tar.xz
-# Source0-md5:	07b3b0ef97db4fca2fe96914eff8365d
+# Source0-md5:	568a21a4df4e0ec985c849b38fc66908
 Patch0:		%{name}-gtkdoc.patch
 URL:		http://www.gnome.org/projects/evolution/
 BuildRequires:	cmake >= 3.1
@@ -219,7 +219,7 @@ API serwera danych Evolution dla języka Vala.
 
 %build
 %cmake \
-	-DLIBEXEC_INSTALL_DIR=%{_libdir} \
+	-DLIBEXEC_INSTALL_DIR=%{_libexecdir} \
 	%{?with_kerberos5:-DWITH_KRB5=%{_prefix} -DWITH_KRB5_LIBS=%{_libdir}} \
 	%{!?with_kerberos5:-DWITH_KRB5=OFF} \
 	%{!?with_ldap:-DWITH_OPENLDAP=OFF} \
@@ -278,10 +278,11 @@ fi
 %attr(755,root,root) %{_libexecdir}/evolution-scan-gconf-tree-xml
 %attr(755,root,root) %{_libexecdir}/evolution-source-registry
 %attr(755,root,root) %{_libexecdir}/evolution-user-prompter
+%dir %{_libexecdir}/%{name}
+%attr(755,root,root) %{_libexecdir}/%{name}/addressbook-export
+%attr(755,root,root) %{_libexecdir}/%{name}/csv2vcard
+%attr(755,root,root) %{_libexecdir}/%{name}/list-sources
 %dir %{_libdir}/%{name}
-%attr(755,root,root) %{_libdir}/%{name}/addressbook-export
-%attr(755,root,root) %{_libdir}/%{name}/csv2vcard
-%attr(755,root,root) %{_libdir}/%{name}/list-sources
 %attr(755,root,root) %{_libdir}/%{name}/libedbus-private.so
 %dir %{_libdir}/%{name}/addressbook-backends
 %attr(755,root,root) %{_libdir}/%{name}/addressbook-backends/libebookbackendfile.so
