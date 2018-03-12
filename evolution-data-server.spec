@@ -6,17 +6,17 @@
 %bcond_without	uoa		# single sign-on (aka Ubuntu Online Accounts)
 %bcond_without	vala		# do not build Vala API
 
-%define		basever		3.26
+%define		basever		3.28
 %define		apiver		1.2
 Summary:	Evolution data server
 Summary(pl.UTF-8):	Serwer danych Evolution
 Name:		evolution-data-server
-Version:	3.26.4
+Version:	3.28.0
 Release:	1
 License:	LGPL v2+
 Group:		X11/Libraries
-Source0:	http://ftp.gnome.org/pub/GNOME/sources/evolution-data-server/3.26/%{name}-%{version}.tar.xz
-# Source0-md5:	a71c7de5c4083231a5725332fd82fbe5
+Source0:	http://ftp.gnome.org/pub/GNOME/sources/evolution-data-server/3.28/%{name}-%{version}.tar.xz
+# Source0-md5:	da21f3262a82caee12ee6b552f12d82b
 Patch0:		%{name}-gtkdoc.patch
 URL:		http://www.gnome.org/projects/evolution/
 BuildRequires:	cmake >= 3.1
@@ -314,6 +314,7 @@ fi
 %attr(755,root,root) %{_libdir}/evolution-data-server/registry-modules/module-cache-reaper.so
 %attr(755,root,root) %{_libdir}/evolution-data-server/registry-modules/module-gnome-online-accounts.so
 %attr(755,root,root) %{_libdir}/evolution-data-server/registry-modules/module-google-backend.so
+%attr(755,root,root) %{_libdir}/evolution-data-server/registry-modules/module-oauth2-services.so
 %attr(755,root,root) %{_libdir}/evolution-data-server/registry-modules/module-outlook-backend.so
 %attr(755,root,root) %{_libdir}/evolution-data-server/registry-modules/module-secret-monitor.so
 %attr(755,root,root) %{_libdir}/evolution-data-server/registry-modules/module-trust-prompt.so
@@ -379,7 +380,7 @@ fi
 %files libs
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_libdir}/libcamel-%{apiver}.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libcamel-%{apiver}.so.60
+%attr(755,root,root) %ghost %{_libdir}/libcamel-%{apiver}.so.61
 %attr(755,root,root) %{_libdir}/libebackend-%{apiver}.so.*.*.*
 %attr(755,root,root) %ghost %{_libdir}/libebackend-%{apiver}.so.10
 %attr(755,root,root) %{_libdir}/libebook-%{apiver}.so.*.*.*
@@ -393,9 +394,9 @@ fi
 %attr(755,root,root) %{_libdir}/libedata-cal-%{apiver}.so.*.*.*
 %attr(755,root,root) %ghost %{_libdir}/libedata-cal-%{apiver}.so.28
 %attr(755,root,root) %{_libdir}/libedataserver-%{apiver}.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libedataserver-%{apiver}.so.22
+%attr(755,root,root) %ghost %{_libdir}/libedataserver-%{apiver}.so.23
 %attr(755,root,root) %{_libdir}/libedataserverui-%{apiver}.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libedataserverui-%{apiver}.so.1
+%attr(755,root,root) %ghost %{_libdir}/libedataserverui-%{apiver}.so.2
 %{_libdir}/girepository-1.0/Camel-1.2.typelib
 %{_libdir}/girepository-1.0/EBook-%{apiver}.typelib
 %{_libdir}/girepository-1.0/EBookContacts-%{apiver}.typelib
