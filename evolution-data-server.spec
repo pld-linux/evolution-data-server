@@ -6,17 +6,17 @@
 %bcond_without	uoa		# single sign-on (aka Ubuntu Online Accounts)
 %bcond_without	vala		# do not build Vala API
 
-%define		basever		3.28
+%define		basever		3.30
 %define		apiver		1.2
 Summary:	Evolution data server
 Summary(pl.UTF-8):	Serwer danych Evolution
 Name:		evolution-data-server
-Version:	3.28.3
+Version:	3.30.4
 Release:	1
 License:	LGPL v2+
 Group:		X11/Libraries
-Source0:	http://ftp.gnome.org/pub/GNOME/sources/evolution-data-server/3.28/%{name}-%{version}.tar.xz
-# Source0-md5:	71b418e5a2e26a7fbe0369cbfa61b62a
+Source0:	http://ftp.gnome.org/pub/GNOME/sources/evolution-data-server/3.30/%{name}-%{version}.tar.xz
+# Source0-md5:	6f38d50ffa152dabce24404e071748ca
 Patch0:		%{name}-gtkdoc.patch
 URL:		http://www.gnome.org/projects/evolution/
 BuildRequires:	cmake >= 3.1
@@ -281,13 +281,14 @@ fi
 %dir %{_libexecdir}/%{name}
 %attr(755,root,root) %{_libexecdir}/%{name}/addressbook-export
 %attr(755,root,root) %{_libexecdir}/%{name}/csv2vcard
+%attr(755,root,root) %{_libexecdir}/%{name}/evolution-alarm-notify
 %attr(755,root,root) %{_libexecdir}/%{name}/list-sources
 %dir %{_libdir}/%{name}
 %attr(755,root,root) %{_libdir}/%{name}/libedbus-private.so
 %dir %{_libdir}/%{name}/addressbook-backends
 %attr(755,root,root) %{_libdir}/%{name}/addressbook-backends/libebookbackendfile.so
 %attr(755,root,root) %{_libdir}/%{name}/addressbook-backends/libebookbackendgoogle.so
-%attr(755,root,root) %{_libdir}/%{name}/addressbook-backends/libebookbackendwebdav.so
+%attr(755,root,root) %{_libdir}/%{name}/addressbook-backends/libebookbackendcarddav.so
 %dir %{_libdir}/%{name}/calendar-backends
 %attr(755,root,root) %{_libdir}/%{name}/calendar-backends/libecalbackendcaldav.so
 %attr(755,root,root) %{_libdir}/%{name}/calendar-backends/libecalbackendcontacts.so
@@ -343,6 +344,9 @@ fi
 %{_datadir}/glib-2.0/schemas/org.gnome.evolution-data-server.calendar.gschema.xml
 %{_datadir}/glib-2.0/schemas/org.gnome.evolution-data-server.gschema.xml
 
+%{_sysconfdir}/xdg/autostart/org.gnome.Evolution-alarm-notify.desktop
+%{_desktopdir}/org.gnome.Evolution-alarm-notify.desktop
+
 %if %{with ldap}
 %files ldap
 %defattr(644,root,root,755)
@@ -380,7 +384,7 @@ fi
 %files libs
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_libdir}/libcamel-%{apiver}.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libcamel-%{apiver}.so.61
+%attr(755,root,root) %ghost %{_libdir}/libcamel-%{apiver}.so.62
 %attr(755,root,root) %{_libdir}/libebackend-%{apiver}.so.*.*.*
 %attr(755,root,root) %ghost %{_libdir}/libebackend-%{apiver}.so.10
 %attr(755,root,root) %{_libdir}/libebook-%{apiver}.so.*.*.*
@@ -392,7 +396,7 @@ fi
 %attr(755,root,root) %{_libdir}/libedata-book-%{apiver}.so.*.*.*
 %attr(755,root,root) %ghost %{_libdir}/libedata-book-%{apiver}.so.25
 %attr(755,root,root) %{_libdir}/libedata-cal-%{apiver}.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libedata-cal-%{apiver}.so.28
+%attr(755,root,root) %ghost %{_libdir}/libedata-cal-%{apiver}.so.29
 %attr(755,root,root) %{_libdir}/libedataserver-%{apiver}.so.*.*.*
 %attr(755,root,root) %ghost %{_libdir}/libedataserver-%{apiver}.so.23
 %attr(755,root,root) %{_libdir}/libedataserverui-%{apiver}.so.*.*.*
