@@ -6,17 +6,17 @@
 %bcond_without	uoa		# single sign-on (aka Ubuntu Online Accounts)
 %bcond_without	vala		# do not build Vala API
 
-%define		basever		3.30
+%define		basever		3.32
 %define		apiver		1.2
 Summary:	Evolution data server
 Summary(pl.UTF-8):	Serwer danych Evolution
 Name:		evolution-data-server
-Version:	3.30.4
-Release:	1
+Version:	3.32.1
+Release:	2
 License:	LGPL v2+
 Group:		X11/Libraries
-Source0:	http://ftp.gnome.org/pub/GNOME/sources/evolution-data-server/3.30/%{name}-%{version}.tar.xz
-# Source0-md5:	6f38d50ffa152dabce24404e071748ca
+Source0:	http://ftp.gnome.org/pub/GNOME/sources/evolution-data-server/3.32/%{name}-%{version}.tar.xz
+# Source0-md5:	8832c259a5914b6a27ba4abde681254a
 Patch0:		%{name}-gtkdoc.patch
 URL:		http://www.gnome.org/projects/evolution/
 BuildRequires:	cmake >= 3.1
@@ -37,6 +37,7 @@ BuildRequires:	gtk-webkit4-devel >= 2.12.0
 BuildRequires:	intltool >= 0.40.0
 BuildRequires:	json-glib-devel >= 1.0.4
 %{?with_uoa:BuildRequires:	libaccounts-glib-devel >= 1.4}
+BuildRequires:	libcanberra-gtk3-devel >= 0.25
 BuildRequires:	libgdata-devel >= 0.15.1
 BuildRequires:	libgweather-devel >= 3.10
 BuildRequires:	libical-devel >= 2.0
