@@ -3,7 +3,7 @@
 %bcond_without	apidocs		# do not build and package API docs
 %bcond_without	kerberos5	# build without Kerberos5 support
 %bcond_without	ldap		# build without LDAP support
-%bcond_without	uoa		# single sign-on (aka Ubuntu Online Accounts)
+%bcond_without	goa		# single sign-on (aka Gnome Online Accounts)
 %bcond_without	vala		# do not build Vala API
 
 %define		basever		3.32
@@ -36,14 +36,14 @@ BuildRequires:	gtk-webkit4-devel >= 2.12.0
 %{?with_kerberos5:BuildRequires:	heimdal-devel}
 BuildRequires:	intltool >= 0.40.0
 BuildRequires:	json-glib-devel >= 1.0.4
-%{?with_uoa:BuildRequires:	libaccounts-glib-devel >= 1.4}
+%{?with_goa:BuildRequires:	libaccounts-glib-devel >= 1.4}
 BuildRequires:	libcanberra-gtk3-devel >= 0.25
 BuildRequires:	libgdata-devel >= 0.15.1
 BuildRequires:	libgweather-devel >= 3.10
 BuildRequires:	libical-devel >= 2.0
 BuildRequires:	libicu-devel
 BuildRequires:	libsecret-devel >= 0.5
-%{?with_uoa:BuildRequires:	libsignon-glib-devel >= 1.8}
+%{?with_goa:BuildRequires:	libsignon-glib-devel >= 1.8}
 BuildRequires:	libsoup-devel >= 2.42.0
 BuildRequires:	libstdc++-devel
 BuildRequires:	libtool >= 2:2.2
@@ -52,7 +52,7 @@ BuildRequires:	nspr-devel >= 4
 BuildRequires:	nss-devel >= 3
 %{?with_ldap:BuildRequires:	openldap-devel >= 2.4.6}
 BuildRequires:	pkgconfig
-%{?with_uoa:BuildRequires:	rest-devel >= 0.7}
+%{?with_goa:BuildRequires:	rest-devel >= 0.7}
 BuildRequires:	rpmbuild(macros) >= 1.304
 BuildRequires:	sqlite3-devel >= 3.7.17
 BuildRequires:	tar >= 1:1.22
@@ -226,7 +226,7 @@ API serwera danych Evolution dla języka Vala.
 	%{!?with_ldap:-DWITH_OPENLDAP=OFF} \
 	%{?with_apidocs:-DENABLE_GTK_DOC=ON} \
 	%{?with_vala:-DENABLE_VALA_BINDINGS=ON} \
-	%{!?with_uoa:-DENABLE_UOA=OFF} \
+	%{?with_goa:-DENABLE_GOA=ON} \
 	-DENABLE_SCHEMAS_COMPILE=OFF \
 	-DENABLE_INTROSPECTION=ON
 
