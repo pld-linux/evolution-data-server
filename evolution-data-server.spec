@@ -53,7 +53,7 @@ BuildRequires:	nss-devel >= 3
 %{?with_ldap:BuildRequires:	openldap-devel >= 2.4.6}
 BuildRequires:	pkgconfig
 %{?with_goa:BuildRequires:	rest-devel >= 0.7}
-BuildRequires:	rpmbuild(macros) >= 1.304
+BuildRequires:	rpmbuild(macros) >= 1.742
 BuildRequires:	sqlite3-devel >= 3.7.17
 BuildRequires:	tar >= 1:1.22
 %{?with_vala:BuildRequires:	vala >= 2:0.22.0}
@@ -222,11 +222,11 @@ API serwera danych Evolution dla języka Vala.
 %cmake \
 	-DLIBEXEC_INSTALL_DIR=%{_libexecdir} \
 	%{?with_kerberos5:-DWITH_KRB5=%{_prefix} -DWITH_KRB5_LIBS=%{_libdir}} \
-	%{!?with_kerberos5:-DWITH_KRB5=OFF} \
-	%{!?with_ldap:-DWITH_OPENLDAP=OFF} \
-	%{?with_apidocs:-DENABLE_GTK_DOC=ON} \
-	%{?with_vala:-DENABLE_VALA_BINDINGS=ON} \
-	%{?with_goa:-DENABLE_GOA=ON} \
+	%{cmake_on_off kerberos5 WITH_KRB5} \
+	%{cmake_on_off ldap WITH_OPENLDAP} \
+	%{cmake_on_off apidocs ENABLE_GTK_DOC} \
+	%{cmake_on_off vala ENABLE_VALA_BINDINGS} \
+	%{cmake_on_off goa ENABLE_GOA} \
 	-DENABLE_SCHEMAS_COMPILE=OFF \
 	-DENABLE_INTROSPECTION=ON
 
