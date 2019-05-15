@@ -1,22 +1,22 @@
 #
 # Conditional build:
-%bcond_without	apidocs		# do not build and package API docs
-%bcond_without	kerberos5	# build without Kerberos5 support
-%bcond_without	ldap		# build without LDAP support
-%bcond_without	goa		# single sign-on (aka Gnome Online Accounts)
-%bcond_without	vala		# do not build Vala API
+%bcond_without	apidocs		# API documentation
+%bcond_without	kerberos5	# Kerberos5 support
+%bcond_without	ldap		# LDAP support
+%bcond_without	goa		# Gnome Online Accounts support
+%bcond_without	vala		# Vala API
 
 %define		basever		3.32
 %define		apiver		1.2
 Summary:	Evolution data server
 Summary(pl.UTF-8):	Serwer danych Evolution
 Name:		evolution-data-server
-Version:	3.32.1
-Release:	3
+Version:	3.32.2
+Release:	1
 License:	LGPL v2+
 Group:		X11/Libraries
 Source0:	http://ftp.gnome.org/pub/GNOME/sources/evolution-data-server/3.32/%{name}-%{version}.tar.xz
-# Source0-md5:	8832c259a5914b6a27ba4abde681254a
+# Source0-md5:	965648316c7cee06f49878eceed5da01
 Patch0:		%{name}-gtkdoc.patch
 URL:		http://www.gnome.org/projects/evolution/
 BuildRequires:	cmake >= 3.1
@@ -26,8 +26,7 @@ BuildRequires:	gcr-devel >= 3.4.0
 BuildRequires:	gcr-ui-devel >= 3.4.0
 BuildRequires:	gettext-tools >= 0.18.1
 BuildRequires:	glib2-devel >= 1:2.46.0
-BuildRequires:	gnome-common >= 2.20.0
-BuildRequires:	gnome-online-accounts-devel >= 3.8.0
+%{?with_goa:BuildRequires:	gnome-online-accounts-devel >= 3.8.0}
 BuildRequires:	gobject-introspection-devel >= 0.10.0
 BuildRequires:	gperf
 BuildRequires:	gtk+3-devel >= 3.10.0
@@ -36,23 +35,20 @@ BuildRequires:	gtk-webkit4-devel >= 2.12.0
 %{?with_kerberos5:BuildRequires:	heimdal-devel}
 BuildRequires:	intltool >= 0.40.0
 BuildRequires:	json-glib-devel >= 1.0.4
-%{?with_goa:BuildRequires:	libaccounts-glib-devel >= 1.4}
 BuildRequires:	libcanberra-gtk3-devel >= 0.25
 BuildRequires:	libgdata-devel >= 0.15.1
 BuildRequires:	libgweather-devel >= 3.10
 BuildRequires:	libical-devel >= 2.0
 BuildRequires:	libicu-devel
 BuildRequires:	libsecret-devel >= 0.5
-%{?with_goa:BuildRequires:	libsignon-glib-devel >= 1.8}
 BuildRequires:	libsoup-devel >= 2.42.0
-BuildRequires:	libstdc++-devel
+BuildRequires:	libstdc++-devel >= 6:5.0
 BuildRequires:	libtool >= 2:2.2
 BuildRequires:	libxml2-devel >= 1:2.6.31
 BuildRequires:	nspr-devel >= 4
 BuildRequires:	nss-devel >= 3
 %{?with_ldap:BuildRequires:	openldap-devel >= 2.4.6}
 BuildRequires:	pkgconfig
-%{?with_goa:BuildRequires:	rest-devel >= 0.7}
 BuildRequires:	rpmbuild(macros) >= 1.742
 BuildRequires:	sqlite3-devel >= 3.7.17
 BuildRequires:	tar >= 1:1.22
@@ -61,12 +57,11 @@ BuildRequires:	xz
 BuildRequires:	zlib-devel
 Requires(post,postun):	glib2 >= 1:2.46.0
 Requires:	%{name}-libs = %{version}-%{release}
-Requires:	gnome-online-accounts-libs >= 3.8.0
+%{?with_goa:Requires:	gnome-online-accounts-libs >= 3.8.0}
 Requires:	gtk+3 >= 3.10.0
 Requires:	libgdata >= 0.15.1
 Requires:	libgweather >= 3.10
-# sr@Latn vs. sr@latin
-Conflicts:	glibc-misc < 6:2.7
+Obsoletes:	evolution-data-server-uoa < 3.32
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %define		schemadir	/usr/share/openldap/schema
@@ -89,23 +84,6 @@ LDAP support for Evolution data server (address book backend module).
 %description ldap -l pl.UTF-8
 Obsługa LDAP dla serwera danych Evolution (moduł dla książki
 adresowej).
-
-%package uoa
-Summary:	Ubuntu Online Accounts support for Evolution data server
-Summary(pl.UTF-8):	Obsługa Ubuntu Online Accounts dla serwera danych Evolution
-Group:		Libraries
-Requires:	%{name} = %{version}-%{release}
-Requires:	libaccounts-glib >= 1.4
-Requires:	libsignon-glib >= 1.8
-Requires:	rest >= 0.7
-
-%description uoa
-Ubuntu Online Accounts (single sign-on) support for Evolution data
-server.
-
-%description uoa -l pl.UTF-8
-Obsługa Ubuntu Online Accounts (pojedynczego logowania) dla serwera
-danych Evolution.
 
 %package -n openldap-schema-evolutionperson
 Summary:	evolutionperson LDAP schema
@@ -155,7 +133,7 @@ Requires:	gcr-ui-devel >= 3.4.0
 Requires:	glib2-devel >= 1:2.46.0
 %{?with_kerberos5:Requires:	heimdal-devel}
 Requires:	libgdata-devel >= 0.15.1
-Requires:	libical-devel >= 0.43
+Requires:	libical-devel >= 2.0
 Requires:	libsecret-devel >= 0.5
 Requires:	libsoup-devel >= 2.42.0
 Requires:	libxml2-devel >= 1:2.6.31
@@ -219,7 +197,9 @@ API serwera danych Evolution dla języka Vala.
 %patch0 -p1
 
 %build
-%cmake \
+install -d build
+cd build
+%cmake .. \
 	-DLIBEXEC_INSTALL_DIR=%{_libexecdir} \
 	%{?with_kerberos5:-DWITH_KRB5=%{_prefix} -DWITH_KRB5_LIBS=%{_libdir}} \
 	%{cmake_on_off kerberos5 WITH_KRB5} \
@@ -234,10 +214,9 @@ API serwera danych Evolution dla języka Vala.
 
 %install
 rm -rf $RPM_BUILD_ROOT
-install -d $RPM_BUILD_ROOT%{_libdir}/%{name}-%{basever}
-install -d $RPM_BUILD_ROOT%{schemadir}
+install -d $RPM_BUILD_ROOT{%{_libdir}/%{name}-%{basever},%{schemadir}}
 
-%{__make} install \
+%{__make} -C build install \
 	DESTDIR=$RPM_BUILD_ROOT
 
 cp -p src/addressbook/backends/ldap/evolutionperson.schema $RPM_BUILD_ROOT%{schemadir}
@@ -279,7 +258,9 @@ fi
 %attr(755,root,root) %{_libexecdir}/evolution-scan-gconf-tree-xml
 %attr(755,root,root) %{_libexecdir}/evolution-source-registry
 %attr(755,root,root) %{_libexecdir}/evolution-user-prompter
+%if "%{_libexecdir}" != "%{_libdir}"
 %dir %{_libexecdir}/%{name}
+%endif
 %attr(755,root,root) %{_libexecdir}/%{name}/addressbook-export
 %attr(755,root,root) %{_libexecdir}/%{name}/csv2vcard
 %attr(755,root,root) %{_libexecdir}/%{name}/evolution-alarm-notify
@@ -311,10 +292,14 @@ fi
 %attr(755,root,root) %{_libdir}/%{name}/camel-providers/libcamelsmtp.so
 %{_libdir}/%{name}/camel-providers/libcamelsmtp.urls
 %dir %{_libdir}/%{name}/credential-modules
+%if %{with goa}
 %attr(755,root,root) %{_libdir}/%{name}/credential-modules/module-credentials-goa.so
+%endif
 %dir %{_libdir}/evolution-data-server/registry-modules
 %attr(755,root,root) %{_libdir}/evolution-data-server/registry-modules/module-cache-reaper.so
+%if %{with goa}
 %attr(755,root,root) %{_libdir}/evolution-data-server/registry-modules/module-gnome-online-accounts.so
+%endif
 %attr(755,root,root) %{_libdir}/evolution-data-server/registry-modules/module-google-backend.so
 %attr(755,root,root) %{_libdir}/evolution-data-server/registry-modules/module-oauth2-services.so
 %attr(755,root,root) %{_libdir}/evolution-data-server/registry-modules/module-outlook-backend.so
@@ -353,29 +338,6 @@ fi
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_libdir}/%{name}/addressbook-backends/libebookbackendldap.so
 %{_datadir}/%{name}/evolutionperson.schema
-%endif
-
-%if %{with uoa}
-%files uoa
-%defattr(644,root,root,755)
-%attr(755,root,root) %{_libdir}/evolution-data-server/credential-modules/module-credentials-uoa.so
-%attr(755,root,root) %{_libdir}/evolution-data-server/registry-modules/module-ubuntu-online-accounts.so
-%{_desktopdir}/evolution-data-server-uoa.desktop
-# XXX: which package should own these dirs?
-%dir %{_datadir}/accounts
-%dir %{_datadir}/accounts/applications
-%{_datadir}/accounts/applications/evolution-data-server.application
-%dir %{_datadir}/accounts/service_types
-%{_datadir}/accounts/service_types/calendar.service-type
-%{_datadir}/accounts/service_types/contacts.service-type
-%{_datadir}/accounts/service_types/mail.service-type
-%dir %{_datadir}/accounts/services
-%{_datadir}/accounts/services/google-calendar.service
-%{_datadir}/accounts/services/google-contacts.service
-%{_datadir}/accounts/services/google-gmail.service
-%{_datadir}/accounts/services/windows-live-mail.service
-%{_datadir}/accounts/services/yahoo-calendar.service
-%{_datadir}/accounts/services/yahoo-mail.service
 %endif
 
 %files -n openldap-schema-evolutionperson
