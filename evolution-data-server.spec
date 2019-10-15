@@ -6,17 +6,18 @@
 %bcond_without	goa		# Gnome Online Accounts support
 %bcond_without	vala		# Vala API
 
-%define		basever		3.32
+%define		basever		3.34
 %define		apiver		1.2
+%define		cal_apiver	2.0
 Summary:	Evolution data server
 Summary(pl.UTF-8):	Serwer danych Evolution
 Name:		evolution-data-server
-Version:	3.32.4
-Release:	2
+Version:	3.34.1
+Release:	1
 License:	LGPL v2+
 Group:		X11/Libraries
-Source0:	http://ftp.gnome.org/pub/GNOME/sources/evolution-data-server/3.32/%{name}-%{version}.tar.xz
-# Source0-md5:	57820f3f88fc554e1a58665a52e12c05
+Source0:	http://ftp.gnome.org/pub/GNOME/sources/evolution-data-server/3.34/%{name}-%{version}.tar.xz
+# Source0-md5:	d1701875bbac80d6d62e9acfc6c43bea
 Patch0:		%{name}-gtkdoc.patch
 URL:		https://wiki.gnome.org/Apps/Evolution
 BuildRequires:	cmake >= 3.1
@@ -38,7 +39,7 @@ BuildRequires:	json-glib-devel >= 1.0.4
 BuildRequires:	libcanberra-gtk3-devel >= 0.25
 BuildRequires:	libgdata-devel >= 0.15.1
 BuildRequires:	libgweather-devel >= 3.10
-BuildRequires:	libical-devel >= 2.0
+BuildRequires:	libical-glib-devel >= 3.0.5
 BuildRequires:	libicu-devel
 BuildRequires:	libsecret-devel >= 0.5
 BuildRequires:	libsoup-devel >= 2.42.0
@@ -53,6 +54,7 @@ BuildRequires:	rpmbuild(macros) >= 1.742
 BuildRequires:	sqlite3-devel >= 3.7.17
 BuildRequires:	tar >= 1:1.22
 %{?with_vala:BuildRequires:	vala >= 2:0.22.0}
+BuildRequires:	vala-libical-glib >= 3.0.5
 BuildRequires:	xz
 BuildRequires:	zlib-devel
 Requires(post,postun):	glib2 >= 1:2.46.0
@@ -110,7 +112,7 @@ Requires:	gcr-ui >= 3.4.0
 Requires:	glib2 >= 1:2.46.0
 Requires:	gtk-webkit4 >= 2.12.0
 Requires:	json-glib >= 1.0.4
-Requires:	libical >= 2.0
+Requires:	libical-glib >= 3.0.5
 Requires:	libsecret >= 0.5
 Requires:	libsoup >= 2.42.0
 Requires:	libxml2 >= 1:2.6.31
@@ -133,7 +135,7 @@ Requires:	gcr-ui-devel >= 3.4.0
 Requires:	glib2-devel >= 1:2.46.0
 %{?with_kerberos5:Requires:	heimdal-devel}
 Requires:	libgdata-devel >= 0.15.1
-Requires:	libical-devel >= 2.0
+Requires:	libical-glib-devel >= 3.0.5
 Requires:	libsecret-devel >= 0.5
 Requires:	libsoup-devel >= 2.42.0
 Requires:	libxml2-devel >= 1:2.6.31
@@ -351,22 +353,26 @@ fi
 %attr(755,root,root) %{_libdir}/libebackend-%{apiver}.so.*.*.*
 %attr(755,root,root) %ghost %{_libdir}/libebackend-%{apiver}.so.10
 %attr(755,root,root) %{_libdir}/libebook-%{apiver}.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libebook-%{apiver}.so.19
+%attr(755,root,root) %ghost %{_libdir}/libebook-%{apiver}.so.20
 %attr(755,root,root) %{_libdir}/libebook-contacts-%{apiver}.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libebook-contacts-%{apiver}.so.2
-%attr(755,root,root) %{_libdir}/libecal-%{apiver}.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libecal-%{apiver}.so.19
+%attr(755,root,root) %ghost %{_libdir}/libebook-contacts-%{apiver}.so.3
+%attr(755,root,root) %{_libdir}/libecal-%{cal_apiver}.so.*.*.*
+%attr(755,root,root) %ghost %{_libdir}/libecal-%{cal_apiver}.so.1
 %attr(755,root,root) %{_libdir}/libedata-book-%{apiver}.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libedata-book-%{apiver}.so.25
-%attr(755,root,root) %{_libdir}/libedata-cal-%{apiver}.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libedata-cal-%{apiver}.so.29
+%attr(755,root,root) %ghost %{_libdir}/libedata-book-%{apiver}.so.26
+%attr(755,root,root) %{_libdir}/libedata-cal-%{cal_apiver}.so.*.*.*
+%attr(755,root,root) %ghost %{_libdir}/libedata-cal-%{cal_apiver}.so.1
 %attr(755,root,root) %{_libdir}/libedataserver-%{apiver}.so.*.*.*
 %attr(755,root,root) %ghost %{_libdir}/libedataserver-%{apiver}.so.24
 %attr(755,root,root) %{_libdir}/libedataserverui-%{apiver}.so.*.*.*
 %attr(755,root,root) %ghost %{_libdir}/libedataserverui-%{apiver}.so.2
 %{_libdir}/girepository-1.0/Camel-1.2.typelib
+%{_libdir}/girepository-1.0/EBackend-%{apiver}.typelib
 %{_libdir}/girepository-1.0/EBook-%{apiver}.typelib
 %{_libdir}/girepository-1.0/EBookContacts-%{apiver}.typelib
+%{_libdir}/girepository-1.0/ECal-%{cal_apiver}.typelib
+%{_libdir}/girepository-1.0/EDataBook-%{apiver}.typelib
+%{_libdir}/girepository-1.0/EDataCal-%{cal_apiver}.typelib
 %{_libdir}/girepository-1.0/EDataServer-%{apiver}.typelib
 %{_libdir}/girepository-1.0/EDataServerUI-1.2.typelib
 
@@ -376,9 +382,9 @@ fi
 %attr(755,root,root) %{_libdir}/libebackend-%{apiver}.so
 %attr(755,root,root) %{_libdir}/libebook-%{apiver}.so
 %attr(755,root,root) %{_libdir}/libebook-contacts-%{apiver}.so
-%attr(755,root,root) %{_libdir}/libecal-%{apiver}.so
+%attr(755,root,root) %{_libdir}/libecal-%{cal_apiver}.so
 %attr(755,root,root) %{_libdir}/libedata-book-%{apiver}.so
-%attr(755,root,root) %{_libdir}/libedata-cal-%{apiver}.so
+%attr(755,root,root) %{_libdir}/libedata-cal-%{cal_apiver}.so
 %attr(755,root,root) %{_libdir}/libedataserver-%{apiver}.so
 %attr(755,root,root) %{_libdir}/libedataserverui-%{apiver}.so
 %{_includedir}/evolution-data-server
@@ -387,14 +393,18 @@ fi
 %{_pkgconfigdir}/libebackend-%{apiver}.pc
 %{_pkgconfigdir}/libebook-%{apiver}.pc
 %{_pkgconfigdir}/libebook-contacts-%{apiver}.pc
-%{_pkgconfigdir}/libecal-%{apiver}.pc
+%{_pkgconfigdir}/libecal-%{cal_apiver}.pc
 %{_pkgconfigdir}/libedata-book-%{apiver}.pc
-%{_pkgconfigdir}/libedata-cal-%{apiver}.pc
+%{_pkgconfigdir}/libedata-cal-%{cal_apiver}.pc
 %{_pkgconfigdir}/libedataserver-%{apiver}.pc
 %{_pkgconfigdir}/libedataserverui-%{apiver}.pc
 %{_datadir}/gir-1.0/Camel-1.2.gir
+%{_datadir}/gir-1.0/EBackend-%{apiver}.gir
 %{_datadir}/gir-1.0/EBook-%{apiver}.gir
 %{_datadir}/gir-1.0/EBookContacts-%{apiver}.gir
+%{_datadir}/gir-1.0/ECal-%{cal_apiver}.gir
+%{_datadir}/gir-1.0/EDataBook-%{apiver}.gir
+%{_datadir}/gir-1.0/EDataCal-%{cal_apiver}.gir
 %{_datadir}/gir-1.0/EDataServer-%{apiver}.gir
 %{_datadir}/gir-1.0/EDataServerUI-1.2.gir
 
@@ -410,10 +420,18 @@ fi
 %defattr(644,root,root,755)
 %{_datadir}/vala/vapi/camel-1.2.deps
 %{_datadir}/vala/vapi/camel-1.2.vapi
+%{_datadir}/vala/vapi/libebackend-%{apiver}.deps
+%{_datadir}/vala/vapi/libebackend-%{apiver}.vapi
 %{_datadir}/vala/vapi/libebook-%{apiver}.deps
 %{_datadir}/vala/vapi/libebook-%{apiver}.vapi
 %{_datadir}/vala/vapi/libebook-contacts-%{apiver}.deps
 %{_datadir}/vala/vapi/libebook-contacts-%{apiver}.vapi
+%{_datadir}/vala/vapi/libecal-%{cal_apiver}.deps
+%{_datadir}/vala/vapi/libecal-%{cal_apiver}.vapi
+%{_datadir}/vala/vapi/libedata-book-%{apiver}.deps
+%{_datadir}/vala/vapi/libedata-book-%{apiver}.vapi
+%{_datadir}/vala/vapi/libedata-cal-%{cal_apiver}.deps
+%{_datadir}/vala/vapi/libedata-cal-%{cal_apiver}.vapi
 %{_datadir}/vala/vapi/libedataserver-%{apiver}.deps
 %{_datadir}/vala/vapi/libedataserver-%{apiver}.vapi
 %{_datadir}/vala/vapi/libedataserverui-%{apiver}.deps

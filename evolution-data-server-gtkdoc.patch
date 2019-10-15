@@ -1,3 +1,6 @@
+* adjust gtk-doc path to PLD specific
+* hack: gtkdoc-scan can't deal with function (arguments) on the next line and tries to recognize "struct tm"
+  as struct declaration instead of return type
 --- evolution-data-server-3.24.0/cmake/modules/GtkDoc.cmake.fixgtkdoc	2017-03-20 19:52:48.389756275 +0100
 +++ evolution-data-server-3.24.0/cmake/modules/GtkDoc.cmake	2017-03-20 19:53:06.978322900 +0100
 @@ -48,7 +48,7 @@ macro(add_gtkdoc _module _namespace _dep
@@ -9,3 +12,23 @@
  
  	set(_filedeps)
  	set(_srcdirs)
+--- evolution-data-server-3.34.1/src/calendar/libecal/e-cal-time-util.h.orig	2019-10-07 09:13:09.000000000 +0200
++++ evolution-data-server-3.34.1/src/calendar/libecal/e-cal-time-util.h	2019-10-15 19:53:28.748288143 +0200
+@@ -150,14 +150,11 @@
+  * struct tm manipulation
+  **************************************************************************/
+ 
+-struct tm	e_cal_util_icaltime_to_tm
+-					(const ICalTime *itt);
+-struct tm	e_cal_util_icaltime_to_tm_with_zone
+-					(const ICalTime *itt,
++struct tm	e_cal_util_icaltime_to_tm (const ICalTime *itt);
++struct tm	e_cal_util_icaltime_to_tm_with_zone (const ICalTime *itt,
+ 					 const ICalTimezone *from_zone,
+ 					 const ICalTimezone *to_zone);
+-ICalTime *	e_cal_util_tm_to_icaltime
+-					(struct tm *tm,
++ICalTime *	e_cal_util_tm_to_icaltime (struct tm *tm,
+ 					 gboolean is_date);
+ 
+ G_END_DECLS
