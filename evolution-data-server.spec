@@ -1,3 +1,4 @@
+# TODO: libphonenumber
 #
 # Conditional build:
 %bcond_without	apidocs		# API documentation
@@ -6,18 +7,18 @@
 %bcond_without	goa		# Gnome Online Accounts support
 %bcond_without	vala		# Vala API
 
-%define		basever		3.34
+%define		basever		3.36
 %define		apiver		1.2
 %define		cal_apiver	2.0
 Summary:	Evolution data server
 Summary(pl.UTF-8):	Serwer danych Evolution
 Name:		evolution-data-server
-Version:	3.34.4
+Version:	3.36.2
 Release:	1
 License:	LGPL v2+
 Group:		X11/Libraries
-Source0:	http://ftp.gnome.org/pub/GNOME/sources/evolution-data-server/3.34/%{name}-%{version}.tar.xz
-# Source0-md5:	23293554e9d92c6c0c78b5568b286efd
+Source0:	http://ftp.gnome.org/pub/GNOME/sources/evolution-data-server/3.36/%{name}-%{version}.tar.xz
+# Source0-md5:	0d09eb9bdc50930d7057c8d8a34bbe7a
 Patch0:		%{name}-gtkdoc.patch
 URL:		https://wiki.gnome.org/Apps/Evolution
 BuildRequires:	cmake >= 3.1
@@ -37,9 +38,10 @@ BuildRequires:	gtk-webkit4-devel >= 2.12.0
 BuildRequires:	intltool >= 0.40.0
 BuildRequires:	json-glib-devel >= 1.0.4
 BuildRequires:	libcanberra-gtk3-devel >= 0.25
+%{?with_kerberos5:BuildRequires:	libcom_err-devel}
 BuildRequires:	libgdata-devel >= 0.15.1
 BuildRequires:	libgweather-devel >= 3.10
-BuildRequires:	libical-glib-devel >= 3.0.5
+BuildRequires:	libical-glib-devel >= 3.0.7
 BuildRequires:	libicu-devel
 BuildRequires:	libsecret-devel >= 0.5
 BuildRequires:	libsoup-devel >= 2.42.0
@@ -54,7 +56,7 @@ BuildRequires:	rpmbuild(macros) >= 1.742
 BuildRequires:	sqlite3-devel >= 3.7.17
 BuildRequires:	tar >= 1:1.22
 %{?with_vala:BuildRequires:	vala >= 2:0.22.0}
-BuildRequires:	vala-libical-glib >= 3.0.5
+BuildRequires:	vala-libical-glib >= 3.0.7
 BuildRequires:	xz
 BuildRequires:	zlib-devel
 Requires(post,postun):	glib2 >= 1:2.46.0
@@ -112,7 +114,7 @@ Requires:	gcr-ui >= 3.4.0
 Requires:	glib2 >= 1:2.46.0
 Requires:	gtk-webkit4 >= 2.12.0
 Requires:	json-glib >= 1.0.4
-Requires:	libical-glib >= 3.0.5
+Requires:	libical-glib >= 3.0.7
 Requires:	libsecret >= 0.5
 Requires:	libsoup >= 2.42.0
 Requires:	libxml2 >= 1:2.6.31
@@ -135,7 +137,7 @@ Requires:	gcr-ui-devel >= 3.4.0
 Requires:	glib2-devel >= 1:2.46.0
 %{?with_kerberos5:Requires:	heimdal-devel}
 Requires:	libgdata-devel >= 0.15.1
-Requires:	libical-glib-devel >= 3.0.5
+Requires:	libical-glib-devel >= 3.0.7
 Requires:	libsecret-devel >= 0.5
 Requires:	libsoup-devel >= 2.42.0
 Requires:	libxml2-devel >= 1:2.6.31
