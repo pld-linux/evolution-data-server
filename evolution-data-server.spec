@@ -5,6 +5,7 @@
 %bcond_without	kerberos5	# Kerberos5 support
 %bcond_without	ldap		# LDAP support
 %bcond_without	goa		# Gnome Online Accounts support
+%bcond_without	phonenumber	# libphonenumber support for address books
 %bcond_without	vala		# Vala API
 
 %define		basever		3.36
@@ -43,6 +44,7 @@ BuildRequires:	libgdata-devel >= 0.15.1
 BuildRequires:	libgweather-devel >= 3.10
 BuildRequires:	libical-glib-devel >= 3.0.7
 BuildRequires:	libicu-devel
+%{?with_phonenumber:BuildRequires:	libphonenumber-devel}
 BuildRequires:	libsecret-devel >= 0.5
 BuildRequires:	libsoup-devel >= 2.42.0
 BuildRequires:	libstdc++-devel >= 6:5.0
@@ -212,7 +214,8 @@ cd build
 	%{cmake_on_off vala ENABLE_VALA_BINDINGS} \
 	%{cmake_on_off goa ENABLE_GOA} \
 	-DENABLE_SCHEMAS_COMPILE=OFF \
-	-DENABLE_INTROSPECTION=ON
+	-DENABLE_INTROSPECTION=ON \
+	%{?with_phonenumber:-DWITH_PHONENUMBER=ON}
 
 %{__make}
 
