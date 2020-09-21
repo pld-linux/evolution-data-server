@@ -7,18 +7,18 @@
 %bcond_without	phonenumber	# libphonenumber support for address books
 %bcond_without	vala		# Vala API
 
-%define		basever		3.36
+%define		basever		3.38
 %define		apiver		1.2
 %define		cal_apiver	2.0
 Summary:	Evolution data server
 Summary(pl.UTF-8):	Serwer danych Evolution
 Name:		evolution-data-server
-Version:	3.36.5
+Version:	3.38.0
 Release:	1
 License:	LGPL v2+
 Group:		X11/Libraries
-Source0:	http://ftp.gnome.org/pub/GNOME/sources/evolution-data-server/3.36/%{name}-%{version}.tar.xz
-# Source0-md5:	cc971859b875606de9dd1d743e34ab33
+Source0:	http://ftp.gnome.org/pub/GNOME/sources/evolution-data-server/3.38/%{name}-%{version}.tar.xz
+# Source0-md5:	7c2fbae7a25d6757e12e0a4a69911c80
 Patch0:		%{name}-gtkdoc.patch
 URL:		https://wiki.gnome.org/Apps/Evolution
 BuildRequires:	cmake >= 3.1
@@ -32,7 +32,7 @@ BuildRequires:	glib2-devel >= 1:2.46.0
 BuildRequires:	gobject-introspection-devel >= 0.10.0
 BuildRequires:	gperf
 BuildRequires:	gtk+3-devel >= 3.10.0
-BuildRequires:	gtk-webkit4-devel >= 2.12.0
+BuildRequires:	gtk-webkit4-devel >= 2.28.0
 %{?with_apidocs:BuildRequires:	gtk-doc >= 1.14}
 %{?with_kerberos5:BuildRequires:	heimdal-devel}
 BuildRequires:	intltool >= 0.40.0
@@ -45,7 +45,7 @@ BuildRequires:	libical-glib-devel >= 3.0.7
 BuildRequires:	libicu-devel
 %{?with_phonenumber:BuildRequires:	libphonenumber-devel}
 BuildRequires:	libsecret-devel >= 0.5
-BuildRequires:	libsoup-devel >= 2.42.0
+BuildRequires:	libsoup-devel >= 2.58
 BuildRequires:	libstdc++-devel >= 6:5.0
 BuildRequires:	libtool >= 2:2.2
 BuildRequires:	libxml2-devel >= 1:2.6.31
@@ -113,11 +113,11 @@ Group:		X11/Libraries
 Requires:	gcr-libs >= 3.4.0
 Requires:	gcr-ui >= 3.4.0
 Requires:	glib2 >= 1:2.46.0
-Requires:	gtk-webkit4 >= 2.12.0
+Requires:	gtk-webkit4 >= 2.28.0
 Requires:	json-glib >= 1.0.4
 Requires:	libical-glib >= 3.0.7
 Requires:	libsecret >= 0.5
-Requires:	libsoup >= 2.42.0
+Requires:	libsoup >= 2.58
 Requires:	libxml2 >= 1:2.6.31
 Requires:	sqlite3 >= 3.7.17
 Obsoletes:	evolution-data-server-static
@@ -140,7 +140,7 @@ Requires:	glib2-devel >= 1:2.46.0
 Requires:	libgdata-devel >= 0.15.1
 Requires:	libical-glib-devel >= 3.0.7
 Requires:	libsecret-devel >= 0.5
-Requires:	libsoup-devel >= 2.42.0
+Requires:	libsoup-devel >= 2.58
 Requires:	libxml2-devel >= 1:2.6.31
 Requires:	nspr-devel >= 4
 Requires:	nss-devel >= 3
@@ -284,6 +284,7 @@ fi
 %attr(755,root,root) %{_libdir}/%{name}/calendar-backends/libecalbackendgtasks.so
 %attr(755,root,root) %{_libdir}/%{name}/calendar-backends/libecalbackendhttp.so
 %attr(755,root,root) %{_libdir}/%{name}/calendar-backends/libecalbackendweather.so
+%attr(755,root,root) %{_libdir}/%{name}/calendar-backends/libecalbackendwebdavnotes.so
 %dir %{_libdir}/%{name}/camel-providers
 %attr(755,root,root) %{_libdir}/%{name}/camel-providers/libcamelimapx.so
 %{_libdir}/%{name}/camel-providers/libcamelimapx.urls
@@ -323,10 +324,10 @@ fi
 %dir %{_datadir}/%{name}
 %{_pixmapsdir}/%{name}
 
-%{_datadir}/dbus-1/services/org.gnome.evolution.dataserver.AddressBook.service
-%{_datadir}/dbus-1/services/org.gnome.evolution.dataserver.Calendar.service
-%{_datadir}/dbus-1/services/org.gnome.evolution.dataserver.Sources.service
-%{_datadir}/dbus-1/services/org.gnome.evolution.dataserver.UserPrompter.service
+%{_datadir}/dbus-1/services/org.gnome.evolution.dataserver.AddressBook10.service
+%{_datadir}/dbus-1/services/org.gnome.evolution.dataserver.Calendar8.service
+%{_datadir}/dbus-1/services/org.gnome.evolution.dataserver.Sources5.service
+%{_datadir}/dbus-1/services/org.gnome.evolution.dataserver.UserPrompter0.service
 
 %{_datadir}/GConf/gsettings/evolution-data-server.convert
 %{_datadir}/glib-2.0/schemas/org.gnome.evolution.eds-shell.gschema.xml
@@ -367,7 +368,7 @@ fi
 %attr(755,root,root) %{_libdir}/libedata-cal-%{cal_apiver}.so.*.*.*
 %attr(755,root,root) %ghost %{_libdir}/libedata-cal-%{cal_apiver}.so.1
 %attr(755,root,root) %{_libdir}/libedataserver-%{apiver}.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libedataserver-%{apiver}.so.24
+%attr(755,root,root) %ghost %{_libdir}/libedataserver-%{apiver}.so.25
 %attr(755,root,root) %{_libdir}/libedataserverui-%{apiver}.so.*.*.*
 %attr(755,root,root) %ghost %{_libdir}/libedataserverui-%{apiver}.so.2
 %{_libdir}/girepository-1.0/Camel-1.2.typelib
