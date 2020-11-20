@@ -13,12 +13,12 @@
 Summary:	Evolution data server
 Summary(pl.UTF-8):	Serwer danych Evolution
 Name:		evolution-data-server
-Version:	3.38.1
+Version:	3.38.2
 Release:	1
 License:	LGPL v2+
 Group:		X11/Libraries
-Source0:	http://ftp.gnome.org/pub/GNOME/sources/evolution-data-server/3.38/%{name}-%{version}.tar.xz
-# Source0-md5:	000862086f38f88d47b436694e988cde
+Source0:	https://download.gnome.org/sources/evolution-data-server/3.38/%{name}-%{version}.tar.xz
+# Source0-md5:	392438d91772ea9873f77e2a032f55de
 Patch0:		%{name}-gtkdoc.patch
 URL:		https://wiki.gnome.org/Apps/Evolution
 BuildRequires:	cmake >= 3.1
@@ -53,7 +53,7 @@ BuildRequires:	nspr-devel >= 4
 BuildRequires:	nss-devel >= 3
 %{?with_ldap:BuildRequires:	openldap-devel >= 2.4.6}
 BuildRequires:	pkgconfig
-BuildRequires:	rpmbuild(macros) >= 1.742
+BuildRequires:	rpmbuild(macros) >= 1.752
 BuildRequires:	sqlite3-devel >= 3.7.17
 BuildRequires:	tar >= 1:1.22
 %{?with_vala:BuildRequires:	vala >= 2:0.22.0}
@@ -96,9 +96,7 @@ Summary(pl.UTF-8):	Schemat LDAP evolutionperson
 Group:		Networking/Daemons
 Requires(post,postun):	sed >= 4.0
 Requires:	openldap-servers
-%if "%{_rpmversion}" >= "5"
-BuildArch:	noarch
-%endif
+%{?noarchpackage}
 
 %description -n openldap-schema-evolutionperson
 This package contains evolutionperson.schema for OpenLDAP server.
@@ -171,9 +169,7 @@ Summary:	Evolution data server API documentation
 Summary(pl.UTF-8):	Dokumentacja API serwera danych Evolution
 Group:		Documentation
 Requires:	gtk-doc-common
-%if "%{_rpmversion}" >= "5"
-BuildArch:	noarch
-%endif
+%{?noarchpackage}
 
 %description apidocs
 Evolution data server API documentation.
@@ -187,9 +183,7 @@ Summary(pl.UTF-8):	API serwera danych Evolution dla języka Vala
 Group:		Development/Libraries
 Requires:	%{name}-devel = %{version}-%{release}
 Requires:	vala >= 2:0.22.0
-%if "%{_rpmversion}" >= "5"
-BuildArch:	noarch
-%endif
+%{?noarchpackage}
 
 %description -n vala-evolution-data-server
 Evolution data server API for Vala language.
