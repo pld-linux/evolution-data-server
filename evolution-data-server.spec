@@ -96,7 +96,7 @@ Summary(pl.UTF-8):	Schemat LDAP evolutionperson
 Group:		Networking/Daemons
 Requires(post,postun):	sed >= 4.0
 Requires:	openldap-servers
-%{?noarchpackage}
+BuildArch:	noarch
 
 %description -n openldap-schema-evolutionperson
 This package contains evolutionperson.schema for OpenLDAP server.
@@ -169,7 +169,7 @@ Summary:	Evolution data server API documentation
 Summary(pl.UTF-8):	Dokumentacja API serwera danych Evolution
 Group:		Documentation
 Requires:	gtk-doc-common
-%{?noarchpackage}
+BuildArch:	noarch
 
 %description apidocs
 Evolution data server API documentation.
@@ -183,7 +183,7 @@ Summary(pl.UTF-8):	API serwera danych Evolution dla języka Vala
 Group:		Development/Libraries
 Requires:	%{name}-devel = %{version}-%{release}
 Requires:	vala >= 2:0.22.0
-%{?noarchpackage}
+BuildArch:	noarch
 
 %description -n vala-evolution-data-server
 Evolution data server API for Vala language.
