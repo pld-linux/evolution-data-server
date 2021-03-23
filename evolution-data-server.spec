@@ -7,18 +7,18 @@
 %bcond_without	phonenumber	# libphonenumber support for address books
 %bcond_without	vala		# Vala API
 
-%define		basever		3.38
+%define		basever		3.40
 %define		apiver		1.2
 %define		cal_apiver	2.0
 Summary:	Evolution data server
 Summary(pl.UTF-8):	Serwer danych Evolution
 Name:		evolution-data-server
-Version:	3.38.4
+Version:	3.40.0
 Release:	1
 License:	LGPL v2+
 Group:		X11/Libraries
-Source0:	https://download.gnome.org/sources/evolution-data-server/3.38/%{name}-%{version}.tar.xz
-# Source0-md5:	a2ce341366203fa22b7b462b20ffcbb0
+Source0:	https://download.gnome.org/sources/evolution-data-server/3.40/%{name}-%{version}.tar.xz
+# Source0-md5:	4800de1348b9109595f1754f3001d8bf
 Patch0:		%{name}-gtkdoc.patch
 URL:		https://wiki.gnome.org/Apps/Evolution
 BuildRequires:	cmake >= 3.1
@@ -31,7 +31,7 @@ BuildRequires:	glib2-devel >= 1:2.46.0
 %{?with_goa:BuildRequires:	gnome-online-accounts-devel >= 3.8.0}
 BuildRequires:	gobject-introspection-devel >= 0.10.0
 BuildRequires:	gperf
-BuildRequires:	gtk+3-devel >= 3.10.0
+BuildRequires:	gtk+3-devel >= 3.16
 BuildRequires:	gtk-webkit4-devel >= 2.28.0
 %{?with_apidocs:BuildRequires:	gtk-doc >= 1.14}
 %{?with_kerberos5:BuildRequires:	heimdal-devel}
@@ -53,17 +53,19 @@ BuildRequires:	nspr-devel >= 4
 BuildRequires:	nss-devel >= 3
 %{?with_ldap:BuildRequires:	openldap-devel >= 2.4.6}
 BuildRequires:	pkgconfig
+BuildRequires:	rpm-build >= 4.6
 BuildRequires:	rpmbuild(macros) >= 1.752
 BuildRequires:	sqlite3-devel >= 3.7.17
 BuildRequires:	tar >= 1:1.22
 %{?with_vala:BuildRequires:	vala >= 2:0.22.0}
 BuildRequires:	vala-libical-glib >= 3.0.7
+BuildRequires:	vala-libgdata >= 0.15.1
 BuildRequires:	xz
 BuildRequires:	zlib-devel
 Requires(post,postun):	glib2 >= 1:2.46.0
 Requires:	%{name}-libs = %{version}-%{release}
 %{?with_goa:Requires:	gnome-online-accounts-libs >= 3.8.0}
-Requires:	gtk+3 >= 3.10.0
+Requires:	gtk+3 >= 3.16
 Requires:	libgdata >= 0.15.1
 Requires:	libgweather >= 3.10
 Obsoletes:	evolution-data-server-uoa < 3.32
@@ -362,9 +364,9 @@ fi
 %attr(755,root,root) %{_libdir}/libedata-cal-%{cal_apiver}.so.*.*.*
 %attr(755,root,root) %ghost %{_libdir}/libedata-cal-%{cal_apiver}.so.1
 %attr(755,root,root) %{_libdir}/libedataserver-%{apiver}.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libedataserver-%{apiver}.so.25
+%attr(755,root,root) %ghost %{_libdir}/libedataserver-%{apiver}.so.26
 %attr(755,root,root) %{_libdir}/libedataserverui-%{apiver}.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libedataserverui-%{apiver}.so.2
+%attr(755,root,root) %ghost %{_libdir}/libedataserverui-%{apiver}.so.3
 %{_libdir}/girepository-1.0/Camel-1.2.typelib
 %{_libdir}/girepository-1.0/EBackend-%{apiver}.typelib
 %{_libdir}/girepository-1.0/EBook-%{apiver}.typelib
