@@ -60,6 +60,7 @@ BuildRequires:	tar >= 1:1.22
 %{?with_vala:BuildRequires:	vala >= 2:0.22.0}
 BuildRequires:	vala-libical-glib >= 3.0.7
 BuildRequires:	vala-libgdata >= 0.15.1
+%{?with_goa:BuildRequires:	vala-gnome-online-accounts >= 3.8.0}
 BuildRequires:	xz
 BuildRequires:	zlib-devel
 Requires(post,postun):	glib2 >= 1:2.46.0
