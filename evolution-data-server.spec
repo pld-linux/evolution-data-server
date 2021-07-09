@@ -13,12 +13,12 @@
 Summary:	Evolution data server
 Summary(pl.UTF-8):	Serwer danych Evolution
 Name:		evolution-data-server
-Version:	3.40.2
+Version:	3.40.3
 Release:	1
 License:	LGPL v2+
 Group:		X11/Libraries
 Source0:	https://download.gnome.org/sources/evolution-data-server/3.40/%{name}-%{version}.tar.xz
-# Source0-md5:	4f6aeb55563a6f04e13ec0d7d3648192
+# Source0-md5:	c3f93caf8fda15fc1e84395b9e1ffac5
 Patch0:		%{name}-gtkdoc.patch
 URL:		https://wiki.gnome.org/Apps/Evolution
 BuildRequires:	cmake >= 3.1
