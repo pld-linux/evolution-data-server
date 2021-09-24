@@ -7,18 +7,18 @@
 %bcond_without	phonenumber	# libphonenumber support for address books
 %bcond_without	vala		# Vala API
 
-%define		basever		3.40
+%define		basever		3.42
 %define		apiver		1.2
 %define		cal_apiver	2.0
 Summary:	Evolution data server
 Summary(pl.UTF-8):	Serwer danych Evolution
 Name:		evolution-data-server
-Version:	3.40.4
+Version:	3.42.0
 Release:	1
 License:	LGPL v2+
 Group:		X11/Libraries
-Source0:	https://download.gnome.org/sources/evolution-data-server/3.40/%{name}-%{version}.tar.xz
-# Source0-md5:	eb47d38b72b64e863f2c960d37be311e
+Source0:	https://download.gnome.org/sources/evolution-data-server/3.42/%{name}-%{version}.tar.xz
+# Source0-md5:	ab3f33888297b83f2167766ae6b524b7
 Patch0:		%{name}-gtkdoc.patch
 URL:		https://wiki.gnome.org/Apps/Evolution
 BuildRequires:	cmake >= 3.1
@@ -272,7 +272,6 @@ fi
 %attr(755,root,root) %{_libdir}/%{name}/libedbus-private.so
 %dir %{_libdir}/%{name}/addressbook-backends
 %attr(755,root,root) %{_libdir}/%{name}/addressbook-backends/libebookbackendfile.so
-%attr(755,root,root) %{_libdir}/%{name}/addressbook-backends/libebookbackendgoogle.so
 %attr(755,root,root) %{_libdir}/%{name}/addressbook-backends/libebookbackendcarddav.so
 %dir %{_libdir}/%{name}/calendar-backends
 %attr(755,root,root) %{_libdir}/%{name}/calendar-backends/libecalbackendcaldav.so
@@ -351,7 +350,7 @@ fi
 %files libs
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_libdir}/libcamel-%{apiver}.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libcamel-%{apiver}.so.62
+%attr(755,root,root) %ghost %{_libdir}/libcamel-%{apiver}.so.63
 %attr(755,root,root) %{_libdir}/libebackend-%{apiver}.so.*.*.*
 %attr(755,root,root) %ghost %{_libdir}/libebackend-%{apiver}.so.10
 %attr(755,root,root) %{_libdir}/libebook-%{apiver}.so.*.*.*
