@@ -1,6 +1,7 @@
 #
 # Conditional build:
 %bcond_without	apidocs		# API documentation
+%bcond_with	gweather4	# libgweather4 instead of libgweather 3
 %bcond_without	kerberos5	# Kerberos5 support
 %bcond_without	ldap		# LDAP support
 %bcond_without	goa		# Gnome Online Accounts support
@@ -13,12 +14,12 @@
 Summary:	Evolution data server
 Summary(pl.UTF-8):	Serwer danych Evolution
 Name:		evolution-data-server
-Version:	3.42.4
+Version:	3.44.0
 Release:	1
 License:	LGPL v2+
 Group:		X11/Libraries
-Source0:	https://download.gnome.org/sources/evolution-data-server/3.42/%{name}-%{version}.tar.xz
-# Source0-md5:	f76c50fd9868a6df11f2cad2acad9e63
+Source0:	https://download.gnome.org/sources/evolution-data-server/3.44/%{name}-%{version}.tar.xz
+# Source0-md5:	5bb506013a31afc28bc54721797f74fd
 Patch0:		%{name}-gtkdoc.patch
 URL:		https://wiki.gnome.org/Apps/Evolution
 BuildRequires:	cmake >= 3.1
@@ -40,7 +41,8 @@ BuildRequires:	json-glib-devel >= 1.0.4
 BuildRequires:	libcanberra-gtk3-devel >= 0.25
 %{?with_kerberos5:BuildRequires:	libcom_err-devel}
 BuildRequires:	libgdata-devel >= 0.15.1
-BuildRequires:	libgweather-devel >= 3.10
+%{!?with_gweather4:BuildRequires:	libgweather-devel >= 3.10}
+%{?with_gweather4:BuildRequires:	libgweather4-devel >= 4}
 BuildRequires:	libical-glib-devel >= 3.0.7
 BuildRequires:	libicu-devel
 %{?with_phonenumber:BuildRequires:	libphonenumber-devel}
@@ -68,7 +70,7 @@ Requires:	%{name}-libs = %{version}-%{release}
 %{?with_goa:Requires:	gnome-online-accounts-libs >= 3.8.0}
 Requires:	gtk+3 >= 3.16
 Requires:	libgdata >= 0.15.1
-Requires:	libgweather >= 3.10
+%{!?with_gweather4:Requires:	libgweather >= 3.10}
 Obsoletes:	evolution-data-server-uoa < 3.32
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
@@ -121,7 +123,7 @@ Requires:	libsecret >= 0.5
 Requires:	libsoup >= 2.58
 Requires:	libxml2 >= 1:2.6.31
 Requires:	sqlite3 >= 3.7.17
-Obsoletes:	evolution-data-server-static
+Obsoletes:	evolution-data-server-static < 3.24
 
 %description libs
 This package contains Evolution Data Server library.
@@ -211,6 +213,7 @@ cd build
 	%{cmake_on_off goa ENABLE_GOA} \
 	-DENABLE_SCHEMAS_COMPILE=OFF \
 	-DENABLE_INTROSPECTION=ON \
+	%{?with_gweather4:-DWITH_GWEATHER4=ON} \
 	%{?with_phonenumber:-DWITH_PHONENUMBER=ON}
 
 %{__make}
@@ -310,6 +313,7 @@ fi
 %attr(755,root,root) %{_libdir}/evolution-data-server/registry-modules/module-trust-prompt.so
 %attr(755,root,root) %{_libdir}/evolution-data-server/registry-modules/module-webdav-backend.so
 %attr(755,root,root) %{_libdir}/evolution-data-server/registry-modules/module-yahoo-backend.so
+%{_datadir}/evolution-data-server
 
 %{systemduserunitdir}/evolution-addressbook-factory.service
 %{systemduserunitdir}/evolution-calendar-factory.service
