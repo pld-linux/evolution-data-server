@@ -313,15 +313,15 @@ fi
 %attr(755,root,root) %{_libdir}/evolution-data-server/registry-modules/module-trust-prompt.so
 %attr(755,root,root) %{_libdir}/evolution-data-server/registry-modules/module-webdav-backend.so
 %attr(755,root,root) %{_libdir}/evolution-data-server/registry-modules/module-yahoo-backend.so
-%{_datadir}/evolution-data-server
+%dir %{_libdir}/%{name}-%{basever}
+%dir %{_datadir}/evolution-data-server
+%{_datadir}/evolution-data-server/icons
 
 %{systemduserunitdir}/evolution-addressbook-factory.service
 %{systemduserunitdir}/evolution-calendar-factory.service
 %{systemduserunitdir}/evolution-source-registry.service
 %{systemduserunitdir}/evolution-user-prompter.service
 
-%dir %{_libdir}/%{name}-%{basever}
-%dir %{_datadir}/%{name}
 %{_pixmapsdir}/%{name}
 
 %{_datadir}/dbus-1/services/org.gnome.evolution.dataserver.AddressBook10.service
