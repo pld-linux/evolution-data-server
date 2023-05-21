@@ -1,7 +1,7 @@
+# TODO: separate gtk3, gtk4 subpackages from -libs/-devel/vala-?
 #
 # Conditional build:
 %bcond_without	apidocs		# API documentation
-%bcond_with	gweather4	# libgweather4 instead of libgweather 3
 %bcond_without	kerberos5	# Kerberos5 support
 %bcond_without	ldap		# LDAP support
 %bcond_without	goa		# Gnome Online Accounts support
@@ -11,15 +11,16 @@
 %define		basever		3.42
 %define		apiver		1.2
 %define		cal_apiver	2.0
+%define		ui4_apiver	1.0
 Summary:	Evolution data server
 Summary(pl.UTF-8):	Serwer danych Evolution
 Name:		evolution-data-server
-Version:	3.44.4
-Release:	3
+Version:	3.46.4
+Release:	1
 License:	LGPL v2+
 Group:		X11/Libraries
-Source0:	https://download.gnome.org/sources/evolution-data-server/3.44/%{name}-%{version}.tar.xz
-# Source0-md5:	fe8f0b1b77594589d6897de4b160015e
+Source0:	https://download.gnome.org/sources/evolution-data-server/3.46/%{name}-%{version}.tar.xz
+# Source0-md5:	45a022d2460ca032581909eb09b308ec
 Patch0:		%{name}-gtkdoc.patch
 URL:		https://wiki.gnome.org/Apps/Evolution
 BuildRequires:	cmake >= 3.1
@@ -28,12 +29,14 @@ BuildRequires:	docbook-dtd412-xml
 BuildRequires:	gcr-devel >= 3.4.0
 BuildRequires:	gcr-ui-devel >= 3.4.0
 BuildRequires:	gettext-tools >= 0.18.1
-BuildRequires:	glib2-devel >= 1:2.46.0
+BuildRequires:	glib2-devel >= 1:2.68
 %{?with_goa:BuildRequires:	gnome-online-accounts-devel >= 3.8.0}
 BuildRequires:	gobject-introspection-devel >= 0.10.0
 BuildRequires:	gperf
-BuildRequires:	gtk+3-devel >= 3.16
-BuildRequires:	gtk-webkit4-devel >= 2.28.0
+BuildRequires:	gtk+3-devel >= 3.20
+BuildRequires:	gtk4-devel >= 4.4
+BuildRequires:	gtk-webkit4.1-devel >= 2.34.0
+BuildRequires:	gtk-webkit5-devel >= 2.36.0
 %{?with_apidocs:BuildRequires:	gtk-doc >= 1.14}
 %{?with_kerberos5:BuildRequires:	heimdal-devel}
 BuildRequires:	intltool >= 0.40.0
@@ -41,13 +44,13 @@ BuildRequires:	json-glib-devel >= 1.0.4
 BuildRequires:	libcanberra-gtk3-devel >= 0.25
 %{?with_kerberos5:BuildRequires:	libcom_err-devel}
 BuildRequires:	libgdata-devel >= 0.15.1
-%{!?with_gweather4:BuildRequires:	libgweather-devel >= 3.10}
-%{?with_gweather4:BuildRequires:	libgweather4-devel >= 4}
+# libgweather4 built with libsoup3
+BuildRequires:	libgweather4-devel >= 4
 BuildRequires:	libical-glib-devel >= 3.0.7
 BuildRequires:	libicu-devel
 %{?with_phonenumber:BuildRequires:	libphonenumber-devel}
 BuildRequires:	libsecret-devel >= 0.5
-BuildRequires:	libsoup-devel >= 2.58
+BuildRequires:	libsoup3-devel >= 3.1.1
 BuildRequires:	libstdc++-devel >= 6:5.0
 BuildRequires:	libtool >= 2:2.2
 BuildRequires:	libxml2-devel >= 1:2.6.31
@@ -65,12 +68,13 @@ BuildRequires:	vala-libgdata >= 0.15.1
 %{?with_goa:BuildRequires:	vala-gnome-online-accounts >= 3.8.0}
 BuildRequires:	xz
 BuildRequires:	zlib-devel
-Requires(post,postun):	glib2 >= 1:2.46.0
+Requires(post,postun):	glib2 >= 1:2.68
 Requires:	%{name}-libs = %{version}-%{release}
 %{?with_goa:Requires:	gnome-online-accounts-libs >= 3.8.0}
-Requires:	gtk+3 >= 3.16
+Requires:	gtk+3 >= 3.20
+Requires:	gtk4 >= 4.4
 Requires:	libgdata >= 0.15.1
-%{!?with_gweather4:Requires:	libgweather >= 3.10}
+Requires:	libgweather4 >= 4
 Obsoletes:	evolution-data-server-uoa < 3.32
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
@@ -115,12 +119,15 @@ Summary(pl.UTF-8):	Biblioteka Evolution Data Server
 Group:		X11/Libraries
 Requires:	gcr-libs >= 3.4.0
 Requires:	gcr-ui >= 3.4.0
-Requires:	glib2 >= 1:2.46.0
-Requires:	gtk-webkit4 >= 2.28.0
+Requires:	glib2 >= 1:2.68
+Requires:	gtk+3 >= 3.20
+Requires:	gtk4 >= 4.4
+Requires:	gtk-webkit4.1 >= 2.34.0
+Requires:	gtk-webkit5 >= 2.36.0
 Requires:	json-glib >= 1.0.4
 Requires:	libical-glib >= 3.0.7
 Requires:	libsecret >= 0.5
-Requires:	libsoup >= 2.58
+Requires:	libsoup3 >= 3.1.1
 Requires:	libxml2 >= 1:2.6.31
 Requires:	sqlite3 >= 3.7.17
 Obsoletes:	evolution-data-server-static < 3.24
@@ -138,12 +145,14 @@ Group:		X11/Development/Libraries
 Requires:	%{name}-libs = %{version}-%{release}
 Requires:	gcr-devel >= 3.4.0
 Requires:	gcr-ui-devel >= 3.4.0
-Requires:	glib2-devel >= 1:2.46.0
+Requires:	glib2-devel >= 1:2.68
+Requires:	gtk+3-devel >= 3.20
+Requires:	gtk4-devel >= 4.4
 %{?with_kerberos5:Requires:	heimdal-devel}
 Requires:	libgdata-devel >= 0.15.1
 Requires:	libical-glib-devel >= 3.0.7
 Requires:	libsecret-devel >= 0.5
-Requires:	libsoup-devel >= 2.58
+Requires:	libsoup3-devel >= 3.1.1
 Requires:	libxml2-devel >= 1:2.6.31
 Requires:	nspr-devel >= 4
 Requires:	nss-devel >= 3
@@ -213,7 +222,6 @@ cd build
 	%{cmake_on_off goa ENABLE_GOA} \
 	-DENABLE_SCHEMAS_COMPILE=OFF \
 	-DENABLE_INTROSPECTION=ON \
-	%{?with_gweather4:-DWITH_GWEATHER4=ON} \
 	%{?with_phonenumber:-DWITH_PHONENUMBER=ON}
 
 %{__make}
@@ -354,23 +362,25 @@ fi
 %files libs
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_libdir}/libcamel-%{apiver}.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libcamel-%{apiver}.so.63
+%attr(755,root,root) %ghost %{_libdir}/libcamel-%{apiver}.so.64
 %attr(755,root,root) %{_libdir}/libebackend-%{apiver}.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libebackend-%{apiver}.so.10
+%attr(755,root,root) %ghost %{_libdir}/libebackend-%{apiver}.so.11
 %attr(755,root,root) %{_libdir}/libebook-%{apiver}.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libebook-%{apiver}.so.20
+%attr(755,root,root) %ghost %{_libdir}/libebook-%{apiver}.so.21
 %attr(755,root,root) %{_libdir}/libebook-contacts-%{apiver}.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libebook-contacts-%{apiver}.so.3
+%attr(755,root,root) %ghost %{_libdir}/libebook-contacts-%{apiver}.so.4
 %attr(755,root,root) %{_libdir}/libecal-%{cal_apiver}.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libecal-%{cal_apiver}.so.1
+%attr(755,root,root) %ghost %{_libdir}/libecal-%{cal_apiver}.so.2
 %attr(755,root,root) %{_libdir}/libedata-book-%{apiver}.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libedata-book-%{apiver}.so.26
+%attr(755,root,root) %ghost %{_libdir}/libedata-book-%{apiver}.so.27
 %attr(755,root,root) %{_libdir}/libedata-cal-%{cal_apiver}.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libedata-cal-%{cal_apiver}.so.1
+%attr(755,root,root) %ghost %{_libdir}/libedata-cal-%{cal_apiver}.so.2
 %attr(755,root,root) %{_libdir}/libedataserver-%{apiver}.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libedataserver-%{apiver}.so.26
+%attr(755,root,root) %ghost %{_libdir}/libedataserver-%{apiver}.so.27
 %attr(755,root,root) %{_libdir}/libedataserverui-%{apiver}.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libedataserverui-%{apiver}.so.3
+%attr(755,root,root) %ghost %{_libdir}/libedataserverui-%{apiver}.so.4
+%attr(755,root,root) %{_libdir}/libedataserverui4-%{ui4_apiver}.so.*.*.*
+%attr(755,root,root) %ghost %{_libdir}/libedataserverui4-%{ui4_apiver}.so.0
 %{_libdir}/girepository-1.0/Camel-1.2.typelib
 %{_libdir}/girepository-1.0/EBackend-%{apiver}.typelib
 %{_libdir}/girepository-1.0/EBook-%{apiver}.typelib
@@ -379,7 +389,8 @@ fi
 %{_libdir}/girepository-1.0/EDataBook-%{apiver}.typelib
 %{_libdir}/girepository-1.0/EDataCal-%{cal_apiver}.typelib
 %{_libdir}/girepository-1.0/EDataServer-%{apiver}.typelib
-%{_libdir}/girepository-1.0/EDataServerUI-1.2.typelib
+%{_libdir}/girepository-1.0/EDataServerUI-%{apiver}.typelib
+%{_libdir}/girepository-1.0/EDataServerUI4-%{ui4_apiver}.typelib
 
 %files devel
 %defattr(644,root,root,755)
@@ -392,6 +403,7 @@ fi
 %attr(755,root,root) %{_libdir}/libedata-cal-%{cal_apiver}.so
 %attr(755,root,root) %{_libdir}/libedataserver-%{apiver}.so
 %attr(755,root,root) %{_libdir}/libedataserverui-%{apiver}.so
+%attr(755,root,root) %{_libdir}/libedataserverui4-%{ui4_apiver}.so
 %{_includedir}/evolution-data-server
 %{_pkgconfigdir}/camel-%{apiver}.pc
 %{_pkgconfigdir}/evolution-data-server-%{apiver}.pc
@@ -403,6 +415,7 @@ fi
 %{_pkgconfigdir}/libedata-cal-%{cal_apiver}.pc
 %{_pkgconfigdir}/libedataserver-%{apiver}.pc
 %{_pkgconfigdir}/libedataserverui-%{apiver}.pc
+%{_pkgconfigdir}/libedataserverui4-%{ui4_apiver}.pc
 %{_datadir}/gir-1.0/Camel-1.2.gir
 %{_datadir}/gir-1.0/EBackend-%{apiver}.gir
 %{_datadir}/gir-1.0/EBook-%{apiver}.gir
@@ -411,7 +424,8 @@ fi
 %{_datadir}/gir-1.0/EDataBook-%{apiver}.gir
 %{_datadir}/gir-1.0/EDataCal-%{cal_apiver}.gir
 %{_datadir}/gir-1.0/EDataServer-%{apiver}.gir
-%{_datadir}/gir-1.0/EDataServerUI-1.2.gir
+%{_datadir}/gir-1.0/EDataServerUI-%{apiver}.gir
+%{_datadir}/gir-1.0/EDataServerUI4-%{ui4_apiver}.gir
 
 %if %{with apidocs}
 %files apidocs
@@ -441,4 +455,6 @@ fi
 %{_datadir}/vala/vapi/libedataserver-%{apiver}.vapi
 %{_datadir}/vala/vapi/libedataserverui-%{apiver}.deps
 %{_datadir}/vala/vapi/libedataserverui-%{apiver}.vapi
+%{_datadir}/vala/vapi/libedataserverui4-%{ui4_apiver}.deps
+%{_datadir}/vala/vapi/libedataserverui4-%{ui4_apiver}.vapi
 %endif
