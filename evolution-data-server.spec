@@ -8,19 +8,18 @@
 %bcond_without	phonenumber	# libphonenumber support for address books
 %bcond_without	vala		# Vala API
 
-%define		basever		3.42
 %define		apiver		1.2
 %define		cal_apiver	2.0
 %define		ui4_apiver	1.0
 Summary:	Evolution data server
 Summary(pl.UTF-8):	Serwer danych Evolution
 Name:		evolution-data-server
-Version:	3.46.4
-Release:	2
+Version:	3.48.4
+Release:	1
 License:	LGPL v2+
 Group:		X11/Libraries
-Source0:	https://download.gnome.org/sources/evolution-data-server/3.46/%{name}-%{version}.tar.xz
-# Source0-md5:	45a022d2460ca032581909eb09b308ec
+Source0:	https://download.gnome.org/sources/evolution-data-server/3.48/%{name}-%{version}.tar.xz
+# Source0-md5:	b387f584adf2318e958d7928925d1e37
 Patch0:		%{name}-gtkdoc.patch
 URL:		https://wiki.gnome.org/Apps/Evolution
 BuildRequires:	cmake >= 3.1
@@ -36,7 +35,7 @@ BuildRequires:	gperf
 BuildRequires:	gtk+3-devel >= 3.20
 BuildRequires:	gtk4-devel >= 4.4
 BuildRequires:	gtk-webkit4.1-devel >= 2.34.0
-BuildRequires:	gtk-webkit5-devel >= 2.36.0
+BuildRequires:	gtk-webkit6-devel >= 2.40.0
 %{?with_apidocs:BuildRequires:	gtk-doc >= 1.14}
 %{?with_kerberos5:BuildRequires:	heimdal-devel}
 BuildRequires:	intltool >= 0.40.0
@@ -123,7 +122,7 @@ Requires:	glib2 >= 1:2.68
 Requires:	gtk+3 >= 3.20
 Requires:	gtk4 >= 4.4
 Requires:	gtk-webkit4.1 >= 2.34.0
-Requires:	gtk-webkit5 >= 2.36.0
+Requires:	gtk-webkit6 >= 2.40.0
 Requires:	json-glib >= 1.0.4
 Requires:	libical-glib >= 3.0.7
 Requires:	libsecret >= 0.5
@@ -228,7 +227,7 @@ cd build
 
 %install
 rm -rf $RPM_BUILD_ROOT
-install -d $RPM_BUILD_ROOT{%{_libdir}/%{name}-%{basever},%{schemadir}}
+install -d $RPM_BUILD_ROOT%{schemadir}
 
 %{__make} -C build install \
 	DESTDIR=$RPM_BUILD_ROOT
@@ -321,7 +320,6 @@ fi
 %attr(755,root,root) %{_libdir}/evolution-data-server/registry-modules/module-trust-prompt.so
 %attr(755,root,root) %{_libdir}/evolution-data-server/registry-modules/module-webdav-backend.so
 %attr(755,root,root) %{_libdir}/evolution-data-server/registry-modules/module-yahoo-backend.so
-%dir %{_libdir}/%{name}-%{basever}
 %dir %{_datadir}/evolution-data-server
 %{_datadir}/evolution-data-server/icons
 
