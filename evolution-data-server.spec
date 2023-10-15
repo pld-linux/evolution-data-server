@@ -363,8 +363,6 @@ fi
 %attr(755,root,root) %{_libexecdir}/%{name}/csv2vcard
 %attr(755,root,root) %{_libexecdir}/%{name}/evolution-alarm-notify
 %attr(755,root,root) %{_libexecdir}/%{name}/list-sources
-%dir %{_libdir}/%{name}
-%attr(755,root,root) %{_libdir}/%{name}/libedbus-private.so
 %dir %{_libdir}/%{name}/addressbook-backends
 %attr(755,root,root) %{_libdir}/%{name}/addressbook-backends/libebookbackendfile.so
 %attr(755,root,root) %{_libdir}/%{name}/addressbook-backends/libebookbackendcarddav.so
@@ -460,6 +458,8 @@ fi
 %attr(755,root,root) %ghost %{_libdir}/libedata-cal-%{cal_apiver}.so.2
 %attr(755,root,root) %{_libdir}/libedataserver-%{apiver}.so.*.*.*
 %attr(755,root,root) %ghost %{_libdir}/libedataserver-%{apiver}.so.27
+%dir %{_libdir}/%{name}
+%attr(755,root,root) %{_libdir}/%{name}/libedbus-private.so
 %{_libdir}/girepository-1.0/Camel-1.2.typelib
 %{_libdir}/girepository-1.0/EBackend-%{apiver}.typelib
 %{_libdir}/girepository-1.0/EBook-%{apiver}.typelib
