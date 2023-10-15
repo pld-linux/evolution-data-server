@@ -1,4 +1,3 @@
-# TODO: separate gtk3, gtk4 subpackages from -libs/-devel/vala-?
 #
 # Conditional build:
 %bcond_without	apidocs		# API documentation
@@ -25,8 +24,6 @@ URL:		https://wiki.gnome.org/Apps/Evolution
 BuildRequires:	cmake >= 3.1
 BuildRequires:	db-devel
 BuildRequires:	docbook-dtd412-xml
-BuildRequires:	gcr-devel >= 3.4.0
-BuildRequires:	gcr-ui-devel >= 3.4.0
 BuildRequires:	gettext-tools >= 0.18.1
 BuildRequires:	glib2-devel >= 1:2.68
 %{?with_goa:BuildRequires:	gnome-online-accounts-devel >= 3.8.0}
@@ -68,6 +65,7 @@ BuildRequires:	vala-libgdata >= 0.15.1
 BuildRequires:	xz
 BuildRequires:	zlib-devel
 Requires(post,postun):	glib2 >= 1:2.68
+Requires:	%{name}-gtk3-libs = %{version}-%{release}
 Requires:	%{name}-libs = %{version}-%{release}
 %{?with_goa:Requires:	gnome-online-accounts-libs >= 3.8.0}
 Requires:	gtk+3 >= 3.20
@@ -116,12 +114,8 @@ Ten pakiet zawiera evolutionperson.schema dla serwera OpenLDAP.
 Summary:	Evolution Data Server library
 Summary(pl.UTF-8):	Biblioteka Evolution Data Server
 Group:		X11/Libraries
-Requires:	gcr-libs >= 3.4.0
-Requires:	gcr-ui >= 3.4.0
 Requires:	glib2 >= 1:2.68
-Requires:	gtk+3 >= 3.20
 Requires:	gtk4 >= 4.4
-Requires:	gtk-webkit4.1 >= 2.34.0
 Requires:	gtk-webkit6 >= 2.40.0
 Requires:	json-glib >= 1.0.4
 Requires:	libical-glib >= 3.0.7
@@ -142,10 +136,7 @@ Summary:	Evolution data server development files
 Summary(pl.UTF-8):	Pliki programistyczne serwera danych evolution
 Group:		X11/Development/Libraries
 Requires:	%{name}-libs = %{version}-%{release}
-Requires:	gcr-devel >= 3.4.0
-Requires:	gcr-ui-devel >= 3.4.0
 Requires:	glib2-devel >= 1:2.68
-Requires:	gtk+3-devel >= 3.20
 Requires:	gtk4-devel >= 4.4
 %{?with_kerberos5:Requires:	heimdal-devel}
 Requires:	libgdata-devel >= 0.15.1
@@ -204,6 +195,94 @@ Evolution data server API for Vala language.
 %description -n vala-evolution-data-server -l pl.UTF-8
 API serwera danych Evolution dla języka Vala.
 
+%package gtk3-libs
+Summary:	Evolution data server GTK+ 3 UI library
+Summary(pl.UTF-8):	Biblioteka interfejsu użytkownika GTK+ 3 serwera danych Evolution
+Group:		X11/Libraries
+Requires:	%{name}-libs = %{version}-%{release}
+Requires:	gtk+3 >= 3.20
+Requires:	gtk-webkit4.1 >= 2.34.0
+
+%description gtk3-libs
+Evolution data server GTK+ 3 UI library.
+
+%description gtk3-libs -l pl.UTF-8
+Biblioteka interfejsu użytkownika GTK+ 3 serwera danych Evolution.
+
+%package gtk3-devel
+Summary:	Header files for Evolution data server GTK+ 3 UI library
+Summary(pl.UTF-8):	Pliki nagłówkowe biblioteki interfejsu użytkownika GTK+ 3 serwera danych Evolution
+Group:		X11/Development/Libraries
+Requires:	%{name}-devel = %{version}-%{release}
+Requires:	%{name}-gtk3-libs = %{version}-%{release}
+Requires:	gtk+3-devel >= 3.20
+
+%description gtk3-devel
+Header files for Evolution data server GTK+ 3 UI library.
+
+%description gtk3-devel -l pl.UTF-8
+Pliki nagłówkowe biblioteki interfejsu użytkownika GTK+ 3 serwera
+danych Evolution.
+
+%package -n vala-evolution-data-server-gtk3
+Summary:	Vala API for Evolution data server GTK+ 3 UI library
+Summary(pl.UTF-8):	API języka Vala do biblioteki interfejsu użytkownika GTK+ 3 serwera danych Evolution
+Group:		X11/Development/Libraries
+Requires:	%{name}-gtk3-devel = %{version}-%{release}
+Requires:	vala-evolution-data-server = %{version}-%{release}
+BuildArch:	noarch
+
+%description -n vala-evolution-data-server-gtk3
+Vala API for Evolution data server GTK+ 3 UI library.
+
+%description -n vala-evolution-data-server-gtk3 -l pl.UTF-8
+API języka Vala do biblioteki interfejsu użytkownika GTK+ 3 serwera
+danych Evolution.
+
+%package gtk4-libs
+Summary:	Evolution data server GTK 4 UI library
+Summary(pl.UTF-8):	Biblioteka interfejsu użytkownika GTK 4 serwera danych Evolution
+Group:		X11/Libraries
+Requires:	%{name}-libs = %{version}-%{release}
+Requires:	gtk4 >= 4.4
+Requires:	gtk-webkit6 >= 2.40.0
+
+%description gtk4-libs
+Evolution data server GTK 4 UI library.
+
+%description gtk4-libs -l pl.UTF-8
+Biblioteka interfejsu użytkownika GTK 4 serwera danych Evolution.
+
+%package gtk4-devel
+Summary:	Header files for Evolution data server GTK 4 UI library
+Summary(pl.UTF-8):	Pliki nagłówkowe biblioteki interfejsu użytkownika GTK 4 serwera danych Evolution
+Group:		X11/Development/Libraries
+Requires:	%{name}-devel = %{version}-%{release}
+Requires:	%{name}-gtk4-libs = %{version}-%{release}
+Requires:	gtk4-devel >= 4.4
+
+%description gtk4-devel
+Header files for Evolution data server GTK 4 UI library.
+
+%description gtk4-devel -l pl.UTF-8
+Pliki nagłówkowe biblioteki interfejsu użytkownika GTK 4 serwera
+danych Evolution.
+
+%package -n vala-evolution-data-server-gtk4
+Summary:	Vala API for Evolution data server GTK 4 UI library
+Summary(pl.UTF-8):	API języka Vala do biblioteki interfejsu użytkownika GTK 4 serwera danych Evolution
+Group:		X11/Development/Libraries
+Requires:	%{name}-gtk4-devel = %{version}-%{release}
+Requires:	vala-evolution-data-server = %{version}-%{release}
+BuildArch:	noarch
+
+%description -n vala-evolution-data-server-gtk4
+Vala API for Evolution data server GTK 4 UI library.
+
+%description -n vala-evolution-data-server-gtk4 -l pl.UTF-8
+API języka Vala do biblioteki interfejsu użytkownika GTK 4 serwera
+danych Evolution.
+
 %prep
 %setup -q
 %patch0 -p1
@@ -257,6 +336,12 @@ if [ "$1" = "0" ]; then
 	%openldap_schema_unregister %{schemadir}/evolutionperson.schema
 	%service -q ldap restart
 fi
+
+%post	gtk3-libs -p /sbin/ldconfig
+%postun	gtk3-libs -p /sbin/ldconfig
+
+%post	gtk4-libs -p /sbin/ldconfig
+%postun	gtk4-libs -p /sbin/ldconfig
 
 %files -f %{name}.lang
 %defattr(644,root,root,755)
@@ -375,10 +460,6 @@ fi
 %attr(755,root,root) %ghost %{_libdir}/libedata-cal-%{cal_apiver}.so.2
 %attr(755,root,root) %{_libdir}/libedataserver-%{apiver}.so.*.*.*
 %attr(755,root,root) %ghost %{_libdir}/libedataserver-%{apiver}.so.27
-%attr(755,root,root) %{_libdir}/libedataserverui-%{apiver}.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libedataserverui-%{apiver}.so.4
-%attr(755,root,root) %{_libdir}/libedataserverui4-%{ui4_apiver}.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libedataserverui4-%{ui4_apiver}.so.0
 %{_libdir}/girepository-1.0/Camel-1.2.typelib
 %{_libdir}/girepository-1.0/EBackend-%{apiver}.typelib
 %{_libdir}/girepository-1.0/EBook-%{apiver}.typelib
@@ -387,8 +468,6 @@ fi
 %{_libdir}/girepository-1.0/EDataBook-%{apiver}.typelib
 %{_libdir}/girepository-1.0/EDataCal-%{cal_apiver}.typelib
 %{_libdir}/girepository-1.0/EDataServer-%{apiver}.typelib
-%{_libdir}/girepository-1.0/EDataServerUI-%{apiver}.typelib
-%{_libdir}/girepository-1.0/EDataServerUI4-%{ui4_apiver}.typelib
 
 %files devel
 %defattr(644,root,root,755)
@@ -400,9 +479,15 @@ fi
 %attr(755,root,root) %{_libdir}/libedata-book-%{apiver}.so
 %attr(755,root,root) %{_libdir}/libedata-cal-%{cal_apiver}.so
 %attr(755,root,root) %{_libdir}/libedataserver-%{apiver}.so
-%attr(755,root,root) %{_libdir}/libedataserverui-%{apiver}.so
-%attr(755,root,root) %{_libdir}/libedataserverui4-%{ui4_apiver}.so
-%{_includedir}/evolution-data-server
+%dir %{_includedir}/evolution-data-server
+%{_includedir}/evolution-data-server/camel
+%{_includedir}/evolution-data-server/libebackend
+%{_includedir}/evolution-data-server/libebook
+%{_includedir}/evolution-data-server/libebook-contacts
+%{_includedir}/evolution-data-server/libecal
+%{_includedir}/evolution-data-server/libedata-book
+%{_includedir}/evolution-data-server/libedata-cal
+%{_includedir}/evolution-data-server/libedataserver
 %{_pkgconfigdir}/camel-%{apiver}.pc
 %{_pkgconfigdir}/evolution-data-server-%{apiver}.pc
 %{_pkgconfigdir}/libebackend-%{apiver}.pc
@@ -412,8 +497,6 @@ fi
 %{_pkgconfigdir}/libedata-book-%{apiver}.pc
 %{_pkgconfigdir}/libedata-cal-%{cal_apiver}.pc
 %{_pkgconfigdir}/libedataserver-%{apiver}.pc
-%{_pkgconfigdir}/libedataserverui-%{apiver}.pc
-%{_pkgconfigdir}/libedataserverui4-%{ui4_apiver}.pc
 %{_datadir}/gir-1.0/Camel-1.2.gir
 %{_datadir}/gir-1.0/EBackend-%{apiver}.gir
 %{_datadir}/gir-1.0/EBook-%{apiver}.gir
@@ -422,8 +505,6 @@ fi
 %{_datadir}/gir-1.0/EDataBook-%{apiver}.gir
 %{_datadir}/gir-1.0/EDataCal-%{cal_apiver}.gir
 %{_datadir}/gir-1.0/EDataServer-%{apiver}.gir
-%{_datadir}/gir-1.0/EDataServerUI-%{apiver}.gir
-%{_datadir}/gir-1.0/EDataServerUI4-%{ui4_apiver}.gir
 
 %if %{with apidocs}
 %files apidocs
@@ -451,8 +532,44 @@ fi
 %{_datadir}/vala/vapi/libedata-cal-%{cal_apiver}.vapi
 %{_datadir}/vala/vapi/libedataserver-%{apiver}.deps
 %{_datadir}/vala/vapi/libedataserver-%{apiver}.vapi
+%endif
+
+%files gtk3-libs
+%defattr(644,root,root,755)
+%attr(755,root,root) %{_libdir}/libedataserverui-%{apiver}.so.*.*.*
+%attr(755,root,root) %ghost %{_libdir}/libedataserverui-%{apiver}.so.4
+%{_libdir}/girepository-1.0/EDataServerUI-%{apiver}.typelib
+
+%files gtk3-devel
+%defattr(644,root,root,755)
+%attr(755,root,root) %{_libdir}/libedataserverui-%{apiver}.so
+%{_includedir}/evolution-data-server/libedataserverui
+%{_datadir}/gir-1.0/EDataServerUI-%{apiver}.gir
+%{_pkgconfigdir}/libedataserverui-%{apiver}.pc
+
+%if %{with vala}
+%files -n vala-evolution-data-server-gtk3
+%defattr(644,root,root,755)
 %{_datadir}/vala/vapi/libedataserverui-%{apiver}.deps
 %{_datadir}/vala/vapi/libedataserverui-%{apiver}.vapi
+%endif
+
+%files gtk4-libs
+%defattr(644,root,root,755)
+%attr(755,root,root) %{_libdir}/libedataserverui4-%{ui4_apiver}.so.*.*.*
+%attr(755,root,root) %ghost %{_libdir}/libedataserverui4-%{ui4_apiver}.so.0
+%{_libdir}/girepository-1.0/EDataServerUI4-%{ui4_apiver}.typelib
+
+%files gtk4-devel
+%defattr(644,root,root,755)
+%attr(755,root,root) %{_libdir}/libedataserverui4-%{ui4_apiver}.so
+%{_datadir}/gir-1.0/EDataServerUI4-%{ui4_apiver}.gir
+%{_includedir}/evolution-data-server/libedataserverui4
+%{_pkgconfigdir}/libedataserverui4-%{ui4_apiver}.pc
+
+%if %{with vala}
+%files -n vala-evolution-data-server-gtk4
+%defattr(644,root,root,755)
 %{_datadir}/vala/vapi/libedataserverui4-%{ui4_apiver}.deps
 %{_datadir}/vala/vapi/libedataserverui4-%{ui4_apiver}.vapi
 %endif
