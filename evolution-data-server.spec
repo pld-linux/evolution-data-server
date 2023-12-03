@@ -13,12 +13,12 @@
 Summary:	Evolution data server
 Summary(pl.UTF-8):	Serwer danych Evolution
 Name:		evolution-data-server
-Version:	3.50.1
+Version:	3.50.2
 Release:	1
 License:	LGPL v2+
 Group:		X11/Libraries
 Source0:	https://download.gnome.org/sources/evolution-data-server/3.50/%{name}-%{version}.tar.xz
-# Source0-md5:	2e49ec11ccdf99621be465fc87dfbbe2
+# Source0-md5:	11dd4a3a0b78bbb5576965892cba2a9e
 Patch0:		%{name}-gtkdoc.patch
 URL:		https://wiki.gnome.org/Apps/Evolution
 BuildRequires:	cmake >= 3.1
@@ -362,6 +362,7 @@ fi
 %attr(755,root,root) %{_libexecdir}/%{name}/addressbook-export
 %attr(755,root,root) %{_libexecdir}/%{name}/csv2vcard
 %attr(755,root,root) %{_libexecdir}/%{name}/evolution-alarm-notify
+%attr(755,root,root) %{_libexecdir}/%{name}/evolution-oauth2-handler
 %attr(755,root,root) %{_libexecdir}/%{name}/list-sources
 %dir %{_libdir}/%{name}/addressbook-backends
 %attr(755,root,root) %{_libdir}/%{name}/addressbook-backends/libebookbackendfile.so
@@ -428,6 +429,7 @@ fi
 
 %{_sysconfdir}/xdg/autostart/org.gnome.Evolution-alarm-notify.desktop
 %{_desktopdir}/org.gnome.Evolution-alarm-notify.desktop
+%{_desktopdir}/org.gnome.evolution-data-server.OAuth2-handler.desktop
 
 %if %{with ldap}
 %files ldap
