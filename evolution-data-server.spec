@@ -156,18 +156,6 @@ using Evolution's data server libraries.
 Ten pakiet zawiera pliki potrzebne do tworzenia aplikacji
 korzystających z bibliotek serwera danych Evolution.
 
-%package static
-Summary:	Evolution data server static libraries
-Summary(pl.UTF-8):	Statyczne biblioteki serwera danych Evolution
-Group:		X11/Development/Libraries
-Requires:	%{name}-devel = %{version}-%{release}
-
-%description static
-Evolution data server static libraries.
-
-%description static -l pl.UTF-8
-Statyczne biblioteki serwera danych Evolution.
-
 %package apidocs
 Summary:	Evolution data server API documentation
 Summary(pl.UTF-8):	Dokumentacja API serwera danych Evolution
