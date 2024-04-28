@@ -13,15 +13,15 @@
 Summary:	Evolution data server
 Summary(pl.UTF-8):	Serwer danych Evolution
 Name:		evolution-data-server
-Version:	3.50.4
+Version:	3.52.1
 Release:	1
 License:	LGPL v2+
 Group:		X11/Libraries
-Source0:	https://download.gnome.org/sources/evolution-data-server/3.50/%{name}-%{version}.tar.xz
-# Source0-md5:	3aca3ad79c9ee833f25d68e6097b46ee
+Source0:	https://download.gnome.org/sources/evolution-data-server/3.52/%{name}-%{version}.tar.xz
+# Source0-md5:	0cf18350f9097402db202b90855bf5db
 Patch0:		%{name}-gtkdoc.patch
-URL:		https://wiki.gnome.org/Apps/Evolution
-BuildRequires:	cmake >= 3.1
+URL:		https://gitlab.gnome.org/GNOME/evolution/-/wikis/home
+BuildRequires:	cmake >= 3.15
 BuildRequires:	db-devel
 BuildRequires:	docbook-dtd412-xml
 BuildRequires:	gettext-tools >= 0.18.1
@@ -276,9 +276,7 @@ danych Evolution.
 %patch0 -p1
 
 %build
-install -d build
-cd build
-%cmake .. \
+%cmake -B build \
 	-DLIBEXEC_INSTALL_DIR=%{_libexecdir} \
 	%{?with_kerberos5:-DWITH_KRB5=%{_prefix} -DWITH_KRB5_LIBS=%{_libdir}} \
 	%{cmake_on_off kerberos5 WITH_KRB5} \
@@ -290,7 +288,7 @@ cd build
 	-DENABLE_INTROSPECTION=ON \
 	%{?with_phonenumber:-DWITH_PHONENUMBER=ON}
 
-%{__make}
+%{__make} -C build
 
 %install
 rm -rf $RPM_BUILD_ROOT
@@ -400,6 +398,7 @@ fi
 %{systemduserunitdir}/evolution-source-registry.service
 %{systemduserunitdir}/evolution-user-prompter.service
 
+%{_iconsdir}/hicolor/scalable/apps/org.gnome.Evolution-alarm-notify.svg
 %{_pixmapsdir}/%{name}
 
 %{_datadir}/dbus-1/services/org.gnome.evolution.dataserver.AddressBook10.service
@@ -441,7 +440,7 @@ fi
 %attr(755,root,root) %{_libdir}/libebook-contacts-%{apiver}.so.*.*.*
 %attr(755,root,root) %ghost %{_libdir}/libebook-contacts-%{apiver}.so.4
 %attr(755,root,root) %{_libdir}/libecal-%{cal_apiver}.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libecal-%{cal_apiver}.so.2
+%attr(755,root,root) %ghost %{_libdir}/libecal-%{cal_apiver}.so.3
 %attr(755,root,root) %{_libdir}/libedata-book-%{apiver}.so.*.*.*
 %attr(755,root,root) %ghost %{_libdir}/libedata-book-%{apiver}.so.27
 %attr(755,root,root) %{_libdir}/libedata-cal-%{cal_apiver}.so.*.*.*
