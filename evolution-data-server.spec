@@ -14,7 +14,7 @@ Summary:	Evolution data server
 Summary(pl.UTF-8):	Serwer danych Evolution
 Name:		evolution-data-server
 Version:	3.54.0
-Release:	1
+Release:	2
 License:	LGPL v2+
 Group:		X11/Libraries
 Source0:	https://download.gnome.org/sources/evolution-data-server/3.54/%{name}-%{version}.tar.xz
@@ -299,6 +299,8 @@ install -d $RPM_BUILD_ROOT%{schemadir}
 	DESTDIR=$RPM_BUILD_ROOT
 
 cp -p src/addressbook/backends/ldap/evolutionperson.schema $RPM_BUILD_ROOT%{schemadir}
+
+%{__rm} -r $RPM_BUILD_ROOT%{_localedir}/ie
 
 %find_lang %{name}
 
